@@ -18,6 +18,8 @@ public struct SebGreenToggleStyle: ToggleStyle {
     private let circlePadding: CGFloat = 2
     private let offset: CGFloat = 10
 
+    public init() {}
+
     public func makeBody(configuration: Configuration) -> some View {
         HStack {
             configuration.label
