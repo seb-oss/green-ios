@@ -18,15 +18,15 @@ public class Typography {
         var fontName: String {
             switch self {
             case .light:
-                return "SansSerifGDS-Light"
+                return "SEBSansSerifGDS-Light"
             case .regular:
-                return "SansSerifGDS-Regular"
+                return "SEBSansSerifGDS-Regular"
             case .book:
-                return "SansSerifGDS-Book"
+                return "SEBSansSerifGDS-Book"
             case .medium:
-                return "SansSerifGDS-Medium"
+                return "SEBSansSerifGDS-Medium"
             case .bold:
-                return "SansSerifGDS-Bold"
+                return "SEBSansSerifGDS-Bold"
             }
         }
     }
