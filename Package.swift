@@ -23,7 +23,8 @@ let package = Package(
             name: "SebGreenComponents",
             dependencies: [
 //                .product(name: "GreenTokens", package: "green-tokens-ios"),
-            ]
+            ],
+            resources: [.process("Resources")]
         ),
     ]
 )
