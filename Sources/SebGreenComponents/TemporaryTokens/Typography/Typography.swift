@@ -3,7 +3,6 @@
 //  SebGreen
 //
 
-import Foundation
 import UIKit
 
 public class Typography {
@@ -56,28 +55,5 @@ public class Typography {
         public let preambleM: CGFloat = 20
         public let preambleS: CGFloat = 18
         public let preambleXs: CGFloat = 16
-    }
-
-    static func registerFonts() {
-        for weight in Weight.allCases {
-            Typography.registerFont(named: weight.fontName)
-        }
-    }
-}
-
-private extension Typography {
-
-    static func registerFont(named name: String) {
-       guard
-        let asset = NSDataAsset(name: "Fonts/\(name)", bundle: Bundle.module),
-        let provider = CGDataProvider(data: asset.data as NSData),
-        let font = CGFont(provider),
-        CTFontManagerRegisterGraphicsFont(font, nil)
-        else {
-           let message = "Failed to register font \(name)"
-           assertionFailure(message)
-           print(message)
-           return
-       }
     }
 }

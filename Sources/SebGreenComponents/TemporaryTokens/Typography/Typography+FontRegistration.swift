@@ -1,0 +1,30 @@
+//
+//  Typography+FontRegistration.swift
+//  SebGreenComponents
+//
+//  Created by Mayur Deshmukh on 2025-08-18.
+//
+
+import UIKit
+
+extension Typography {
+    static func registerFonts() {
+        for weight in Weight.allCases {
+            Typography.registerFont(named: weight.fontName)
+        }
+    }
+    
+    private static func registerFont(named name: String) {
+        guard
+         let asset = NSDataAsset(name: "Fonts/\(name)", bundle: Bundle.module),
+         let provider = CGDataProvider(data: asset.data as NSData),
+         let font = CGFont(provider),
+         CTFontManagerRegisterGraphicsFont(font, nil)
+         else {
+            let message = "Failed to register font \(name)"
+            assertionFailure(message)
+            print(message)
+            return
+        }
+     }
+}
