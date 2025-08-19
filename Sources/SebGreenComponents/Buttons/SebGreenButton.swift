@@ -45,7 +45,7 @@ public struct SebGreenButton: View {
                 }
                 if let titleKey {
                     Text(titleKey)
-                        .font(.sebGreen(17, weight: .book))
+                        .typography(.headlineEmphasized)
                 }
             }
         }
@@ -115,5 +115,6 @@ public extension SebGreenButton {
             SebGreenButton(systemImage: "checkmark") {}
                 .greenButtonStyle(.tertiary)
         }
+        .previewByRegisteringFonts()
     }
 }
