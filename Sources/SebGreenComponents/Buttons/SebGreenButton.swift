@@ -12,10 +12,10 @@ public struct SebGreenButton: View {
 
     @State private var isPressed: Bool = false
 
-    @ScaledMetric private var verticalPadding: CGFloat = Space.spaceS
-    @ScaledMetric private var horizontalPaddingForText: CGFloat = Space.spaceL
-    @ScaledMetric private var horizontalPaddingForImage: CGFloat = Space.spaceS
-    private var horizontalComponentSpacing: CGFloat = Space.spaceS
+    @ScaledMetric private var verticalPadding: CGFloat = .spaceS
+    @ScaledMetric private var horizontalPaddingForText: CGFloat = .spaceL
+    @ScaledMetric private var horizontalPaddingForImage: CGFloat = .spaceS
+    private var horizontalComponentSpacing: CGFloat = .spaceS
 
     private var horizontalPadding: CGFloat {
         hasText ? horizontalPaddingForText : horizontalPaddingForImage

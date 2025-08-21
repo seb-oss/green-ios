@@ -102,7 +102,7 @@ private extension FloatingLabelInput {
             accessoryStack
         }
         .padding(.horizontal, .spaceM)
-        .padding(.vertical, .spaceXS)
+        .padding(.vertical, .spaceXs)
     }
     
     // MARK: Labeled text field
@@ -200,7 +200,7 @@ private extension FloatingLabelInput {
         Text(hintText)
             .foregroundStyle(isValid ? Color.content02 : Color.contentNegative01)
             .typography(.footnote)
-            .padding(.top, .spaceXS)
+            .padding(.top, .spaceXs)
             .padding(.leading, .spaceM)
     }
     
@@ -274,12 +274,6 @@ struct FloatingLabelInput_Previews: PreviewProvider {
         DummyForm()
             .background(Color.iOSGroupedBackgroundPrimary)
     }
-}
-
-extension CGFloat {
-    static let spaceXS: CGFloat = 8
-    static let spaceS: CGFloat = 12
-    static let spaceM: CGFloat = 16
 }
 
 extension Color {
