@@ -58,11 +58,13 @@ private extension FloatingLabelInput {
         ZStack(alignment: .leading) {
             background
             
-            if isEditing || hasContent {
-                editingStack
-            } else {
-                placeholderView
+            HStack(spacing: .zero) {
+                labeledInput
+                Spacer(minLength: 0)
+                accessoryStack
             }
+            .padding(.horizontal, .spaceM)
+            .padding(.vertical, .spaceS)
         }
     }
     
@@ -80,14 +82,26 @@ private extension FloatingLabelInput {
     }
 }
 
+// MARK: Labeled input
+
+private extension FloatingLabelInput {
+    @ViewBuilder
+    var labeledInput: some View {
+        if isEditing || hasContent {
+            labeledTextFieldStack
+        } else {
+            placeholderView
+        }
+    }
+}
+
 // MARK: - Placeholder state
 
 private extension FloatingLabelInput {
     var placeholderView: some View {
         Text(placeholder)
             .typography(.headlineEmphasized)
-            .padding(.horizontal, .spaceM)
-            .padding(.vertical, .spaceM)
+            .padding(.vertical, true ? .spaceS :.spaceM)
             .foregroundStyle(isValid ? Color.content02 : Color.contentNegative01)
     }
 }
@@ -95,15 +109,6 @@ private extension FloatingLabelInput {
 // MARK: - Editing state
 
 private extension FloatingLabelInput {
-    var editingStack: some View {
-        HStack(spacing: .zero) {
-            labeledTextFieldStack
-            
-            accessoryStack
-        }
-        .padding(.horizontal, .spaceM)
-        .padding(.vertical, .spaceXs)
-    }
     
     // MARK: Labeled text field
     
@@ -117,20 +122,28 @@ private extension FloatingLabelInput {
     
     var label: some View {
         Text(placeholder)
-            .foregroundStyle(isValid ? Color.content02 : Color.contentNegative01)
+            .foregroundStyle(labelColor)
             .typography(.subhead)
+    }
+    
+    var labelColor: Color {
+        isValid || isFocused ? Color.content02 : Color.contentNegative01
     }
     
     var textfield: some View {
         TextField("", text: limitedTextBinding)
             .focused($isFocused)
             .typography(.headlineEmphasized)
-            .foregroundStyle(isValid ? Color.content01 : Color.contentNegative01)
+            .foregroundStyle(textFieldForegroundColor)
             .onAppear {
                 DispatchQueue.main.async {
                     isFocused = !hasContent
                 }
             }
+    }
+    
+    var textFieldForegroundColor: Color {
+        isValid || isFocused ? Color.content01 : Color.contentNegative01
     }
     
     var limitedTextBinding: Binding<String> {
@@ -150,13 +163,13 @@ private extension FloatingLabelInput {
     
     var accessoryStack: some View {
         VStack(alignment: .trailing ,spacing: .zero) {
-            if isValid {
+            if isFocused {
                 if characterLimit != nil {
                     characterCountLabel
                 }
                 
                 clearButton
-            } else {
+            } else if !isValid {
                 errorIcon
             }
         }
@@ -240,7 +253,8 @@ struct DummyForm: View {
                 FloatingLabelInput(
                     text: $textCounter,
                     placeholder: "Label",
-                    characterLimit: 10
+                    characterLimit: 10,
+                    isValid: false
                 )
 
                 FloatingLabelInput(
