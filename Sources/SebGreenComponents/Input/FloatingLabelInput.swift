@@ -232,37 +232,37 @@ struct DummyForm: View {
     @State private var textCounter = ""
     @State private var textPrefilled = "Content shared"
     @State private var textNearLimit = "1234567890" // 9/10
-
+    
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: .spaceM) {
-                    FloatingLabelInput(
-                        text: $textDefault,
-                        placeholder: "Longer Label for accessbility"
-                    )
-
-
+                FloatingLabelInput(
+                    text: $textDefault,
+                    placeholder: "Longer Label for accessbility"
+                )
+                
+                
                 FloatingLabelInput(
                     text: $textSupport,
                     placeholder: "Label",
                     supportingText: "Support text for input"
                 )
-                    
                 
-
+                
+                
                 FloatingLabelInput(
                     text: $textCounter,
                     placeholder: "Label",
                     characterLimit: 10,
                     isValid: false
                 )
-
+                
                 FloatingLabelInput(
                     text: $textPrefilled,
                     placeholder: "Label",
                     characterLimit: 50
                 )
-
+                
                 FloatingLabelInput(
                     text: $textNearLimit,
                     placeholder: "Label",
@@ -271,7 +271,7 @@ struct DummyForm: View {
                     errorText: "Character limit reached",
                     isValid: false
                 )
-
+                
                 Text(verbatim: "Tip: Tap any field to edit and see the floating label + clear button.")
                     .typography(.caption1)
                     .foregroundStyle(Color.content02)
@@ -293,31 +293,31 @@ struct FloatingLabelInput_Previews: PreviewProvider {
 extension Color {
     static let iOSBackgroundsGroupedBackgroundSecondary: Color = Color(uiColor: UIColor { traitCollection in
         traitCollection.userInterfaceStyle == .light
-            ? UIColor(red: 1, green: 1, blue: 1, alpha: 1)   // Light mode
-            : UIColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1)    // Dark mode
+        ? UIColor(red: 1, green: 1, blue: 1, alpha: 1)   // Light mode
+        : UIColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1)    // Dark mode
     })
-
+    
     static let iOSGroupedBackgroundPrimary: Color = Color(uiColor: UIColor { traitCollection in
         traitCollection.userInterfaceStyle == .light
-            ? UIColor(red: 0.94, green: 0.94, blue: 0.94, alpha: 1)   // Light mode
-            : UIColor(red: 0.04, green: 0.04, blue: 0.04, alpha: 1)    // Dark mode
+        ? UIColor(red: 0.94, green: 0.94, blue: 0.94, alpha: 1)   // Light mode
+        : UIColor(red: 0.04, green: 0.04, blue: 0.04, alpha: 1)    // Dark mode
     })
     
     static let content01: Color = Color(uiColor: UIColor { traitCollection in
         traitCollection.userInterfaceStyle == .light
-            ? UIColor(red: 0.04, green: 0.04, blue: 0.04, alpha: 1)   // Light mode
-            : UIColor(red: 0.97, green: 0.97, blue: 0.97, alpha: 1)    // Dark mode
+        ? UIColor(red: 0.04, green: 0.04, blue: 0.04, alpha: 1)   // Light mode
+        : UIColor(red: 0.97, green: 0.97, blue: 0.97, alpha: 1)    // Dark mode
     })
     
     static let content02: Color = Color(uiColor: UIColor { traitCollection in
         traitCollection.userInterfaceStyle == .light
-            ? UIColor(red: 0.39, green: 0.41, blue: 0.4, alpha: 1)   // Light mode
-            : UIColor(red: 0.67, green: 0.69, blue: 0.68, alpha: 1)    // Dark mode
+        ? UIColor(red: 0.39, green: 0.41, blue: 0.4, alpha: 1)   // Light mode
+        : UIColor(red: 0.67, green: 0.69, blue: 0.68, alpha: 1)    // Dark mode
     })
     
     static let contentNegative01: Color = Color(uiColor: UIColor { traitCollection in
         traitCollection.userInterfaceStyle == .light
-            ? UIColor(red: 0.73, green: 0.18, blue: 0.07, alpha: 1)   // Light mode
-            : UIColor(red: 0.94, green: 0.54, blue: 0.46, alpha: 1)    // Dark mode
+        ? UIColor(red: 0.73, green: 0.18, blue: 0.07, alpha: 1)   // Light mode
+        : UIColor(red: 0.94, green: 0.54, blue: 0.46, alpha: 1)    // Dark mode
     })
 }
