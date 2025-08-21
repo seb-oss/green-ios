@@ -77,7 +77,7 @@ private extension FloatingLabelInput {
 
 private extension FloatingLabelInput {
     var background: some View {
-        Color.white
+        Color.iOSBackgroundsGroupedBackgroundSecondary
             .cornerRadius(.spaceS)
     }
 }
@@ -291,9 +291,33 @@ struct FloatingLabelInput_Previews: PreviewProvider {
 }
 
 extension Color {
-    static let iOSGroupedBackgroundPrimary: Color = Color(red: 0.94, green: 0.94, blue: 0.94)
+    static let iOSBackgroundsGroupedBackgroundSecondary: Color = Color(uiColor: UIColor { traitCollection in
+        traitCollection.userInterfaceStyle == .light
+            ? UIColor(red: 1, green: 1, blue: 1, alpha: 1)   // Light mode
+            : UIColor(red: 0.1, green: 0.1, blue: 0.1, alpha: 1)    // Dark mode
+    })
+
+    static let iOSGroupedBackgroundPrimary: Color = Color(uiColor: UIColor { traitCollection in
+        traitCollection.userInterfaceStyle == .light
+            ? UIColor(red: 0.94, green: 0.94, blue: 0.94, alpha: 1)   // Light mode
+            : UIColor(red: 0.04, green: 0.04, blue: 0.04, alpha: 1)    // Dark mode
+    })
     
-    static let content01: Color = Color(red: 0.04, green: 0.04, blue: 0.04)
-    static let content02: Color = Color(red: 0.39, green: 0.41, blue: 0.4)
-    static let contentNegative01: Color = Color(red: 0.73, green: 0.18, blue: 0.07)
+    static let content01: Color = Color(uiColor: UIColor { traitCollection in
+        traitCollection.userInterfaceStyle == .light
+            ? UIColor(red: 0.04, green: 0.04, blue: 0.04, alpha: 1)   // Light mode
+            : UIColor(red: 0.97, green: 0.97, blue: 0.97, alpha: 1)    // Dark mode
+    })
+    
+    static let content02: Color = Color(uiColor: UIColor { traitCollection in
+        traitCollection.userInterfaceStyle == .light
+            ? UIColor(red: 0.39, green: 0.41, blue: 0.4, alpha: 1)   // Light mode
+            : UIColor(red: 0.67, green: 0.69, blue: 0.68, alpha: 1)    // Dark mode
+    })
+    
+    static let contentNegative01: Color = Color(uiColor: UIColor { traitCollection in
+        traitCollection.userInterfaceStyle == .light
+            ? UIColor(red: 0.73, green: 0.18, blue: 0.07, alpha: 1)   // Light mode
+            : UIColor(red: 0.94, green: 0.54, blue: 0.46, alpha: 1)    // Dark mode
+    })
 }
