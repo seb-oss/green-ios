@@ -7,24 +7,26 @@ import UIKit
 
 extension Typography {
     public enum Weight: CaseIterable {
-        case light
-        case regular
-        case book
-        case medium
         case bold
+        case boldItalic
+        case book
+        case bookItalic
+        case italic
+        case medium
+        case mediumItalic
+        case regular
+        
 
         var fontName: String {
             switch self {
-            case .light:
-                return "SEBSansSerifGDS-Light"
-            case .regular:
-                return "SEBSansSerifGDS-Regular"
-            case .book:
-                return "SEBSansSerifGDS-Book"
-            case .medium:
-                return "SEBSansSerifGDS-Medium"
-            case .bold:
-                return "SEBSansSerifGDS-Bold"
+            case .bold : "SEBSansSerif-Bold"
+            case .boldItalic : "SEBSansSerif-BoldItalic"
+            case .book : "SEBSansSerif-Book"
+            case .bookItalic : "SEBSansSerif-BookItalic"
+            case .italic : "SEBSansSerif-Italic"
+            case .medium : "SEBSansSerif-Medium"
+            case .mediumItalic : "SEBSansSerif-MediumItalic"
+            case .regular : "SEBSansSerif-Regular"
             }
         }
     }
