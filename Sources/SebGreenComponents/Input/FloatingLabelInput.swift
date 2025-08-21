@@ -13,6 +13,7 @@ public struct FloatingLabelInput: View {
     let characterLimit: Int?
     let supportingText: String?
     let errorText: String?
+    let isMultiline: Bool
     
     /// - Parameters:
     ///   - text: Binding to the text content.
@@ -24,7 +25,8 @@ public struct FloatingLabelInput: View {
         characterLimit: Int? = nil,
         supportingText: String? = nil,
         errorText: String? = nil,
-        isValid: Bool = true
+        isValid: Bool = true,
+        isMultiline: Bool = false
     ) {
         self._text = text
         self.placeholder = placeholder
@@ -32,6 +34,7 @@ public struct FloatingLabelInput: View {
         self.supportingText = supportingText
         self.errorText = errorText
         self.isValid = isValid
+        self.isMultiline = isMultiline
     }
     
     public var body: some View {
@@ -101,7 +104,7 @@ private extension FloatingLabelInput {
     var placeholderView: some View {
         Text(placeholder)
             .typography(.headlineEmphasized)
-            .padding(.vertical, true ? .spaceS :.spaceM)
+            .padding(.vertical, .spaceS)
             .foregroundStyle(isValid ? Color.content02 : Color.contentNegative01)
     }
 }
@@ -116,7 +119,11 @@ private extension FloatingLabelInput {
         VStack(alignment: .leading, spacing: .zero) {
             label
             
-            textfield
+            if isMultiline {
+                textEditor
+            } else {
+                textfield
+            }
         }
     }
     
@@ -132,6 +139,20 @@ private extension FloatingLabelInput {
     
     var textfield: some View {
         TextField("", text: limitedTextBinding)
+            .focused($isFocused)
+            .typography(.headlineEmphasized)
+            .foregroundStyle(textFieldForegroundColor)
+            .onAppear {
+                DispatchQueue.main.async {
+                    isFocused = !hasContent
+                }
+            }
+    }
+    
+    var textEditor: some View {
+        TextEditor(text: limitedTextBinding)
+            .scrollContentBackground(.hidden)
+            .background(Color.clear)
             .focused($isFocused)
             .typography(.headlineEmphasized)
             .foregroundStyle(textFieldForegroundColor)
@@ -238,7 +259,8 @@ struct DummyForm: View {
             VStack(alignment: .leading, spacing: .spaceM) {
                 FloatingLabelInput(
                     text: $textDefault,
-                    placeholder: "Longer Label for accessbility"
+                    placeholder: "Longer Label for accessbility",
+                    isMultiline: true
                 )
                 
                 
