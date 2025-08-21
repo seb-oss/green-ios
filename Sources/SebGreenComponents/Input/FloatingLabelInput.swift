@@ -35,7 +35,7 @@ public struct FloatingLabelInput: View {
     }
     
     public var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
+        VStack(alignment: .leading, spacing: .zero) {
             inputField
             
             hintAccessoryView
@@ -96,7 +96,7 @@ private extension FloatingLabelInput {
 
 private extension FloatingLabelInput {
     var editingStack: some View {
-        HStack(spacing: 0) {
+        HStack(spacing: .zero) {
             labeledTextFieldStack
             
             accessoryStack
@@ -108,7 +108,7 @@ private extension FloatingLabelInput {
     // MARK: Labeled text field
     
     var labeledTextFieldStack: some View {
-        VStack(alignment: .leading, spacing: 0) {
+        VStack(alignment: .leading, spacing: .zero) {
             label
             
             textfield
@@ -149,7 +149,7 @@ private extension FloatingLabelInput {
     // MARK: Accessory elements
     
     var accessoryStack: some View {
-        VStack(alignment: .trailing ,spacing: 0) {
+        VStack(alignment: .trailing ,spacing: .zero) {
             if isValid {
                 if characterLimit != nil {
                     characterCountLabel
@@ -222,7 +222,7 @@ struct DummyForm: View {
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 16) {
+            VStack(alignment: .leading, spacing: .spaceM) {
                     FloatingLabelInput(
                         text: $textDefault,
                         placeholder: "Longer Label for accessbility"
