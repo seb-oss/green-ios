@@ -13,9 +13,9 @@ public enum SebGreenButtonStyle {
     fileprivate var backgroundColor: Color {
         switch self {
         case .primary:
-            Colors.Level.L3.Background.primary
+                .L3Neutral01
         case .secondary:
-            Colors.Level.L3.Background.secondary
+                .backgroundSecondary
         case .tertiary:
             Color.clear
         }
@@ -24,23 +24,25 @@ public enum SebGreenButtonStyle {
     fileprivate var foregroundColor: Color {
         switch self {
         case .primary:
-            Colors.Level.L3.Content.primary
+                .content03
         case .secondary:
-            Colors.Level.L3.Content.tertiary
+                .content01
         case .tertiary:
-            Colors.Level.L3.Content.tertiary
+                .content02
         }
     }
 
     fileprivate var focusColor: Color {
-        switch self {
-        case .primary:
-            Colors.PocCustom.grey28
-        case .secondary:
-            Colors.PocCustom.grey9
-        case .tertiary:
-            Colors.PocCustom.grey6
-        }
+        backgroundColor.opacity(0.75)
+        // TODO: Currently being finalized/revised. Replaced with alpha effect meanwhile
+//        switch self {
+//        case .primary:
+//                .backgroundPrimary
+//        case .secondary:
+//                .backgroundPrimary
+//        case .tertiary:
+//                .backgroundPrimary
+//        }
     }
 }
 

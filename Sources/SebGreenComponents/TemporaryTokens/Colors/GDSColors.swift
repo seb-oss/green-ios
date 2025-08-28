@@ -21,7 +21,11 @@ public extension Color {
     // Content
     static let content01         = Color("Content01", bundle: .module)
     static let content02         = Color("Content02", bundle: .module)
+    static let content03         = Color("Content03", bundle: .module)
     static let content04         = Color("Content04", bundle: .module)
     static let contentNegative01 = Color("ContentNegative01", bundle: .module)
     static let contentPositive01 = Color("ContentPositive01", bundle: .module)
+    
+    // L3
+    static let L3Neutral01      = Color("L3/Neutral-01", bundle: .module)
 }

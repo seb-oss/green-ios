@@ -94,7 +94,7 @@ private extension LabelOutsideInput {
 
 private extension LabelOutsideInput {
     var background: some View {
-        Color.iOSBackgroundsGroupedBackgroundSecondary
+        Color.groupedBackgroundSecondary
             .cornerRadius(.spaceS)
     }
 }
@@ -117,9 +117,14 @@ private extension LabelOutsideInput {
 private extension LabelOutsideInput {
     var placeholderView: some View {
         Text(placeholder)
-            .typography(.headlineEmphasized)
+            .typography(
+                isValid ? .headline :
+                .headlineEmphasized
+            )
 //            .padding(.vertical, .spaceS)
-            .foregroundStyle(isValid ? Color.content02 : Color.contentNegative01)
+            .foregroundStyle(
+                isValid ? Color.content02 : Color.contentNegative01
+            )
     }
 }
 
@@ -141,7 +146,7 @@ private extension LabelOutsideInput {
     var label: some View {
         Text(title)
             .foregroundStyle(labelColor)
-            .typography(.subhead)
+            .typography(.headlineEmphasized)
     }
     
     var labelColor: Color {
@@ -279,7 +284,7 @@ private extension LabelOutsideInput {
                     LabelOutsideInput(
                         text: $textSupport,
                         title: "Title",
-                        placeholder: "Placeholder",
+                        placeholder: "Enter something here",
                         supportingText: "Support text for input"
                     )
                     
@@ -288,7 +293,7 @@ private extension LabelOutsideInput {
                     LabelOutsideInput(
                         text: $textCounter,
                         title: "Title",
-                        placeholder: "Label",
+                        placeholder: "Enter address",
                         characterLimit: 10,
                         isValid: false
                     )
@@ -303,11 +308,11 @@ private extension LabelOutsideInput {
                     LabelOutsideInput(
                         text: $textNearLimit,
                         title: "Title",
-                        placeholder: "Label",
+                        placeholder: "Enter phone number",
                         characterLimit: 10,
                         supportingText: "Keep it short",
                         errorText: "Character limit reached",
-                        isValid: false
+                        isValid: true
                     )
                     
                     Text(verbatim: "Tip: Tap any field to edit and see the floating label + clear button.")
@@ -317,7 +322,7 @@ private extension LabelOutsideInput {
                 .padding(.horizontal, 8)
                 .padding(.vertical, 16)
             }
-            .background(Color.iOSGroupedBackgroundPrimary)
+            .background(Color.groupedBackgroundPrimary)
         }
     }
 }
@@ -325,6 +330,6 @@ private extension LabelOutsideInput {
 struct LabelOutsideInput_Previews: PreviewProvider {
     static var previews: some View {
         LabelOutsideInput.DummyForm()
-            .background(Color.iOSGroupedBackgroundPrimary)
+            .background(Color.groupedBackgroundPrimary)
     }
 }

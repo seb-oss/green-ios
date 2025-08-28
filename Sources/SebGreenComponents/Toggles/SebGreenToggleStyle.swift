@@ -11,7 +11,7 @@ import SwiftUI
 public struct SebGreenToggleStyle: ToggleStyle {
 
     private let imageResource: ImageResource = ImageResource(name: "circle-check", bundle: .module)
-    private let activeColor: Color = Colors.Level.L3.Background.positive
+    private let activeColor: Color = .contentPositive01
     private let inactiveColor: Color = Color(.systemGray5)
     private let width: CGFloat = 51
     private let height: CGFloat = 31
@@ -24,7 +24,7 @@ public struct SebGreenToggleStyle: ToggleStyle {
         HStack {
             configuration.label
                 .typography(.headlineEmphasized)
-                .foregroundColor(Colors.Level.L2.Content.primary)
+                .foregroundColor(.content01)
 
             Spacer()
 
