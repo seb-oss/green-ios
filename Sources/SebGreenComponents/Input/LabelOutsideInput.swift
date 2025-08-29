@@ -123,7 +123,7 @@ private extension LabelOutsideInput {
             )
 //            .padding(.vertical, .spaceS)
             .foregroundStyle(
-                isValid ? Color.content02 : Color.contentNegative01
+                isValid ? Color.contentNeutral02 : Color.contentNegative01
             )
     }
 }
@@ -150,7 +150,7 @@ private extension LabelOutsideInput {
     }
     
     var labelColor: Color {
-        isValid || isFocused ? Color.content01 : Color.contentNegative01
+        isValid || isFocused ? Color.contentNeutral01 : Color.contentNegative01
     }
     
     var textfield: some View {
@@ -180,7 +180,7 @@ private extension LabelOutsideInput {
     }
     
     var textFieldForegroundColor: Color {
-        isValid || isFocused ? Color.content01 : Color.contentNegative01
+        isValid || isFocused ? Color.contentNeutral01 : Color.contentNegative01
     }
     
     var limitedTextBinding: Binding<String> {
@@ -216,7 +216,7 @@ private extension LabelOutsideInput {
         Button(action: clearInput) {
             Image(systemName: "xmark.circle.fill")
                 .typography(.headline)
-                .foregroundStyle(Color.content02)
+                .foregroundStyle(Color.contentNeutral02)
         }
     }
     
@@ -226,7 +226,7 @@ private extension LabelOutsideInput {
     
     var characterCountLabel: some View {
         Text(characterCountString)
-            .foregroundStyle(Color.content01)
+            .foregroundStyle(Color.contentNeutral01)
             .typography(.caption1)
     }
     
@@ -248,7 +248,7 @@ private extension LabelOutsideInput {
 private extension LabelOutsideInput {
     private func hintAccessoryView(with hintText: String) -> some View {
         Text(hintText)
-            .foregroundStyle(isValid ? Color.content02 : Color.contentNegative01)
+            .foregroundStyle(isValid ? Color.contentNeutral02 : Color.contentNegative01)
             .typography(.footnote)
             .padding(.top, .zero)
             .padding(.leading, .spaceM)
@@ -317,7 +317,7 @@ private extension LabelOutsideInput {
                     
                     Text(verbatim: "Tip: Tap any field to edit and see the floating label + clear button.")
                         .typography(.caption1)
-                        .foregroundStyle(Color.content02)
+                        .foregroundStyle(Color.contentNeutral02)
                 }
                 .padding(.horizontal, 8)
                 .padding(.vertical, 16)

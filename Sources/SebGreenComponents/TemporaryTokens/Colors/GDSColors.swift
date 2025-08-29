@@ -19,13 +19,26 @@ public extension Color {
     static let groupedBackgroundTertiary  = Color("GroupedBackgroundTertiary", bundle: .module)
 
     // Content
-    static let content01         = Color("Content01", bundle: .module)
-    static let content02         = Color("Content02", bundle: .module)
-    static let content03         = Color("Content03", bundle: .module)
-    static let content04         = Color("Content04", bundle: .module)
+    static let contentNeutral01         = Color("ContentNeutral01", bundle: .module)
+    static let contentNeutral02         = Color("ContentNeutral02", bundle: .module)
+    static let contentNeutral03         = Color("ContentNeutral03", bundle: .module)
+    static let contentNeutral04         = Color("ContentNeutral04", bundle: .module)
+    static let contentDisabled01 = Color("ContentDisabled01", bundle: .main)
     static let contentNegative01 = Color("ContentNegative01", bundle: .module)
     static let contentPositive01 = Color("ContentPositive01", bundle: .module)
     
     // L3
+    static let L3Brand01        = Color("L3/Brand-01", bundle: .module)
     static let L3Neutral01      = Color("L3/Neutral-01", bundle: .module)
+    static let L3Negative01     = Color("L3/Negative-01", bundle: .module)
+    static let L3Disabled03     = Color("L3/Disabled-03", bundle: .main)
+    
+    //State
+    static let StateBrand01      = Color("State/Brand-01", bundle: .module)
+    static let StateNeutral01    = Color("State/Neutral-01", bundle: .module)
+    static let StateNeutral05    = Color("State/Neutral-05", bundle: .module)
+    static let StateNegative01   = Color("State/Negative-01", bundle: .module)
+    
+    // Border
+    static let BorderSubtle01    = Color("Border/Subtle-01", bundle: .module)
 }

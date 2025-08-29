@@ -23,7 +23,7 @@ extension View {
             
             Text(subheadline)
                 .typography(.subhead)
-                .foregroundStyle(Color.content02)
+                .foregroundStyle(Color.contentNeutral02)
         }
     }
     

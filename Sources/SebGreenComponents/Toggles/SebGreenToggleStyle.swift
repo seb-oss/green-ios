@@ -24,7 +24,7 @@ public struct SebGreenToggleStyle: ToggleStyle {
         HStack {
             configuration.label
                 .typography(.headlineEmphasized)
-                .foregroundColor(.content01)
+                .foregroundColor(.contentNeutral01)
 
             Spacer()
 

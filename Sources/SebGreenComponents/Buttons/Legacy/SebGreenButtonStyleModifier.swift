@@ -24,11 +24,11 @@ public enum SebGreenButtonStyle {
     fileprivate var foregroundColor: Color {
         switch self {
         case .primary:
-                .content03
+                .contentNeutral03
         case .secondary:
-                .content01
+                .contentNeutral01
         case .tertiary:
-                .content02
+                .contentNeutral02
         }
     }
 
