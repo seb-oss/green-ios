@@ -18,15 +18,15 @@ public struct GreenButtonStyle: ButtonStyle {
             let bgColors = GreenButtonTokens.background(for: kind)
             let fgColors = GreenButtonTokens.foreground(for: kind)
             let border = GreenButtonTokens.border(for: kind)
-            let padd = GreenButtonTokens.paddings(for: size)
+            let padding = GreenButtonTokens.paddings(for: size)
             
             // pressed/disabled state derived colors
             let isPressed = configuration.isPressed
             let state = ButtonVisualState(isPressed: isPressed)
             
             configuration.label
-                .padding(.horizontal, padd.h)
-                .padding(.vertical, padd.v)
+                .padding(.horizontal, padding.h)
+                .padding(.vertical, padding.v)
                 .frame(minHeight: minH)
                 .contentShape(Rectangle())
                 .background(
