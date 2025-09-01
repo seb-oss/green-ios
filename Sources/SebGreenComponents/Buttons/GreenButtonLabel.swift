@@ -27,7 +27,14 @@ struct GreenButtonLabel: View {
         }
     }
     
-    var spacing: CGFloat { switch size { case .xLarge: return 12; case .large: return 10; case .medium: return 8; case .small: return 6 } }
+    var spacing: CGFloat {
+        switch size {
+        case .xLarge: return .spaceXs
+        case .large: return .spaceXs
+        case .medium: return .spaceXs
+        case .small: return .space2xs
+        }
+    }
     
     var body: some View {
         HStack(spacing: spacing) {
