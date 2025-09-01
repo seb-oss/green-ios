@@ -34,7 +34,10 @@ public struct GreenButtonStyle: ButtonStyle {
                         .fill(bgColors.color(for: state))
                         .overlay(content: {
                             if isPressed {
-                                GreenButtonTokens.pressedOverlay(for: kind)
+                                RoundedRectangle(cornerRadius: corner)
+                                    .fill(
+                                        GreenButtonTokens.pressedOverlay(for: kind)
+                                    )
                             }
                         })
                 )
