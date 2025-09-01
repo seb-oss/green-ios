@@ -43,12 +43,12 @@ enum GreenButtonTokens {
         }
     }
     
-    static func font(for size: GreenButton.Size) -> Font {
+    static func typography(for size: GreenButton.Size) -> Typography {
         switch size {
-        case .xLarge: return .system(.headline, design: .default)
-        case .large: return .system(.callout, design: .default)
-        case .medium: return .system(.subheadline, design: .default)
-        case .small: return .system(.footnote, design: .default)
+        case .xLarge, .large, .medium:
+            return .headlineEmphasized
+        case .small:
+            return .subheadEmphasized
         }
     }
     
