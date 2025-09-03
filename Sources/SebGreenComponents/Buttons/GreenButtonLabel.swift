@@ -13,6 +13,8 @@ struct GreenButtonLabel: View {
     let iconPosition: GreenButton.IconPosition
     let size: GreenButton.Size
     
+    
+    // TODO: Icons should only scale upto XXXL and stops larger than that.
     @ScaledMetric(relativeTo: .body) private var iconXL: CGFloat = 24
     @ScaledMetric(relativeTo: .body) private var iconL: CGFloat = 24
     @ScaledMetric(relativeTo: .body) private var iconM: CGFloat = 20
