@@ -36,10 +36,10 @@ enum GreenButtonTokens {
     // Heights
     static func minHeight(for size: GreenButton.Size) -> CGFloat {
         switch size {
-        case .xLarge: return 52
-        case .large: return 44
-        case .medium: return 36
-        case .small: return 28
+        case .xLarge: return 56
+        case .large: return 48
+        case .medium: return 40
+        case .small: return 32
         }
     }
     
