@@ -64,60 +64,67 @@ public struct GreenButton: View {
 // MARK: - Previews
 
 struct GreenButton_Previews: PreviewProvider {
+    static let arrangement: Arrangement = .vertically
+    
     static var previews: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 24) {
                 ForEach([GreenButton.Kind.brand, .primary, .secondary, .tertiary, .outline, .negative], id: \.self) { kind in
-                    VStack(alignment: .leading, spacing: 12) {
+                    VStack(alignment: .center, spacing: 12) {
                         Text("\(kind.rawValue.capitalized) — Sizes")
                             .font(.headline)
                             .foregroundStyle(.secondary)
                         
                         // Row: text only
-                        HStack(spacing: 12) {
-                            GreenButton(title: "Label", kind: kind, size: .xLarge, action: {})
-                            GreenButton(title: "Label", kind: kind, size: .large, action: {})
-                            GreenButton(title: "Label", kind: kind, size: .medium, action: {})
+                        Text("Text only")
+                        [
+                            GreenButton(title: "Label", kind: kind, size: .xLarge, action: {}),
+                            GreenButton(title: "Label", kind: kind, size: .large, action: {}),
+                            GreenButton(title: "Label", kind: kind, size: .medium, action: {}),
                             GreenButton(title: "Label", kind: kind, size: .small, action: {})
-                        }
+                        ].stack(arrangement: arrangement)
                         
                         // Row: text + leading icon
-                        HStack(spacing: 12) {
-                            GreenButton(title: "Label", kind: kind, size: .xLarge, icon: Image(systemName: "arrow.right"), iconPosition: .leading, action: {})
-                            GreenButton(title: "Label", kind: kind, size: .large, icon: Image(systemName: "arrow.right"), iconPosition: .leading, action: {})
-                            GreenButton(title: "Label", kind: kind, size: .medium, icon: Image(systemName: "arrow.right"), iconPosition: .leading, action: {})
+                        Text("Text + leading icon")
+                        [
+                            GreenButton(title: "Label", kind: kind, size: .xLarge, icon: Image(systemName: "arrow.right"), iconPosition: .leading, action: {}),
+                            GreenButton(title: "Label", kind: kind, size: .large, icon: Image(systemName: "arrow.right"), iconPosition: .leading, action: {}),
+                            GreenButton(title: "Label", kind: kind, size: .medium, icon: Image(systemName: "arrow.right"), iconPosition: .leading, action: {}),
                             GreenButton(title: "Label", kind: kind, size: .small, icon: Image(systemName: "arrow.right"), iconPosition: .leading, action: {})
-                        }
+                        ].stack(arrangement: arrangement)
                         
                         // Row: text + trailing icon
-                        HStack(spacing: 12) {
-                            GreenButton(title: "Label", kind: kind, size: .xLarge, icon: Image(systemName: "arrow.right"), iconPosition: .trailing, action: {})
-                            GreenButton(title: "Label", kind: kind, size: .large, icon: Image(systemName: "arrow.right"), iconPosition: .trailing, action: {})
-                            GreenButton(title: "Label", kind: kind, size: .medium, icon: Image(systemName: "arrow.right"), iconPosition: .trailing, action: {})
+                        Text("Text + trailing icon")
+                        [
+                            GreenButton(title: "Label", kind: kind, size: .xLarge, icon: Image(systemName: "arrow.right"), iconPosition: .trailing, action: {}),
+                            GreenButton(title: "Label", kind: kind, size: .large, icon: Image(systemName: "arrow.right"), iconPosition: .trailing, action: {}),
+                            GreenButton(title: "Label", kind: kind, size: .medium, icon: Image(systemName: "arrow.right"), iconPosition: .trailing, action: {}),
                             GreenButton(title: "Label", kind: kind, size: .small, icon: Image(systemName: "arrow.right"), iconPosition: .trailing, action: {})
-                        }
+                        ].stack(arrangement: arrangement)
                         
                         // Row: icon only
-                        HStack(spacing: 12) {
+                        Text("Icon only")
+                        [
                             GreenButton(title: nil, kind: kind, size: .xLarge, icon: Image(systemName: "arrow.right"), action: {})
-                                .accessibilityLabel("Next")
+                                .accessibilityLabel("Next"),
                             GreenButton(title: nil, kind: kind, size: .large, icon: Image(systemName: "arrow.right"), action: {})
-                                .accessibilityLabel("Next")
+                                .accessibilityLabel("Next"),
                             GreenButton(title: nil, kind: kind, size: .medium, icon: Image(systemName: "arrow.right"), action: {})
-                                .accessibilityLabel("Next")
+                                .accessibilityLabel("Next"),
                             GreenButton(title: nil, kind: kind, size: .small, icon: Image(systemName: "arrow.right"), action: {})
                                 .accessibilityLabel("Next")
-                        }
+                        ].stack(arrangement: arrangement)
                         
                         // Disabled row
-                        HStack(spacing: 12) {
+                        Text("Disabled")
+                        [
                             GreenButton(title: "Label", kind: kind, size: .medium, action: {})
-                                .disabled(true)
+                                .disabled(true),
                             GreenButton(title: "Label", kind: kind, size: .medium, icon: Image(systemName: "arrow.right"), iconPosition: .trailing, action: {})
-                                .disabled(true)
+                                .disabled(true),
                             GreenButton(title: nil, kind: kind, size: .medium, icon: Image(systemName: "arrow.right"), action: {})
                                 .disabled(true)
-                        }
+                        ].stack(arrangement: arrangement)
                     }
                 }
                 
@@ -126,7 +133,7 @@ struct GreenButton_Previews: PreviewProvider {
                     .font(.headline)
                     .foregroundStyle(.secondary)
                 VStack(alignment: .leading, spacing: 12) {
-                    GreenButton(title: "A very long label that will wrap onto the next line when width is narrow", kind: .primary, size: .large, icon: Image(systemName: "arrow.right"), iconPosition: .trailing, action: {})
+                    GreenButton(title: "A very \nlong label that will wrap onto the next line when width is narrow", kind: .primary, size: .large, icon: Image(systemName: "arrow.right"), iconPosition: .trailing, action: {})
                         .frame(width: 220)
                     GreenButton(title: "Icon-only long demo is irrelevant", kind: .outline, size: .large, icon: Image(systemName: "star.fill"), action: {})
                         .frame(width: 140)
@@ -135,5 +142,34 @@ struct GreenButton_Previews: PreviewProvider {
             .padding(20)
         }
         .previewLayout(.sizeThatFits)
+    }
+}
+
+enum Arrangement {
+    case horizontally
+    case vertically
+}
+
+extension Array where Element: View {
+    @ViewBuilder
+    func stack(
+        _ alignment: Alignment = .center,
+        spacing: CGFloat = .spaceXs,
+        arrangement: Arrangement = .horizontally
+    ) -> some View {
+        switch arrangement {
+        case .horizontally:
+            HStack(alignment: alignment.vertical, spacing: spacing) {
+                ForEach(indices, id: \.self) { i in
+                    self[i]
+                }
+            }
+        case .vertically:
+            VStack(alignment: alignment.horizontal, spacing: spacing) {
+                ForEach(indices, id: \.self) { i in
+                    self[i]
+                }
+            }
+        }
     }
 }
