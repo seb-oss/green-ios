@@ -151,7 +151,7 @@ private extension FloatingLabelInput {
     
     var textEditor: some View {
         TextEditor(text: limitedTextBinding)
-            .scrollContentBackground(.hidden)
+//            .scrollContentBackground(.hidden)
             .background(Color.clear)
             .focused($isFocused)
             .typography(.headlineEmphasized)
