@@ -85,6 +85,7 @@ public extension SebGreenButton {
     }
 }
 
+#if DEBUG
 #Preview {
     ScrollView {
         VStack {
@@ -118,3 +119,4 @@ public extension SebGreenButton {
         .previewByRegisteringFonts()
     }
 }
+#endif
