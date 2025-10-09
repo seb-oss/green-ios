@@ -14,7 +14,7 @@ let package = Package(
         ),
     ],
     dependencies: [
-//        .package(url: "https://github.com/seb-oss/green-tokens-ios", .upToNextMajor(from: "0.10.3"))
+        .package(url: "https://github.com/seb-oss/green-tokens-ios", exact: "0.0.1")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -22,7 +22,7 @@ let package = Package(
         .target(
             name: "SebGreenComponents",
             dependencies: [
-//                .product(name: "GreenTokens", package: "green-tokens-ios"),
+                .product(name: "GdsKit", package: "green-tokens-ios"),
             ],
             resources: [.process("Resources")]
         ),
