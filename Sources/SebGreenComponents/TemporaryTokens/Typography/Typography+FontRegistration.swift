@@ -30,31 +30,31 @@ extension Typography {
 }
 
 #if DEBUG
-import SwiftUI
-
-/// Registers SebGreen fonts exactly once for SwiftUI previews.
-private enum _PreviewFontRegistrar {
-    static var didRegister = false
-    static func registerIfNeeded() {
-        guard !didRegister else { return }
-        Typography.registerFonts()
-        didRegister = true
-    }
-}
-
-public extension View {
-    /// Call this in your `#Preview` or `PreviewProvider` to ensure package fonts are available.
-    ///
-    /// Example:
-    /// ```swift
-    /// #Preview {
-    ///     MyComponent()
-    ///         .sebRegisterFontsForPreview()
-    /// }
-    /// ```
-    func previewByRegisteringFonts() -> some View {
-        _PreviewFontRegistrar.registerIfNeeded()
-        return self
-    }
-}
+//import SwiftUI
+//
+///// Registers SebGreen fonts exactly once for SwiftUI previews.
+//private enum _PreviewFontRegistrar {
+//    static var didRegister = false
+//    static func registerIfNeeded() {
+//        guard !didRegister else { return }
+//        Typography.registerFonts()
+//        didRegister = true
+//    }
+//}
+//
+//public extension View {
+//    /// Call this in your `#Preview` or `PreviewProvider` to ensure package fonts are available.
+//    ///
+//    /// Example:
+//    /// ```swift
+//    /// #Preview {
+//    ///     MyComponent()
+//    ///         .sebRegisterFontsForPreview()
+//    /// }
+//    /// ```
+//    func previewByRegisteringFonts() -> some View {
+//        _PreviewFontRegistrar.registerIfNeeded()
+//        return self
+//    }
+//}
 #endif
