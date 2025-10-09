@@ -3,6 +3,7 @@
 //  SebGreenComponents
 //
 import SwiftUI
+import GdsKit
 
 public struct SebGreenButton: View {
     
