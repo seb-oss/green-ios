@@ -7,14 +7,14 @@ public struct FloatingLabelInput: View {
     
     @State private var isEditing: Bool = false
     @FocusState private var isFocused: Bool
-    
-    @State var isValid: Bool
-    
+
+    @Binding var isValid: Bool
+
     let characterLimit: Int?
     let supportingText: String?
     let errorText: String?
     let isMultiline: Bool
-    
+    let notificationCenter: NotificationCenter
     /// - Parameters:
     ///   - text: Binding to the text content.
     ///   - placeholder: The placeholder string shown when empty and not focused.
@@ -25,18 +25,20 @@ public struct FloatingLabelInput: View {
         characterLimit: Int? = nil,
         supportingText: String? = nil,
         errorText: String? = nil,
-        isValid: Bool = true,
-        isMultiline: Bool = false
+        isValid: Binding<Bool>,
+        isMultiline: Bool = false,
+        notificationCenter: NotificationCenter = .default
     ) {
         self._text = text
         self.placeholder = placeholder
         self.characterLimit = characterLimit
         self.supportingText = supportingText
         self.errorText = errorText
-        self.isValid = isValid
+        self._isValid = isValid
         self.isMultiline = isMultiline
+        self.notificationCenter = notificationCenter
     }
-    
+
     public var body: some View {
         VStack(alignment: .leading, spacing: .zero) {
             inputField
@@ -60,7 +62,7 @@ private extension FloatingLabelInput {
     var inputField: some View {
         ZStack(alignment: .leading) {
             background
-            
+
             HStack(spacing: .zero) {
                 labeledInput
                 Spacer(minLength: 0)
@@ -70,7 +72,7 @@ private extension FloatingLabelInput {
             .padding(.vertical, .spaceS)
         }
     }
-    
+
     var hasContent: Bool {
         text != ""
     }
@@ -112,13 +114,13 @@ private extension FloatingLabelInput {
 // MARK: - Editing state
 
 private extension FloatingLabelInput {
-    
+
     // MARK: Labeled text field
-    
+
     var labeledTextFieldStack: some View {
         VStack(alignment: .leading, spacing: .zero) {
             label
-            
+
             if isMultiline {
                 textEditor
             } else {
@@ -126,76 +128,73 @@ private extension FloatingLabelInput {
             }
         }
     }
-    
+
     var label: some View {
         Text(placeholder)
             .foregroundStyle(labelColor)
             .typography(.subhead)
     }
-    
+
     var labelColor: Color {
         isValid || isFocused ? Color.contentNeutral02 : Color.contentNegative01
     }
-    
+
     var textfield: some View {
-        TextField("", text: limitedTextBinding)
+        TextField("", text: $text)
             .focused($isFocused)
             .typography(.headlineEmphasized)
             .foregroundStyle(textFieldForegroundColor)
+            .onReceive(textDidChange) { notification in
+                textChangeNotifationReceived(notification)
+            }
             .onAppear {
                 DispatchQueue.main.async {
                     isFocused = !hasContent
                 }
             }
     }
-    
+
     var textEditor: some View {
-        TextEditor(text: limitedTextBinding)
-//            .scrollContentBackground(.hidden)
+        TextEditor(text: $text)
+        //            .scrollContentBackground(.hidden)
             .background(Color.clear)
             .focused($isFocused)
             .typography(.headlineEmphasized)
             .foregroundStyle(textFieldForegroundColor)
+            .onReceive(textDidChange) { notification in
+                textChangeNotifationReceived(notification)
+            }
             .onAppear {
                 DispatchQueue.main.async {
                     isFocused = !hasContent
                 }
             }
     }
-    
+
     var textFieldForegroundColor: Color {
         isValid || isFocused ? Color.contentNeutral01 : Color.contentNegative01
     }
-    
-    var limitedTextBinding: Binding<String> {
-        Binding(
-            get: { text },
-            set: { newValue in
-                if let limit = characterLimit, newValue.count > limit {
-                    text = String(newValue.prefix(limit))
-                } else {
-                    text = newValue
-                }
-            }
-        )
+
+    var textDidChange: NotificationCenter.Publisher {
+        NotificationCenter.default.publisher(for: UITextField.textDidChangeNotification)
     }
-    
+
     // MARK: Accessory elements
-    
+
     var accessoryStack: some View {
-        VStack(alignment: .trailing ,spacing: .zero) {
+        VStack(alignment: .trailing, spacing: .zero) {
             if isFocused {
                 if characterLimit != nil {
                     characterCountLabel
                 }
-                
+
                 clearButton
             } else if !isValid {
                 errorIcon
             }
         }
     }
-    
+
     var clearButton: some View {
         Button(action: clearInput) {
             Image(systemName: "xmark.circle.fill")
@@ -203,28 +202,33 @@ private extension FloatingLabelInput {
                 .foregroundStyle(Color.contentNeutral02)
         }
     }
-    
+
     func clearInput() {
         text = ""
     }
-    
+
     var characterCountLabel: some View {
         Text(characterCountString)
             .foregroundStyle(Color.contentNeutral01)
             .typography(.caption1)
     }
-    
+
     var characterCountString: String {
         guard let characterLimit else {
             return ""
         }
-        
+
         return "\(text.count)/\(characterLimit)"
     }
-    
+
     var errorIcon: some View {
         Image(systemName: "exclamationmark.square.fill")
             .foregroundStyle(Color.contentNegative01)
+    }
+
+    private func textChangeNotifationReceived(_ notification: Notification) {
+        guard isFocused, let textField = notification.object as? UITextField, textField.isFirstResponder else { return }
+        textField.text = text
     }
 }
 
@@ -237,7 +241,7 @@ private extension FloatingLabelInput {
             .padding(.top, .spaceXs)
             .padding(.leading, .spaceM)
     }
-    
+
     private var hintText: String {
         if isValid {
             return supportingText ?? ""
@@ -253,45 +257,46 @@ struct DummyForm: View {
     @State private var textCounter = ""
     @State private var textPrefilled = "Content shared"
     @State private var textNearLimit = "1234567890" // 9/10
-    
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: .spaceM) {
                 FloatingLabelInput(
                     text: $textDefault,
                     placeholder: "Longer Label for accessbility",
+                    isValid: .constant(true),
                     isMultiline: true
                 )
-                
-                
+
                 FloatingLabelInput(
                     text: $textSupport,
                     placeholder: "Label",
-                    supportingText: "Support text for input"
+                    supportingText: "Support text for input",
+                    isValid: .constant(true),
                 )
-                
-                
-                
+
                 FloatingLabelInput(
                     text: $textCounter,
                     placeholder: "Label",
                     characterLimit: 10,
-                    isValid: false
+                    isValid: .constant(true)
                 )
-                
+
                 FloatingLabelInput(
                     text: $textPrefilled,
                     placeholder: "Label",
-                    characterLimit: 50
+                    characterLimit: 50,
+                    isValid: .constant(true)
                 )
                 
+
                 FloatingLabelInput(
                     text: $textNearLimit,
                     placeholder: "Label",
                     characterLimit: 10,
                     supportingText: "Keep it short",
                     errorText: "Character limit reached",
-                    isValid: false
+                    isValid: .constant(true)
                 )
                 
                 Text(verbatim: "Tip: Tap any field to edit and see the floating label + clear button.")
