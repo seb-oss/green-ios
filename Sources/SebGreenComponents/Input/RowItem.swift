@@ -21,7 +21,7 @@ extension View {
             self
             
             Text(subheadline)
-                .typography(.subhead)
+                .typography(.detailRegularS)
                 .foregroundStyle(Color.contentNeutral02)
         }
     }

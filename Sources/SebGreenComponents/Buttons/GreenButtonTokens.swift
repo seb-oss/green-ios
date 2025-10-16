@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import GdsKit
 
 struct ButtonVisualState {
     let isPressed: Bool
@@ -46,9 +47,9 @@ enum GreenButtonTokens {
     static func typography(for size: GreenButton.Size) -> Typography {
         switch size {
         case .xLarge, .large, .medium:
-            return .headlineEmphasized
+            return .detailBookM
         case .small:
-            return .subheadEmphasized
+            return .detailBookS
         }
     }
     

@@ -23,7 +23,7 @@ public struct SebGreenToggleStyle: ToggleStyle {
     public func makeBody(configuration: Configuration) -> some View {
         HStack {
             configuration.label
-                .typography(.headlineEmphasized)
+                .typography(.detailBookM)
                 .foregroundColor(.contentNeutral01)
 
             Spacer()

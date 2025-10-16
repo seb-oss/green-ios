@@ -46,7 +46,7 @@ public struct SebGreenButton: View {
                 }
                 if let titleKey {
                     Text(titleKey)
-                        .typography(.headlineEmphasized)
+                        .typography(.detailBookM)
                 }
             }
         }
