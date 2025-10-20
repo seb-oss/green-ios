@@ -121,7 +121,6 @@ private extension LabelOutsideInput {
                 isValid ? .headline :
                 .headlineEmphasized
             )
-//            .padding(.vertical, .spaceS)
             .foregroundStyle(
                 isValid ? Color.contentNeutral02 : Color.contentNegative01
             )

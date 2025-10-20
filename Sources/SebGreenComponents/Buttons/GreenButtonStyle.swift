@@ -13,7 +13,7 @@ struct GreenButtonStyle: ButtonStyle {
     let size: GreenButton.Size
     
     public func makeBody(configuration: Configuration) -> some View {
-        GeometryReader { proxy in // TODO: - Check if this can be achieved with ScaledMetrics
+        GeometryReader { proxy in // TODO: - SEB-29415: Check if this can be achieved with ScaledMetrics
             let minH = GreenButtonTokens.minHeight(for: size)
             let corner = GreenButtonTokens.cornerRadius(forHeight: minH)
             let bgColors = GreenButtonTokens.background(for: kind)
