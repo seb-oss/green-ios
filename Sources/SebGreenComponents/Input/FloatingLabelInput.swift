@@ -8,7 +8,7 @@ public struct FloatingLabelInput: View {
     @State private var isEditing: Bool = false
     @FocusState private var isFocused: Bool
 
-    @Binding var isValid: Bool
+    var isValid: Bool
 
     let characterLimit: Int?
     let supportingText: String?
@@ -25,7 +25,7 @@ public struct FloatingLabelInput: View {
         characterLimit: Int? = nil,
         supportingText: String? = nil,
         errorText: String? = nil,
-        isValid: Binding<Bool>,
+        isValid: Bool,
         isMultiline: Bool = false,
         notificationCenter: NotificationCenter = .default
     ) {
@@ -34,7 +34,7 @@ public struct FloatingLabelInput: View {
         self.characterLimit = characterLimit
         self.supportingText = supportingText
         self.errorText = errorText
-        self._isValid = isValid
+        self.isValid = isValid
         self.isMultiline = isMultiline
         self.notificationCenter = notificationCenter
     }
@@ -263,7 +263,7 @@ struct DummyForm: View {
                 FloatingLabelInput(
                     text: $textDefault,
                     placeholder: "Longer Label for accessbility",
-                    isValid: .constant(true),
+                    isValid: true,
                     isMultiline: true
                 )
 
@@ -271,21 +271,21 @@ struct DummyForm: View {
                     text: $textSupport,
                     placeholder: "Label",
                     supportingText: "Support text for input",
-                    isValid: .constant(true),
+                    isValid: true,
                 )
 
                 FloatingLabelInput(
                     text: $textCounter,
                     placeholder: "Label",
                     characterLimit: 10,
-                    isValid: .constant(true)
+                    isValid: true
                 )
 
                 FloatingLabelInput(
                     text: $textPrefilled,
                     placeholder: "Label",
                     characterLimit: 50,
-                    isValid: .constant(true)
+                    isValid: true
                 )
                 
 
@@ -295,7 +295,7 @@ struct DummyForm: View {
                     characterLimit: 10,
                     supportingText: "Keep it short",
                     errorText: "Character limit reached",
-                    isValid: .constant(true)
+                    isValid: true
                 )
                 
                 Text(verbatim: "Tip: Tap any field to edit and see the floating label + clear button.")
