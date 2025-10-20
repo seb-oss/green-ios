@@ -18,7 +18,7 @@ public struct FloatingLabelInput: View {
     /// - Parameters:
     ///   - text: Binding to the text content.
     ///   - placeholder: The placeholder string shown when empty and not focused.
-    ///   - characterLimit: Limit for characteres that the input field enforces.
+    ///   - characterLimit: Limit for characters that the input field enforces.
     public init(
         text: Binding<String>,
         placeholder: String,
