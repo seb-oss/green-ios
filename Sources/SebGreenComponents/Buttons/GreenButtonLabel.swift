@@ -1,0 +1,68 @@
+//
+//  GreenButtonLabel.swift
+//  SebGreenComponents
+//
+//  Created by Mayur Deshmukh on 2025-08-28.
+//
+
+import SwiftUI
+
+struct GreenButtonLabel: View {
+    let title: String?
+    let icon: Image?
+    let iconPosition: GreenButton.IconPosition
+    let size: GreenButton.Size
+    
+    
+    // TODO: Icons should only scale upto XXXL and stops larger than that.
+    @ScaledMetric(relativeTo: .body) private var iconXL: CGFloat = 24
+    @ScaledMetric(relativeTo: .body) private var iconL: CGFloat = 24
+    @ScaledMetric(relativeTo: .body) private var iconM: CGFloat = 20
+    @ScaledMetric(relativeTo: .body) private var iconS: CGFloat = 16
+    
+    var iconSize: CGFloat {
+        switch size {
+        case .xLarge: return iconXL
+        case .large: return iconL
+        case .medium: return iconM
+        case .small: return iconS
+        }
+    }
+    
+    var spacing: CGFloat {
+        switch size {
+        case .xLarge: return .spaceXs
+        case .large: return .spaceXs
+        case .medium: return .spaceXs
+        case .small: return .space2xs
+        }
+    }
+    
+    var body: some View {
+        HStack(spacing: spacing) {
+            if icon != nil && iconPosition == .leading {
+                iconView
+            }
+            
+            if let title {
+                Text(title)
+                    .typography(GreenButtonTokens.typography(for: size))
+                    .lineLimit(nil)
+                    .multilineTextAlignment(.leading) // left aligned when it wraps
+            }
+            
+            if icon != nil && iconPosition == .trailing {
+                iconView
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .center) // center the stack horizontally
+    }
+    
+    private var iconView: some View {
+        icon!
+            .resizable()
+            .scaledToFit()
+            .frame(width: iconSize, height: iconSize)
+            .accessibility(hidden: title != nil) // for icon-only we’ll expose label on Button
+    }
+}

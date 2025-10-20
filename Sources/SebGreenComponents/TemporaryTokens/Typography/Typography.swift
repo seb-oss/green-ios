@@ -1,83 +1,95 @@
 //
-//  Typography.swift
-//  SebGreen
+//  TypographyStyle.swift
+//  SebGreenComponents
+//
+//  Created by Mayur Deshmukh on 2025-08-18.
 //
 
-import Foundation
+
+import SwiftUI
 import UIKit
 
-public class Typography {
+// MARK: - Typography
 
-    public enum Weight: CaseIterable {
-        case light
-        case regular
-        case book
-        case medium
-        case bold
-
-        var fontName: String {
-            switch self {
-            case .light:
-                return "SEBSansSerifGDS-Light"
-            case .regular:
-                return "SEBSansSerifGDS-Regular"
-            case .book:
-                return "SEBSansSerifGDS-Book"
-            case .medium:
-                return "SEBSansSerifGDS-Medium"
-            case .bold:
-                return "SEBSansSerifGDS-Bold"
-            }
-        }
-    }
-
-    public struct Size {
-        public let headingXl: CGFloat = 32
-        public let headingL: CGFloat = 28
-        public let headingM: CGFloat = 24
-        public let headingS: CGFloat = 20
-        public let headingXs: CGFloat = 16
-        public let heading2Xs: CGFloat = 14
-        public let heading2Xl: CGFloat = 14
-        public let detailM: CGFloat = 16
-        public let detailS: CGFloat = 14
-        public let detailXs: CGFloat = 12
-        public let bodyL: CGFloat = 20
-        public let bodyM: CGFloat = 16
-        public let bodyS: CGFloat = 14
-        public let display2Xl: CGFloat = 82
-        public let displayXl: CGFloat = 64
-        public let displayL: CGFloat = 48
-        public let displayM: CGFloat = 36
-        public let displayS: CGFloat = 32
-        public let preamble2Xl: CGFloat = 32
-        public let preambleXl: CGFloat = 28
-        public let preambleL: CGFloat = 24
-        public let preambleM: CGFloat = 20
-        public let preambleS: CGFloat = 18
-        public let preambleXs: CGFloat = 16
-    }
-
-    static func registerFonts() {
-        for weight in Weight.allCases {
-            Typography.registerFont(named: weight.fontName)
-        }
-    }
+public enum Typography {
+    case largeTitle
+    case title1
+    case title2
+    case title3
+    case headline
+    case headlineEmphasized
+    case body
+    case callout
+    case subhead
+    case subheadEmphasized
+    case footnote
+    case caption1
+    case caption2
+    case caption2Emphasized
 }
 
-private extension Typography {
+extension Typography {
+  /// Base (Large) sizes from Apple’s table
+  var size: CGFloat {
+    switch self {
+    case .largeTitle:               34
+    case .title1:                   28
+    case .title2:                   22
+    case .title3:                   20
+    case .headline:                 17
+    case .headlineEmphasized:       17
+    case .body:                     17
+    case .callout:                  16
+    case .subhead:                  15
+    case .subheadEmphasized:        15
+    case .footnote:                 13
+    case .caption1:                 12
+    case .caption2:                 11
+    case .caption2Emphasized:       11
+    }
+  }
 
-    static func registerFont(named name: String) {
-       guard
-        let asset = NSDataAsset(name: "Fonts/\(name)", bundle: Bundle.module),
-        let provider = CGDataProvider(data: asset.data as NSData),
-        let font = CGFont(provider),
-        CTFontManagerRegisterGraphicsFont(font, nil)
-        else {
-           let message = "Failed to register font \(name)"
-           assertionFailure(message)
-           print(message)
-           return
-       }
+  /// Map to a TextStyle so UIFontMetrics can scale with Dynamic Type.
+  var textStyle: Font.TextStyle {
+    switch self {
+    case .largeTitle:               .largeTitle
+    case .title1:                   .title
+    case .title2:                   .title2
+    case .title3:                   .title3
+    case .headline:                 .headline
+    case .headlineEmphasized:       .headline
+    case .body:                     .body
+    case .callout:                  .callout
+    case .subhead:                  .subheadline
+    case .subheadEmphasized:        .subheadline
+    case .footnote:                 .footnote
+    case .caption1:                 .caption
+    case .caption2:                 .caption2
+    case .caption2Emphasized:       .caption2
+    }
+  }
+
+  var weight: Typography.Weight {
+    switch self {
+    case .title2, .title3, .headlineEmphasized, .subheadEmphasized, .caption2Emphasized:
+            return .book
+    case .largeTitle, .title1, .headline, .body, .callout, .subhead, .footnote, .caption1, .caption2:
+            return .regular
+    }
+  }
+}
+
+extension Typography: CaseIterable {}
+
+#if DEBUG
+#Preview {
+    ScrollView {
+        ForEach(Typography.allCases, id: \.self) {
+            Text("\($0)")
+                .typography($0)
+                .padding(.bottom, 4)
+        }
+        .previewByRegisteringFonts()
     }
 }
+#endif
