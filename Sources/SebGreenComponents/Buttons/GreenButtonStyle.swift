@@ -7,7 +7,8 @@
 
 import SwiftUI
 
-public struct GreenButtonStyle: ButtonStyle {
+// Should this be public?
+struct GreenButtonStyle: ButtonStyle {
     let kind: GreenButton.Kind
     let size: GreenButton.Size
     

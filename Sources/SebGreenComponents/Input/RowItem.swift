@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SwiftUICore
 
 extension View {
     public func icon(_ icon: Image) -> some View {

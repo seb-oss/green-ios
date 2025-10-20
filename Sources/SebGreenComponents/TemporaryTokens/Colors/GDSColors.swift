@@ -1,5 +1,7 @@
 import SwiftUI
 
+// Delete these
+
 public extension Color {
     // Backgrounds
     static let backgroundPrimary   = Color("BackgroundPrimary", bundle: .module)
