@@ -13,9 +13,9 @@ public enum SebGreenButtonStyle {
     fileprivate var backgroundColor: Color {
         switch self {
         case .primary:
-                .L3Neutral01
+                .l3Neutral01
         case .secondary:
-                .backgroundSecondary
+                .l2Neutral01
         case .tertiary:
             Color.clear
         }

@@ -69,49 +69,49 @@ enum GreenButtonTokens {
         switch kind {
         case .brand:
             return StateColors(
-                normal: .L3Brand01,
-                pressed: .L3Brand01,
-                disabled: .L3Disabled03
+                normal: .l3Brand01,
+                pressed: .l3Brand01,
+                disabled: .l3Disabled03
             )
         case .primary:
             return StateColors(
-                normal: .L3Neutral01,
-                pressed: .L3Neutral01,
-                disabled: .L3Disabled03
+                normal: .l3Neutral01,
+                pressed: .l3Neutral01,
+                disabled: .l3Disabled03
             )
         case .secondary:
             return StateColors(
-                normal: .groupedBackgroundTertiary,
-                pressed: .groupedBackgroundTertiary,
-                disabled: .L3Disabled03
+                normal: .l3Elevated02,
+                pressed: .l3Elevated02,
+                disabled: .l3Disabled03
             )
         case .tertiary:
             return StateColors(
                 normal: .clear,
                 pressed: .clear,
-                disabled: .L3Disabled03
+                disabled: .l3Disabled03
             )
         case .outline:
             return StateColors(
                 normal: .clear,
                 pressed: .clear,
-                disabled: .L3Disabled03
+                disabled: .l3Disabled03
             )
         case .negative:
             return StateColors(
-                normal: .L3Negative01,
-                pressed: .L3Negative01,
-                disabled: .L3Disabled03
+                normal: .l3Negative01,
+                pressed: .l3Negative01,
+                disabled: .l3Disabled03
             )
         }
     }
     
     static func pressedOverlay(for kind: GreenButton.Kind) -> Color {
         switch kind {
-        case .brand: return .StateBrand01
-        case .primary, .secondary: return .StateNeutral01
-        case .tertiary, .outline: return .StateNeutral05
-        case .negative: return .StateNegative01
+        case .brand: return .stateBrand01
+        case .primary, .secondary: return .stateNeutral01
+        case .tertiary, .outline: return .stateNeutral05
+        case .negative: return .stateNegative01
         }
     }
     
@@ -142,8 +142,8 @@ enum GreenButtonTokens {
         switch kind {
         case .outline:
             return StateBorder(
-                normal: .BorderSubtle01,
-                pressed: .BorderSubtle01,
+                normal: .borderSubtle01,
+                pressed: .borderSubtle01,
                 disabled: .clear,
                 width: 1
             )

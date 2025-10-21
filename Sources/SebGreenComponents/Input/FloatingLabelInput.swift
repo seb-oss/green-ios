@@ -82,7 +82,7 @@ private extension FloatingLabelInput {
 
 private extension FloatingLabelInput {
     var background: some View {
-        Color.groupedBackgroundSecondary
+        Color.l2Elevated01
             .cornerRadius(.spaceS)
     }
 }
@@ -305,13 +305,13 @@ struct DummyForm: View {
             .padding(.horizontal, 8)
             .padding(.vertical, 16)
         }
-        .background(Color.groupedBackgroundPrimary)
+        .background(Color.l2Elevated01)
     }
 }
 
 struct FloatingLabelInput_Previews: PreviewProvider {
     static var previews: some View {
         DummyForm()
-            .background(Color.groupedBackgroundPrimary)
+            .background(Color.l2Elevated01)
     }
 }

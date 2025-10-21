@@ -1,4 +1,5 @@
 import SwiftUI
+import GdsKit
 
 /// A text input with a floating placeholder that animates into a label inside the box when editing or when text is present.
 public struct LabelOutsideInput: View {
@@ -94,7 +95,7 @@ private extension LabelOutsideInput {
 
 private extension LabelOutsideInput {
     var background: some View {
-        Color.groupedBackgroundSecondary
+        Color.l2Elevated01
             .cornerRadius(.spaceS)
     }
 }
@@ -321,7 +322,7 @@ private extension LabelOutsideInput {
                 .padding(.horizontal, 8)
                 .padding(.vertical, 16)
             }
-            .background(Color.groupedBackgroundPrimary)
+            .background(Color.l2Elevated01)
         }
     }
 }
@@ -329,6 +330,6 @@ private extension LabelOutsideInput {
 struct LabelOutsideInput_Previews: PreviewProvider {
     static var previews: some View {
         LabelOutsideInput.DummyForm()
-            .background(Color.groupedBackgroundPrimary)
+            .background(Color.l2Elevated01)
     }
 }
