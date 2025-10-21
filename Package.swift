@@ -14,7 +14,7 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/seb-oss/green-tokens-ios", exact: "0.0.1")
+        .package(url: "https://github.com/seb-oss/green-tokens-ios", branch: "fix/Token-registration-access")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.

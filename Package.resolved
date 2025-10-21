@@ -1,13 +1,13 @@
 {
-  "originHash" : "8b6629103d3b0d0f9166e91dac3efc4b2ea13db8e1cce65a7fd6a65bad6a8509",
+  "originHash" : "74bbbae854fa3951cb33f1725a2cdf51c79595fe2f69d02a8c56f6987a21e309",
   "pins" : [
     {
       "identity" : "green-tokens-ios",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/seb-oss/green-tokens-ios",
       "state" : {
-        "revision" : "a7567ad1c3c48322fadd02564ff076ec8784b71e",
-        "version" : "0.0.1"
+        "branch" : "fix/Token-registration-access",
+        "revision" : "115d82f5b17a1b8d5b06d281fe6e95ab1d50700f"
       }
     }
   ],
