@@ -1,4 +1,5 @@
 import SwiftUI
+import GdsKit
 
 /// A text input with a floating placeholder that animates into a label inside the box when editing or when text is present.
 public struct LabelOutsideInput: View {
@@ -94,7 +95,7 @@ private extension LabelOutsideInput {
 
 private extension LabelOutsideInput {
     var background: some View {
-        Color.groupedBackgroundSecondary
+        Color.l2Elevated01
             .cornerRadius(.spaceS)
     }
 }
@@ -118,8 +119,8 @@ private extension LabelOutsideInput {
     var placeholderView: some View {
         Text(placeholder)
             .typography(
-                isValid ? .headline :
-                .headlineEmphasized
+                isValid ? .detailRegularM :
+                .detailBookM
             )
             .foregroundStyle(
                 isValid ? Color.contentNeutral02 : Color.contentNegative01
@@ -145,7 +146,7 @@ private extension LabelOutsideInput {
     var label: some View {
         Text(title)
             .foregroundStyle(labelColor)
-            .typography(.headlineEmphasized)
+            .typography(.detailBookM)
     }
     
     var labelColor: Color {
@@ -155,7 +156,7 @@ private extension LabelOutsideInput {
     var textfield: some View {
         TextField("", text: limitedTextBinding)
             .focused($isFocused)
-            .typography(.headlineEmphasized)
+            .typography(.detailBookM)
             .foregroundStyle(textFieldForegroundColor)
             .onAppear {
                 DispatchQueue.main.async {
@@ -169,7 +170,7 @@ private extension LabelOutsideInput {
 //            .scrollContentBackground(.hidden)
             .background(Color.clear)
             .focused($isFocused)
-            .typography(.headlineEmphasized)
+            .typography(.detailBookM)
             .foregroundStyle(textFieldForegroundColor)
             .onAppear {
                 DispatchQueue.main.async {
@@ -214,7 +215,7 @@ private extension LabelOutsideInput {
     var clearButton: some View {
         Button(action: clearInput) {
             Image(systemName: "xmark.circle.fill")
-                .typography(.headline)
+                .typography(.detailRegularM)
                 .foregroundStyle(Color.contentNeutral02)
         }
     }
@@ -226,7 +227,7 @@ private extension LabelOutsideInput {
     var characterCountLabel: some View {
         Text(characterCountString)
             .foregroundStyle(Color.contentNeutral01)
-            .typography(.caption1)
+            .typography(.detailRegularXs)
     }
     
     var characterCountString: String {
@@ -248,7 +249,7 @@ private extension LabelOutsideInput {
     private func hintAccessoryView(with hintText: String) -> some View {
         Text(hintText)
             .foregroundStyle(isValid ? Color.contentNeutral02 : Color.contentNegative01)
-            .typography(.footnote)
+            .typography(.bodyMediumS)
             .padding(.top, .zero)
             .padding(.leading, .spaceM)
     }
@@ -315,13 +316,13 @@ private extension LabelOutsideInput {
                     )
                     
                     Text(verbatim: "Tip: Tap any field to edit and see the floating label + clear button.")
-                        .typography(.caption1)
+                        .typography(.detailRegularXs)
                         .foregroundStyle(Color.contentNeutral02)
                 }
                 .padding(.horizontal, 8)
                 .padding(.vertical, 16)
             }
-            .background(Color.groupedBackgroundPrimary)
+            .background(Color.l2Elevated01)
         }
     }
 }
@@ -329,6 +330,6 @@ private extension LabelOutsideInput {
 struct LabelOutsideInput_Previews: PreviewProvider {
     static var previews: some View {
         LabelOutsideInput.DummyForm()
-            .background(Color.groupedBackgroundPrimary)
+            .background(Color.l2Elevated01)
     }
 }

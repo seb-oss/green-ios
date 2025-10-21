@@ -82,7 +82,7 @@ private extension FloatingLabelInput {
 
 private extension FloatingLabelInput {
     var background: some View {
-        Color.groupedBackgroundSecondary
+        Color.l2Elevated01
             .cornerRadius(.spaceS)
     }
 }
@@ -105,7 +105,7 @@ private extension FloatingLabelInput {
 private extension FloatingLabelInput {
     var placeholderView: some View {
         Text(placeholder)
-            .typography(.headlineEmphasized)
+            .typography(.detailBookM)
             .padding(.vertical, .spaceS)
             .foregroundStyle(isValid ? Color.contentNeutral02 : Color.contentNegative01)
     }
@@ -132,7 +132,7 @@ private extension FloatingLabelInput {
     var label: some View {
         Text(placeholder)
             .foregroundStyle(labelColor)
-            .typography(.subhead)
+            .typography(.detailRegularS)
     }
 
     var labelColor: Color {
@@ -142,7 +142,7 @@ private extension FloatingLabelInput {
     var textfield: some View {
         TextField("", text: $text)
             .focused($isFocused)
-            .typography(.headlineEmphasized)
+            .typography(.detailBookM)
             .foregroundStyle(textFieldForegroundColor)
             .onReceive(textDidChange) { notification in
                 textChangeNotifationReceived(notification)
@@ -158,7 +158,7 @@ private extension FloatingLabelInput {
         TextEditor(text: $text)
             .background(Color.clear)
             .focused($isFocused)
-            .typography(.headlineEmphasized)
+            .typography(.detailBookM)
             .foregroundStyle(textFieldForegroundColor)
             .onReceive(textDidChange) { notification in
                 textChangeNotifationReceived(notification)
@@ -197,7 +197,7 @@ private extension FloatingLabelInput {
     var clearButton: some View {
         Button(action: clearInput) {
             Image(systemName: "xmark.circle.fill")
-                .typography(.headline)
+                .typography(.detailRegularM)
                 .foregroundStyle(Color.contentNeutral02)
         }
     }
@@ -209,7 +209,7 @@ private extension FloatingLabelInput {
     var characterCountLabel: some View {
         Text(characterCountString)
             .foregroundStyle(Color.contentNeutral01)
-            .typography(.caption1)
+            .typography(.detailRegularXs)
     }
 
     var characterCountString: String {
@@ -236,7 +236,7 @@ private extension FloatingLabelInput {
     private var hintAccessoryView: some View {
         Text(hintText)
             .foregroundStyle(isValid ? Color.contentNeutral02 : Color.contentNegative01)
-            .typography(.footnote)
+            .typography(.bodyMediumS)
             .padding(.top, .spaceXs)
             .padding(.leading, .spaceM)
     }
@@ -299,19 +299,19 @@ struct DummyForm: View {
                 )
                 
                 Text(verbatim: "Tip: Tap any field to edit and see the floating label + clear button.")
-                    .typography(.caption1)
+                    .typography(.detailRegularXs)
                     .foregroundStyle(Color.contentNeutral02)
             }
             .padding(.horizontal, 8)
             .padding(.vertical, 16)
         }
-        .background(Color.groupedBackgroundPrimary)
+        .background(Color.l2Elevated01)
     }
 }
 
 struct FloatingLabelInput_Previews: PreviewProvider {
     static var previews: some View {
         DummyForm()
-            .background(Color.groupedBackgroundPrimary)
+            .background(Color.l2Elevated01)
     }
 }
