@@ -95,7 +95,7 @@ private extension LabelOutsideInput {
 
 private extension LabelOutsideInput {
     var background: some View {
-        Color.l2Elevated01
+        Color.l3Elevated02
             .cornerRadius(.spaceS)
     }
 }
