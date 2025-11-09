@@ -19,9 +19,14 @@ import GdsKit
 public struct GreenList<Content: View>: View {
 
     public enum Style {
-        case plain          // full-bleed background
-        case grouped        // grouped background, full-bleed
-        case card           // card-style surface within parent background
+        /// Full-bleed list on base background.
+        case plain
+        /// List presented as a grouped/card surface on a contrasting background.
+        case grouped
+        /// Full-width elevated surface (e.g. sheet or panel) on a contrasting background.
+        case elevated
+        /// Grouped elevated surface (cards on elevated background).
+        case elevatedGrouped
     }
 
     private let style: Style
@@ -53,20 +58,18 @@ public struct GreenList<Content: View>: View {
 
     private var listBackground: Color {
         switch style {
-        case .plain:
-            return .clear
-        case .grouped, .card:
+        case .plain, .grouped:
             return .l1Neutral01
+        case .elevated, .elevatedGrouped:
+            return .l1Elevated01
         }
     }
 
     private var listContainerBackground: Color {
         switch style {
-        case .plain:
-            return .l1Neutral01
-        case .grouped:
+        case .plain, .grouped:
             return .l1Neutral02
-        case .card:
+        case .elevated, .elevatedGrouped:
             return .l1Neutral02
         }
     }
@@ -74,10 +77,16 @@ public struct GreenList<Content: View>: View {
     private var listClipShape: some Shape {
         switch style {
         case .plain:
+            // Full-bleed, no rounding
             return AnyShape(Rectangle())
         case .grouped:
-            return AnyShape(Rectangle())
-        case .card:
+            // Single grouped surface
+            return AnyShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+        case .elevated:
+            // Elevated full-width surface
+            return AnyShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+        case .elevatedGrouped:
+            // Elevated grouped/card surface
             return AnyShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
         }
     }
@@ -85,11 +94,17 @@ public struct GreenList<Content: View>: View {
     private var listOuterPadding: EdgeInsets {
         switch style {
         case .plain:
-            return EdgeInsets(top: .space0, leading: .space0, bottom: .space0, trailing: .space0)
+            // Full-width list anchored to safe area
+            return EdgeInsets(top: .spaceL, leading: .space0, bottom: .spaceL, trailing: .space0)
         case .grouped:
-            return EdgeInsets(top: .spaceM, leading: .space0, bottom: .spaceM, trailing: .space0)
-        case .card:
-            return EdgeInsets(top: .spaceM, leading: .spaceM, bottom: .spaceM, trailing: .spaceM)
+            // Grouped card inset horizontally and vertically
+            return EdgeInsets(top: .spaceL, leading: .spaceM, bottom: .spaceL, trailing: .spaceM)
+        case .elevated:
+            // Elevated sheet-like surface inset horizontally
+            return EdgeInsets(top: .spaceL, leading: .spaceM, bottom: .spaceL, trailing: .spaceM)
+        case .elevatedGrouped:
+            // Elevated grouped lists in cards
+            return EdgeInsets(top: .spaceL, leading: .spaceM, bottom: .spaceL, trailing: .spaceM)
         }
     }
 }
@@ -367,64 +382,284 @@ public struct GreenRow: View, Identifiable {
 
 struct GreenList_Previews: PreviewProvider {
 
-    struct PreviewToggleModel: View {
-        @State private var wifiOn: Bool = false
-        @State private var notificationsOn: Bool = false
-
+    struct PlainBackgroundPreview: View {
         var body: some View {
-            GreenList(style: .grouped) {
+            GreenList(style: .plain) {
                 Group {
+                    // List 72 examples
+                    Text("List 72")
+                        .typography(.detailRegularS)
+                        .foregroundColor(.black)
+                        .padding(.horizontal, .spaceM)
+                        .padding(.top, .spaceS)
+
                     GreenRow(
-                        title: "Profile",
-                        subtitle: "Personal details and security",
-                        leading: .icon(Image(systemName: "person.circle.fill")),
+                        title: "Headline",
+                        subtitle: "Sub headline",
+                        leading: .icon(Image(systemName: "doc.plaintext")),
                         trailing: .chevron,
                         size: .list72,
                         onTap: {}
                     )
 
                     GreenRow(
-                        title: "Savings account",
-                        subtitle: "••• 1234",
-                        leading: .icon(Image(systemName: "creditcard")),
-                        trailing: .valueText("120 000 kr"),
-                        size: .list56,
+                        title: "Headline",
+                        subtitle: "Sub headline",
+                        leading: .icon(Image(systemName: "doc.plaintext")),
+                        trailing: .chevron,
+                        size: .list72,
                         onTap: {}
                     )
 
                     GreenRow(
-                        title: "Notifications",
-                        subtitle: "Push and email alerts",
-                        leading: .icon(Image(systemName: "bell.fill")),
-                        trailing: .toggle(isOn: $notificationsOn),
-                        size: .list56
-                    )
-
-                    GreenRow(
-                        title: "Wi‑Fi only",
-                        leading: .checkbox(isSelected: wifiOn),
-                        trailing: .none,
-                        size: .list56,
-                        isSelected: wifiOn,
-                        onTap: { wifiOn.toggle() }
-                    )
-
-                    GreenRow(
-                        title: "Radio option selected",
-                        leading: .radio(isSelected: true),
-                        trailing: .none,
-                        size: .list56,
-                        isSelected: true,
+                        title: "Headline",
+                        subtitle: "Sub headline",
+                        leading: .icon(Image(systemName: "doc.plaintext")),
+                        trailing: .icon(Image(systemName: "info.circle")),
+                        size: .list72,
                         onTap: {}
                     )
 
+                    // List 56 examples
+                    Text("List 56")
+                        .typography(.detailRegularS)
+                        .foregroundColor(.contentNeutral03)
+                        .padding(.horizontal, .spaceM)
+                        .padding(.top, .spaceL)
+
                     GreenRow(
-                        title: "Disabled row",
-                        subtitle: "Not available right now",
-                        leading: .icon(Image(systemName: "lock.fill")),
+                        title: "Headline",
+                        leading: .icon(Image(systemName: "doc.plaintext")),
                         trailing: .chevron,
                         size: .list56,
-                        isEnabled: false,
+                        onTap: {}
+                    )
+
+                    GreenRow(
+                        title: "Headline",
+                        leading: .icon(Image(systemName: "doc.plaintext")),
+                        trailing: .chevron,
+                        size: .list56,
+                        onTap: {}
+                    )
+
+                    GreenRow(
+                        title: "Headline",
+                        leading: .icon(Image(systemName: "doc.plaintext")),
+                        trailing: .icon(Image(systemName: "info.circle")),
+                        size: .list56,
+                        onTap: {}
+                    )
+                }
+            }
+        }
+    }
+
+    struct GroupedBackgroundPreview: View {
+        var body: some View {
+            GreenList(style: .grouped) {
+                Text("List 72")
+                    .typography(.detailRegularS)
+                    .foregroundColor(.contentNeutral03)
+                    .padding(.horizontal, .spaceM)
+                    .padding(.top, .spaceS)
+
+                GreenRow(
+                    title: "Headline",
+                    subtitle: "Sub headline",
+                    leading: .icon(Image(systemName: "doc.plaintext")),
+                    trailing: .chevron,
+                    size: .list72,
+                    onTap: {}
+                )
+
+                GreenRow(
+                    title: "Headline",
+                    subtitle: "Sub headline",
+                    leading: .icon(Image(systemName: "doc.plaintext")),
+                    trailing: .valueText("Headline"),
+                    size: .list72,
+                    onTap: {}
+                )
+
+                GreenRow(
+                    title: "Headline",
+                    subtitle: "Sub headline",
+                    leading: .icon(Image(systemName: "doc.plaintext")),
+                    trailing: .chevron,
+                    size: .list72,
+                    onTap: {}
+                )
+
+                Text("List 56")
+                    .typography(.detailRegularS)
+                    .foregroundColor(.contentNeutral03)
+                    .padding(.horizontal, .spaceM)
+                    .padding(.top, .spaceL)
+
+                GreenRow(
+                    title: "Headline",
+                    leading: .icon(Image(systemName: "doc.plaintext")),
+                    trailing: .valueText("Headline"),
+                    size: .list56,
+                    onTap: {}
+                )
+
+                GreenRow(
+                    title: "Headline",
+                    leading: .icon(Image(systemName: "doc.plaintext")),
+                    trailing: .valueText("Headline"),
+                    size: .list56,
+                    onTap: {}
+                )
+
+                GreenRow(
+                    title: "Headline",
+                    leading: .icon(Image(systemName: "doc.plaintext")),
+                    trailing: .valueText("Headline"),
+                    size: .list56,
+                    onTap: {}
+                )
+            }
+        }
+    }
+
+    struct ElevatedBackgroundPreview: View {
+        @State private var firstSelected: Bool = false
+
+        var body: some View {
+            ZStack(alignment: .top) {
+                Color.black
+                    .frame(height: 56)
+                    .ignoresSafeArea(edges: .top)
+
+                GreenList(style: .elevated) {
+                    Text("List 72")
+                        .typography(.detailRegularS)
+                        .foregroundColor(.contentNeutral03)
+                        .padding(.horizontal, .spaceM)
+                        .padding(.top, .spaceS)
+
+                    GreenRow(
+                        title: "Headline",
+                        subtitle: "Sub headline",
+                        leading: .icon(Image(systemName: "doc.plaintext")),
+                        trailing: .chevron,
+                        size: .list72,
+                        onTap: {}
+                    )
+
+                    GreenRow(
+                        title: "Headline",
+                        subtitle: "Sub headline",
+                        leading: .icon(Image(systemName: "doc.plaintext")),
+                        trailing: .icon(Image(systemName: "info.circle")),
+                        size: .list72,
+                        onTap: {}
+                    )
+
+                    Text("List 56")
+                        .typography(.detailRegularS)
+                        .foregroundColor(.contentNeutral03)
+                        .padding(.horizontal, .spaceM)
+                        .padding(.top, .spaceL)
+
+                    GreenRow(
+                        title: "Headline",
+                        leading: .icon(Image(systemName: "doc.plaintext")),
+                        trailing: .chevron,
+                        size: .list56,
+                        onTap: {}
+                    )
+
+                    GreenRow(
+                        title: "Headline",
+                        leading: .icon(Image(systemName: "doc.plaintext")),
+                        trailing: .chevron,
+                        size: .list56,
+                        onTap: {}
+                    )
+
+                    GreenRow(
+                        title: "Headline",
+                        leading: .icon(Image(systemName: "doc.plaintext")),
+                        trailing: .icon(Image(systemName: "info.circle")),
+                        size: .list56,
+                        onTap: {}
+                    )
+                }
+            }
+        }
+    }
+
+    struct ElevatedGroupedBackgroundPreview: View {
+        var body: some View {
+            ZStack(alignment: .top) {
+                Color.black
+                    .frame(height: 56)
+                    .ignoresSafeArea(edges: .top)
+
+                GreenList(style: .elevatedGrouped) {
+                    Text("List 72")
+                        .typography(.detailRegularS)
+                        .foregroundColor(.contentNeutral03)
+                        .padding(.horizontal, .spaceM)
+                        .padding(.top, .spaceS)
+
+                    GreenRow(
+                        title: "Headline",
+                        subtitle: "Sub headline",
+                        leading: .icon(Image(systemName: "doc.plaintext")),
+                        trailing: .valueText("Headline"),
+                        size: .list72,
+                        onTap: {}
+                    )
+
+                    GreenRow(
+                        title: "Headline",
+                        subtitle: "Sub headline",
+                        leading: .icon(Image(systemName: "doc.plaintext")),
+                        trailing: .chevron,
+                        size: .list72,
+                        onTap: {}
+                    )
+
+                    GreenRow(
+                        title: "Headline",
+                        subtitle: "Sub headline",
+                        leading: .icon(Image(systemName: "doc.plaintext")),
+                        trailing: .chevron,
+                        size: .list72,
+                        onTap: {}
+                    )
+
+                    Text("List 56")
+                        .typography(.detailRegularS)
+                        .foregroundColor(.contentNeutral03)
+                        .padding(.horizontal, .spaceM)
+                        .padding(.top, .spaceL)
+
+                    GreenRow(
+                        title: "Headline",
+                        leading: .icon(Image(systemName: "doc.plaintext")),
+                        trailing: .valueText("Headline"),
+                        size: .list56,
+                        onTap: {}
+                    )
+
+                    GreenRow(
+                        title: "Headline",
+                        leading: .icon(Image(systemName: "doc.plaintext")),
+                        trailing: .valueText("Headline"),
+                        size: .list56,
+                        onTap: {}
+                    )
+
+                    GreenRow(
+                        title: "Headline",
+                        leading: .icon(Image(systemName: "doc.plaintext")),
+                        trailing: .valueText("Headline"),
+                        size: .list56,
                         onTap: {}
                     )
                 }
@@ -434,28 +669,17 @@ struct GreenList_Previews: PreviewProvider {
 
     static var previews: some View {
         Group {
-            PreviewToggleModel()
-                .previewDisplayName("GreenList • grouped • mixed rows")
+            PlainBackgroundPreview()
+                .previewDisplayName("Background • plain")
 
-            GreenList(style: .card) {
-                GreenRow(
-                    title: "Card-style list",
-                    subtitle: "Use for sheets or grouped surfaces",
-                    leading: .icon(Image(systemName: "doc.text")),
-                    trailing: .chevron,
-                    size: .list72,
-                    onTap: {}
-                )
-                GreenRow(
-                    title: "Multiline title that wraps onto multiple lines when space is constrained for demonstration purposes",
-                    subtitle: "And a longer subtitle to confirm multiline behavior.",
-                    leading: .none,
-                    trailing: .valueText("Value"),
-                    size: .list72,
-                    onTap: {}
-                )
-            }
-            .previewDisplayName("GreenList • card • multiline")
+            GroupedBackgroundPreview()
+                .previewDisplayName("Grouped Background")
+
+            ElevatedBackgroundPreview()
+                .previewDisplayName("Elevated Background")
+
+            ElevatedGroupedBackgroundPreview()
+                .previewDisplayName("Elevated Grouped Background")
         }
     }
 }
