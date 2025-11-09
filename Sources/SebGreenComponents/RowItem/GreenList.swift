@@ -52,7 +52,6 @@ public struct GreenList<Content: View>: View {
         ScrollView(showsIndicators: false) {
             LazyVStack(spacing: 0, pinnedViews: []) {
                 content()
-                    .modifier(SeparatorListModifier(isVisible: showsSeparators))
             }
             .background(listBackground)
             .clipShape(listClipShape)
@@ -116,13 +115,14 @@ public struct GreenList<Content: View>: View {
 
 // MARK: - Separator Modifier
 
-private struct SeparatorListModifier: ViewModifier {
+/// Draws a separator line at the bottom edge of a single row.
+/// Intended to be applied at row-level, not around a whole list.
+private struct RowSeparatorModifier: ViewModifier {
     let isVisible: Bool
     let leadingInset: CGFloat = .spaceM
 
     func body(content: Content) -> some View {
-        VStack(spacing: 0) {
-            content
+        content.overlay(alignment: .bottom) {
             if isVisible {
                 Rectangle()
                     .fill(Color.borderSeparator01)
@@ -230,6 +230,7 @@ public struct GreenRow: View, Identifiable {
             }
         }
         .background(rowBackground)
+        .modifier(RowSeparatorModifier(isVisible: true))
         .accessibilityElement(children: .combine)
         .accessibility(addTraits: accessibilityTraits)
     }
