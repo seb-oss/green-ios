@@ -98,17 +98,17 @@ public struct GreenList<Content: View>: View {
 
 private struct SeparatorListModifier: ViewModifier {
     let isVisible: Bool
+    let leadingInset: CGFloat = .spaceM
 
     func body(content: Content) -> some View {
-        if isVisible {
+        VStack(spacing: 0) {
             content
-                .overlay(alignment: .bottom) {
-                    Rectangle()
-                        .fill(Color.borderSeparator01)
-                        .frame(height: 0.5)
-                }
-        } else {
-            content
+            if isVisible {
+                Rectangle()
+                    .fill(Color.borderSeparator01)
+                    .frame(height: 0.5)
+                    .padding(.leading, leadingInset)
+            }
         }
     }
 }
@@ -220,13 +220,13 @@ public struct GreenRow: View, Identifiable {
 
             VStack(alignment: .leading, spacing: subtitle == nil ? 0 : 2) {
                 Text(title)
-                    .font(.body)
+                    .typography(.bodyMediumM)
                     .foregroundColor(titleColor)
                     .lineLimit(nil)
 
                 if let subtitleText = subtitle {
                     Text(subtitleText)
-                        .font(.subheadline)
+                        .typography(.detailRegularS)
                         .foregroundColor(subtitleColor)
                         .lineLimit(nil)
                 }
@@ -312,7 +312,7 @@ public struct GreenRow: View, Identifiable {
                 .foregroundColor(.contentNeutral03)
         case .valueText(let text):
             Text(text)
-                .font(.subheadline)
+                .typography(.detailRegularS)
                 .foregroundColor(.contentNeutral02)
                 .multilineTextAlignment(.trailing)
         case .icon(let image):
@@ -368,7 +368,7 @@ public struct GreenRow: View, Identifiable {
 struct GreenList_Previews: PreviewProvider {
 
     struct PreviewToggleModel: View {
-        @State private var wifiOn: Bool = true
+        @State private var wifiOn: Bool = false
         @State private var notificationsOn: Bool = false
 
         var body: some View {
