@@ -12,10 +12,15 @@ import GdsKit
 
 /// A design-system friendly list container used by SDUI and native code.
 ///
+/// Why `GreenList` instead of native `List`:
+/// - Predictable visuals across iOS versions and host apps (no reliance on `List` / `UITableView` defaults).
+/// - Full control over backgrounds, insets, separators, corner radii, and elevation for the four GDS list styles.
+/// - Composable in any container (cards, sheets, nested scroll views) without inheriting unwanted `List` behavior.
+///
 /// Responsibilities:
-/// - Owns background style (plain / grouped / card).
-/// - Provides correct vertical spacing and horizontal insets.
-/// - Hosts `GreenRow` instances or any custom content.
+/// - Owns background style (plain / grouped / elevated / elevatedGrouped).
+/// - Provides the correct spacing, insets, and clipping per style.
+/// - Hosts `GreenRow` instances or any custom content while preserving the above guarantees.
 public struct GreenList<Content: View>: View {
 
     public enum Style {
