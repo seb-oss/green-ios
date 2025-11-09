@@ -382,88 +382,46 @@ public struct GreenRow: View, Identifiable {
 
 struct GreenList_Previews: PreviewProvider {
 
-    struct PlainBackgroundPreview: View {
+    struct AllRowVariations: View {
+        @State private var toggleNotifications = true
+        @State private var toggleWifiOnly = false
+
         var body: some View {
-            GreenList(style: .plain) {
-                Group {
-                    // List 72 examples
-                    Text("List 72")
-                        .typography(.detailRegularS)
-                        .foregroundColor(.black)
-                        .padding(.horizontal, .spaceM)
-                        .padding(.top, .spaceS)
+            Group {
+                // MARK: List 72 (tall rows)
 
-                    GreenRow(
-                        title: "Headline",
-                        subtitle: "Sub headline",
-                        leading: .icon(Image(systemName: "doc.plaintext")),
-                        trailing: .chevron,
-                        size: .list72,
-                        onTap: {}
-                    )
-
-                    GreenRow(
-                        title: "Headline",
-                        subtitle: "Sub headline",
-                        leading: .icon(Image(systemName: "doc.plaintext")),
-                        trailing: .chevron,
-                        size: .list72,
-                        onTap: {}
-                    )
-
-                    GreenRow(
-                        title: "Headline",
-                        subtitle: "Sub headline",
-                        leading: .icon(Image(systemName: "doc.plaintext")),
-                        trailing: .icon(Image(systemName: "info.circle")),
-                        size: .list72,
-                        onTap: {}
-                    )
-
-                    // List 56 examples
-                    Text("List 56")
-                        .typography(.detailRegularS)
-                        .foregroundColor(.contentNeutral03)
-                        .padding(.horizontal, .spaceM)
-                        .padding(.top, .spaceL)
-
-                    GreenRow(
-                        title: "Headline",
-                        leading: .icon(Image(systemName: "doc.plaintext")),
-                        trailing: .chevron,
-                        size: .list56,
-                        onTap: {}
-                    )
-
-                    GreenRow(
-                        title: "Headline",
-                        leading: .icon(Image(systemName: "doc.plaintext")),
-                        trailing: .chevron,
-                        size: .list56,
-                        onTap: {}
-                    )
-
-                    GreenRow(
-                        title: "Headline",
-                        leading: .icon(Image(systemName: "doc.plaintext")),
-                        trailing: .icon(Image(systemName: "info.circle")),
-                        size: .list56,
-                        onTap: {}
-                    )
-                }
-            }
-        }
-    }
-
-    struct GroupedBackgroundPreview: View {
-        var body: some View {
-            GreenList(style: .grouped) {
                 Text("List 72")
                     .typography(.detailRegularS)
                     .foregroundColor(.contentNeutral03)
                     .padding(.horizontal, .spaceM)
                     .padding(.top, .spaceS)
 
+                // 72: No leading / no trailing
+                GreenRow(
+                    title: "Headline",
+                    size: .list72,
+                    onTap: {}
+                )
+
+                // 72: Leading icon
+                GreenRow(
+                    title: "Headline",
+                    subtitle: "Sub headline",
+                    leading: .icon(Image(systemName: "doc.plaintext")),
+                    size: .list72,
+                    onTap: {}
+                )
+
+                // 72: Trailing chevron only
+                GreenRow(
+                    title: "Headline",
+                    leading: .none,
+                    trailing: .chevron,
+                    size: .list72,
+                    onTap: {}
+                )
+
+                // 72: Leading icon + trailing chevron
                 GreenRow(
                     title: "Headline",
                     subtitle: "Sub headline",
@@ -473,23 +431,71 @@ struct GreenList_Previews: PreviewProvider {
                     onTap: {}
                 )
 
+                // 72: Leading icon + trailing value text
                 GreenRow(
                     title: "Headline",
                     subtitle: "Sub headline",
                     leading: .icon(Image(systemName: "doc.plaintext")),
-                    trailing: .valueText("Headline"),
+                    trailing: .valueText("Value"),
                     size: .list72,
                     onTap: {}
                 )
 
+                // 72: Leading icon + trailing icon
                 GreenRow(
                     title: "Headline",
                     subtitle: "Sub headline",
                     leading: .icon(Image(systemName: "doc.plaintext")),
-                    trailing: .chevron,
+                    trailing: .icon(Image(systemName: "info.circle")),
                     size: .list72,
                     onTap: {}
                 )
+
+                // 72: Leading checkbox unchecked
+                GreenRow(
+                    title: "Checkbox option",
+                    leading: .checkbox(isSelected: false),
+                    size: .list72,
+                    onTap: {}
+                )
+
+                // 72: Leading checkbox selected
+                GreenRow(
+                    title: "Checkbox selected",
+                    leading: .checkbox(isSelected: true),
+                    size: .list72,
+                    isSelected: true,
+                    onTap: {}
+                )
+
+                // 72: Leading radio unselected
+                GreenRow(
+                    title: "Radio option",
+                    leading: .radio(isSelected: false),
+                    size: .list72,
+                    onTap: {}
+                )
+
+                // 72: Leading radio selected
+                GreenRow(
+                    title: "Radio selected",
+                    leading: .radio(isSelected: true),
+                    size: .list72,
+                    isSelected: true,
+                    onTap: {}
+                )
+
+                // 72: Disabled row
+                GreenRow(
+                    title: "Disabled row",
+                    subtitle: "Not available right now",
+                    leading: .icon(Image(systemName: "lock.fill")),
+                    size: .list72,
+                    isEnabled: false,
+                    onTap: {}
+                )
+
+                // MARK: List 56 (compact rows)
 
                 Text("List 56")
                     .typography(.detailRegularS)
@@ -497,36 +503,100 @@ struct GreenList_Previews: PreviewProvider {
                     .padding(.horizontal, .spaceM)
                     .padding(.top, .spaceL)
 
+                // 56: No leading / chevron
                 GreenRow(
                     title: "Headline",
-                    leading: .icon(Image(systemName: "doc.plaintext")),
-                    trailing: .valueText("Headline"),
+                    trailing: .chevron,
                     size: .list56,
                     onTap: {}
                 )
 
+                // 56: Leading icon
                 GreenRow(
                     title: "Headline",
                     leading: .icon(Image(systemName: "doc.plaintext")),
-                    trailing: .valueText("Headline"),
                     size: .list56,
                     onTap: {}
                 )
 
+                // 56: Leading icon + trailing value
                 GreenRow(
                     title: "Headline",
                     leading: .icon(Image(systemName: "doc.plaintext")),
-                    trailing: .valueText("Headline"),
+                    trailing: .valueText("Value"),
                     size: .list56,
                     onTap: {}
+                )
+
+                // 56: Leading icon + trailing icon
+                GreenRow(
+                    title: "Headline",
+                    leading: .icon(Image(systemName: "doc.plaintext")),
+                    trailing: .icon(Image(systemName: "info.circle")),
+                    size: .list56,
+                    onTap: {}
+                )
+
+                // 56: Leading icon + trailing toggle
+                GreenRow(
+                    title: "Notifications",
+                    subtitle: "Push and email alerts",
+                    leading: .icon(Image(systemName: "bell.fill")),
+                    trailing: .toggle(isOn: $toggleNotifications),
+                    size: .list56
+                )
+
+                // 56: Trailing toggle only
+                GreenRow(
+                    title: "Wi‑Fi only",
+                    trailing: .toggle(isOn: $toggleWifiOnly),
+                    size: .list56
+                )
+
+                // 56: Trailing checkbox
+                GreenRow(
+                    title: "Checkbox trailing",
+                    trailing: .checkbox(isSelected: true),
+                    size: .list56,
+                    isSelected: true
+                )
+
+                // 56: Trailing radio
+                GreenRow(
+                    title: "Radio trailing",
+                    trailing: .radio(isSelected: true),
+                    size: .list56,
+                    isSelected: true
+                )
+
+                // 56: Disabled compact row
+                GreenRow(
+                    title: "Disabled compact row",
+                    leading: .icon(Image(systemName: "lock.fill")),
+                    size: .list56,
+                    isEnabled: false
                 )
             }
         }
     }
 
-    struct ElevatedBackgroundPreview: View {
-        @State private var firstSelected: Bool = false
+    struct PlainBackgroundPreview: View {
+        var body: some View {
+            GreenList(style: .plain) {
+                AllRowVariations()
+            }
+        }
+    }
 
+    struct GroupedBackgroundPreview: View {
+        var body: some View {
+            GreenList(style: .grouped) {
+                AllRowVariations()
+            }
+        }
+    }
+
+    struct ElevatedBackgroundPreview: View {
         var body: some View {
             ZStack(alignment: .top) {
                 Color.black
@@ -534,59 +604,7 @@ struct GreenList_Previews: PreviewProvider {
                     .ignoresSafeArea(edges: .top)
 
                 GreenList(style: .elevated) {
-                    Text("List 72")
-                        .typography(.detailRegularS)
-                        .foregroundColor(.contentNeutral03)
-                        .padding(.horizontal, .spaceM)
-                        .padding(.top, .spaceS)
-
-                    GreenRow(
-                        title: "Headline",
-                        subtitle: "Sub headline",
-                        leading: .icon(Image(systemName: "doc.plaintext")),
-                        trailing: .chevron,
-                        size: .list72,
-                        onTap: {}
-                    )
-
-                    GreenRow(
-                        title: "Headline",
-                        subtitle: "Sub headline",
-                        leading: .icon(Image(systemName: "doc.plaintext")),
-                        trailing: .icon(Image(systemName: "info.circle")),
-                        size: .list72,
-                        onTap: {}
-                    )
-
-                    Text("List 56")
-                        .typography(.detailRegularS)
-                        .foregroundColor(.contentNeutral03)
-                        .padding(.horizontal, .spaceM)
-                        .padding(.top, .spaceL)
-
-                    GreenRow(
-                        title: "Headline",
-                        leading: .icon(Image(systemName: "doc.plaintext")),
-                        trailing: .chevron,
-                        size: .list56,
-                        onTap: {}
-                    )
-
-                    GreenRow(
-                        title: "Headline",
-                        leading: .icon(Image(systemName: "doc.plaintext")),
-                        trailing: .chevron,
-                        size: .list56,
-                        onTap: {}
-                    )
-
-                    GreenRow(
-                        title: "Headline",
-                        leading: .icon(Image(systemName: "doc.plaintext")),
-                        trailing: .icon(Image(systemName: "info.circle")),
-                        size: .list56,
-                        onTap: {}
-                    )
+                    AllRowVariations()
                 }
             }
         }
@@ -600,68 +618,7 @@ struct GreenList_Previews: PreviewProvider {
                     .ignoresSafeArea(edges: .top)
 
                 GreenList(style: .elevatedGrouped) {
-                    Text("List 72")
-                        .typography(.detailRegularS)
-                        .foregroundColor(.contentNeutral03)
-                        .padding(.horizontal, .spaceM)
-                        .padding(.top, .spaceS)
-
-                    GreenRow(
-                        title: "Headline",
-                        subtitle: "Sub headline",
-                        leading: .icon(Image(systemName: "doc.plaintext")),
-                        trailing: .valueText("Headline"),
-                        size: .list72,
-                        onTap: {}
-                    )
-
-                    GreenRow(
-                        title: "Headline",
-                        subtitle: "Sub headline",
-                        leading: .icon(Image(systemName: "doc.plaintext")),
-                        trailing: .chevron,
-                        size: .list72,
-                        onTap: {}
-                    )
-
-                    GreenRow(
-                        title: "Headline",
-                        subtitle: "Sub headline",
-                        leading: .icon(Image(systemName: "doc.plaintext")),
-                        trailing: .chevron,
-                        size: .list72,
-                        onTap: {}
-                    )
-
-                    Text("List 56")
-                        .typography(.detailRegularS)
-                        .foregroundColor(.contentNeutral03)
-                        .padding(.horizontal, .spaceM)
-                        .padding(.top, .spaceL)
-
-                    GreenRow(
-                        title: "Headline",
-                        leading: .icon(Image(systemName: "doc.plaintext")),
-                        trailing: .valueText("Headline"),
-                        size: .list56,
-                        onTap: {}
-                    )
-
-                    GreenRow(
-                        title: "Headline",
-                        leading: .icon(Image(systemName: "doc.plaintext")),
-                        trailing: .valueText("Headline"),
-                        size: .list56,
-                        onTap: {}
-                    )
-
-                    GreenRow(
-                        title: "Headline",
-                        leading: .icon(Image(systemName: "doc.plaintext")),
-                        trailing: .valueText("Headline"),
-                        size: .list56,
-                        onTap: {}
-                    )
+                    AllRowVariations()
                 }
             }
         }
