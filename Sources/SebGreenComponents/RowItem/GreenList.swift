@@ -314,11 +314,11 @@ public struct GreenRow: View, Identifiable {
         case .checkbox(let isSelected):
             Image(systemName: isSelected ? "checkmark.square.fill" : "square")
                 .imageScale(.medium)
-                .foregroundColor(isSelected ? .statePositive01 : .contentNeutral02)
+                .foregroundColor(isSelected ? .contentPositive01 : .contentNeutral02)
         case .radio(let isSelected):
             Image(systemName: isSelected ? "largecircle.fill.circle" : "circle")
                 .imageScale(.medium)
-                .foregroundColor(isSelected ? .stateBrand01 : .contentNeutral02)
+                .foregroundColor(isSelected ? .contentNeutral02 : .contentNeutral02)
         }
     }
 
@@ -350,11 +350,11 @@ public struct GreenRow: View, Identifiable {
         case .checkbox(let isSelected):
             Image(systemName: isSelected ? "checkmark.square.fill" : "square")
                 .imageScale(.medium)
-                .foregroundColor(isSelected ? .statePositive01 : .contentNeutral02)
+                .foregroundColor(isSelected ? .contentPositive01 : .contentNeutral02)
         case .radio(let isSelected):
             Image(systemName: isSelected ? "largecircle.fill.circle" : "circle")
                 .imageScale(.medium)
-                .foregroundColor(isSelected ? .stateBrand01 : .contentNeutral02)
+                .foregroundColor(isSelected ? .contentNeutral02 : .contentNeutral02)
         }
     }
 
