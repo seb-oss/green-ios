@@ -330,7 +330,7 @@ public struct GreenRow: View, Identifiable {
         case .chevron:
             Image(systemName: "chevron.right")
                 .imageScale(.small)
-                .foregroundColor(.contentNeutral03)
+                .foregroundColor(.contentNeutral02)
         case .valueText(let text):
             Text(text)
                 .typography(.detailRegularS)
