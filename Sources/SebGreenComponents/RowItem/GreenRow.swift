@@ -42,6 +42,7 @@ public struct GreenRow: View, Identifiable {
     public let size: Size
     public let isEnabled: Bool
     public let isSelected: Bool
+    public let showsSeparator: Bool
     public let onTap: (() -> Void)?
 
     public init(
@@ -53,6 +54,7 @@ public struct GreenRow: View, Identifiable {
         size: Size = .list56,
         isEnabled: Bool = true,
         isSelected: Bool = false,
+        showsSeparator: Bool = true,
         onTap: (() -> Void)? = nil
     ) {
         self.id = id
@@ -63,6 +65,7 @@ public struct GreenRow: View, Identifiable {
         self.size = size
         self.isEnabled = isEnabled
         self.isSelected = isSelected
+        self.showsSeparator = showsSeparator
         self.onTap = onTap
     }
 
@@ -86,7 +89,7 @@ public struct GreenRow: View, Identifiable {
             }
         }
         .background(rowBackground)
-        .modifier(RowSeparatorModifier(isVisible: true))
+        .modifier(RowSeparatorModifier(isVisible: showsSeparator))
         .accessibilityElement(children: .combine)
         .accessibility(addTraits: accessibilityTraits)
     }
@@ -259,3 +262,4 @@ private struct RowSeparatorModifier: ViewModifier {
         }
     }
 }
+
