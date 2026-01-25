@@ -14,8 +14,14 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/seb-oss/green-tokens-ios", exact: "0.0.4"),
-        .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", from: "1.18.7")
+        .package(
+            url: "https://github.com/seb-oss/green-tokens-ios",
+            branch: "feature/updated-gds-colors-from-figma-export"
+        ),
+        .package(
+            url: "https://github.com/pointfreeco/swift-snapshot-testing",
+            from: "1.18.7"
+        )
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
