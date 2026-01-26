@@ -14,7 +14,8 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/seb-oss/green-tokens-ios", exact: "0.0.4")
+        .package(url: "https://github.com/seb-oss/green-tokens-ios", exact: "0.0.4"),
+        .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", from: "1.18.7")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -26,5 +27,12 @@ let package = Package(
             ],
             resources: [.process("Resources")]
         ),
+        .testTarget(
+            name: "SebGreenComponentsSnapshotTests",
+            dependencies: [
+                "SebGreenComponents",
+                .product(name: "SnapshotTesting", package: "swift-snapshot-testing")
+            ]
+        )
     ]
 )
