@@ -12,14 +12,16 @@ import SnapshotTesting
 @testable import SebGreenComponents
 
 final class FloatingLabelInputSnapshotTests: XCTestCase {
+    
     func testFloatingLabelInput_Default() {
         let view = FloatingLabelInput(
             text: .constant(""),
             placeholder: "Label",
             isValid: true
         )
-        let hostingController = UIHostingController(rootView: view.frame(width: 300, height: 80))
-        assertSnapshot(of: hostingController, as: .image)
+        .frame(width: 320)
+
+        assertSnapshot(of: view, as: .image(layout: .sizeThatFits))
     }
 
     func testFloatingLabelInput_Filled() {
@@ -28,8 +30,9 @@ final class FloatingLabelInputSnapshotTests: XCTestCase {
             placeholder: "Label",
             isValid: true
         )
-        let hostingController = UIHostingController(rootView: view.frame(width: 300, height: 80))
-        assertSnapshot(of: hostingController, as: .image)
+        .frame(width: 320)
+
+        assertSnapshot(of: view, as: .image(layout: .sizeThatFits))
     }
 
     func testFloatingLabelInput_Error() {
@@ -39,8 +42,9 @@ final class FloatingLabelInputSnapshotTests: XCTestCase {
             errorText: "Required field",
             isValid: false
         )
-        let hostingController = UIHostingController(rootView: view.frame(width: 300, height: 80))
-        assertSnapshot(of: hostingController, as: .image)
+        .frame(width: 320)
+
+        assertSnapshot(of: view, as: .image(layout: .sizeThatFits))
     }
 }
 

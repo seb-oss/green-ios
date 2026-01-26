@@ -295,7 +295,7 @@ struct DummyForm: View {
                     characterLimit: 10,
                     supportingText: "Keep it short",
                     errorText: "Character limit reached",
-                    isValid: true
+                    isValid: false
                 )
                 
                 Text(verbatim: "Tip: Tap any field to edit and see the floating label + clear button.")
@@ -312,6 +312,5 @@ struct DummyForm: View {
 struct FloatingLabelInput_Previews: PreviewProvider {
     static var previews: some View {
         DummyForm()
-            .background(Color.l2Elevated01)
     }
 }
