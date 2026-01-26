@@ -19,7 +19,7 @@ final class FloatingLabelInputSnapshotTests: XCTestCase {
             isValid: true
         )
         let hostingController = UIHostingController(rootView: view.frame(width: 300, height: 80))
-        assertSnapshot(matching: hostingController, as: .image)
+        assertSnapshot(of: hostingController, as: .image)
     }
 
     func testFloatingLabelInput_Filled() {
@@ -29,7 +29,7 @@ final class FloatingLabelInputSnapshotTests: XCTestCase {
             isValid: true
         )
         let hostingController = UIHostingController(rootView: view.frame(width: 300, height: 80))
-        assertSnapshot(matching: hostingController, as: .image)
+        assertSnapshot(of: hostingController, as: .image)
     }
 
     func testFloatingLabelInput_Error() {
@@ -40,7 +40,7 @@ final class FloatingLabelInputSnapshotTests: XCTestCase {
             isValid: false
         )
         let hostingController = UIHostingController(rootView: view.frame(width: 300, height: 80))
-        assertSnapshot(matching: hostingController, as: .image)
+        assertSnapshot(of: hostingController, as: .image)
     }
 }
 
