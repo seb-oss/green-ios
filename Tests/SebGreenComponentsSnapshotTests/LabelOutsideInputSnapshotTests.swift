@@ -11,6 +11,10 @@ import SnapshotTesting
 @testable import SebGreenComponents
 
 final class LabelOutsideInputSnapshotTests: XCTestCase {
+    override class func setUp() {
+        isRecording = true
+    }
+    
     func testLabelOutsideInput_Default() {
         let view = LabelOutsideInput(
             text: .constant(""),

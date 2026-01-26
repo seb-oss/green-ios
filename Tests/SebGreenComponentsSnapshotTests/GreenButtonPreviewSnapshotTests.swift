@@ -11,6 +11,10 @@ import SnapshotTesting
 @testable import SebGreenComponents
 
 final class GreenButtonPreviewSnapshotTests: XCTestCase {
+    override class func setUp() {
+        isRecording = true
+    }
+    
     // MARK: - Text only
     func test_GreenButton_textOnly_brand() {
         let view = GreenButtonPreviewCases.textOnly(kind: .brand)

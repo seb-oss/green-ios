@@ -12,6 +12,10 @@ import SnapshotTesting
 @testable import SebGreenComponents
 
 final class FloatingLabelInputSnapshotTests: XCTestCase {
+    override class func setUp() {
+        isRecording = true
+    }
+    
     func testFloatingLabelInput_Default() {
         let view = FloatingLabelInput(
             text: .constant(""),

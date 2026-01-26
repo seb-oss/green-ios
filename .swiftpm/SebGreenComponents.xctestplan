@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "CC1D61AF-1A70-4388-8277-6CF0150358BF",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "performanceAntipatternCheckerEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "SebGreenComponentsSnapshotTests",
+        "name" : "SebGreenComponentsSnapshotTests"
+      }
+    }
+  ],
+  "version" : 1
+}
