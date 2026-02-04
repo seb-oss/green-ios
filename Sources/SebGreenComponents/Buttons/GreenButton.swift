@@ -65,70 +65,25 @@ public struct GreenButton: View {
 // MARK: - Previews
 
 struct GreenButton_Previews: PreviewProvider {
-    static let arrangement: Arrangement = .vertically
+    static let arrangement: Arrangement = .horizontally
     
     static var previews: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 24) {
                 ForEach([GreenButton.Kind.brand, .primary, .secondary, .tertiary, .outline, .negative], id: \.self) { kind in
-                    VStack(alignment: .center, spacing: 12) {
-                        Text("\(kind.rawValue.capitalized) — Sizes")
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text("\(kind.rawValue.capitalized)")
                             .font(.headline)
                             .foregroundStyle(.secondary)
-                        
-                        // Row: text only
-                        Text("Text only")
-                        [
-                            GreenButton(title: "Label", kind: kind, size: .xLarge, action: {}),
-                            GreenButton(title: "Label", kind: kind, size: .large, action: {}),
-                            GreenButton(title: "Label", kind: kind, size: .medium, action: {}),
-                            GreenButton(title: "Label", kind: kind, size: .small, action: {})
-                        ].stack(arrangement: arrangement)
-                        
-                        // Row: text + leading icon
-                        Text("Text + leading icon")
-                        [
-                            GreenButton(title: "Label", kind: kind, size: .xLarge, icon: Image(systemName: "arrow.right"), iconPosition: .leading, action: {}),
-                            GreenButton(title: "Label", kind: kind, size: .large, icon: Image(systemName: "arrow.right"), iconPosition: .leading, action: {}),
-                            GreenButton(title: "Label", kind: kind, size: .medium, icon: Image(systemName: "arrow.right"), iconPosition: .leading, action: {}),
-                            GreenButton(title: "Label", kind: kind, size: .small, icon: Image(systemName: "arrow.right"), iconPosition: .leading, action: {})
-                        ].stack(arrangement: arrangement)
-                        
-                        // Row: text + trailing icon
-                        Text("Text + trailing icon")
-                        [
-                            GreenButton(title: "Label", kind: kind, size: .xLarge, icon: Image(systemName: "arrow.right"), iconPosition: .trailing, action: {}),
-                            GreenButton(title: "Label", kind: kind, size: .large, icon: Image(systemName: "arrow.right"), iconPosition: .trailing, action: {}),
-                            GreenButton(title: "Label", kind: kind, size: .medium, icon: Image(systemName: "arrow.right"), iconPosition: .trailing, action: {}),
-                            GreenButton(title: "Label", kind: kind, size: .small, icon: Image(systemName: "arrow.right"), iconPosition: .trailing, action: {})
-                        ].stack(arrangement: arrangement)
-                        
-                        // Row: icon only
-                        Text("Icon only")
-                        [
-                            GreenButton(title: nil, kind: kind, size: .xLarge, icon: Image(systemName: "arrow.right"), action: {})
-                                .accessibilityLabel("Next"),
-                            GreenButton(title: nil, kind: kind, size: .large, icon: Image(systemName: "arrow.right"), action: {})
-                                .accessibilityLabel("Next"),
-                            GreenButton(title: nil, kind: kind, size: .medium, icon: Image(systemName: "arrow.right"), action: {})
-                                .accessibilityLabel("Next"),
-                            GreenButton(title: nil, kind: kind, size: .small, icon: Image(systemName: "arrow.right"), action: {})
-                                .accessibilityLabel("Next")
-                        ].stack(arrangement: arrangement)
-                        
-                        // Disabled row
-                        Text("Disabled")
-                        [
-                            GreenButton(title: "Label", kind: kind, size: .medium, action: {})
-                                .disabled(true),
-                            GreenButton(title: "Label", kind: kind, size: .medium, icon: Image(systemName: "arrow.right"), iconPosition: .trailing, action: {})
-                                .disabled(true),
-                            GreenButton(title: nil, kind: kind, size: .medium, icon: Image(systemName: "arrow.right"), action: {})
-                                .disabled(true)
-                        ].stack(arrangement: arrangement)
+
+                        GreenButtonPreviewCases.textOnly(kind: kind, arrangement: arrangement)
+                        GreenButtonPreviewCases.leadingIcon(kind: kind, arrangement: arrangement)
+                        GreenButtonPreviewCases.trailingIcon(kind: kind, arrangement: arrangement)
+                        GreenButtonPreviewCases.iconOnly(kind: kind, arrangement: arrangement)
+                        GreenButtonPreviewCases.disabled(kind: kind, arrangement: arrangement)
                     }
                 }
-                
+
                 // Multiline showcase: constrained width
                 Text("Multiline wrapping (left aligned text)")
                     .font(.headline)
@@ -142,7 +97,6 @@ struct GreenButton_Previews: PreviewProvider {
             }
             .padding(20)
         }
-        .previewLayout(.sizeThatFits)
     }
 }
 

@@ -81,9 +81,20 @@ private extension FloatingLabelInput {
 // MARK: - Background
 
 private extension FloatingLabelInput {
+    @ViewBuilder
     var background: some View {
-        Color.l3Elevated02
-            .cornerRadius(.spaceS)
+        Color.l2Neutral02
+            .cornerRadius(.spaceM)
+            .overlay {
+                if !isValid {
+                    RoundedRectangle(cornerRadius: .spaceM)
+                        .inset(by: 1)
+                        .stroke(
+                            Color.borderNegative01,
+                            lineWidth: .space4xs
+                        )
+                }
+            }
     }
 }
 
@@ -107,7 +118,7 @@ private extension FloatingLabelInput {
         Text(placeholder)
             .typography(.detailBookM)
             .padding(.vertical, .spaceS)
-            .foregroundStyle(isValid ? Color.contentNeutral02 : Color.contentNegative01)
+            .foregroundStyle(Color.contentNeutral02)
     }
 }
 
@@ -131,19 +142,15 @@ private extension FloatingLabelInput {
 
     var label: some View {
         Text(placeholder)
-            .foregroundStyle(labelColor)
+            .foregroundStyle(Color.contentNeutral02)
             .typography(.detailRegularS)
-    }
-
-    var labelColor: Color {
-        isValid || isFocused ? Color.contentNeutral02 : Color.contentNegative01
     }
 
     var textfield: some View {
         TextField("", text: $text)
             .focused($isFocused)
             .typography(.detailBookM)
-            .foregroundStyle(textFieldForegroundColor)
+            .foregroundStyle(Color.contentNeutral01)
             .onReceive(textDidChange) { notification in
                 textChangeNotifationReceived(notification)
             }
@@ -159,7 +166,7 @@ private extension FloatingLabelInput {
             .background(Color.clear)
             .focused($isFocused)
             .typography(.detailBookM)
-            .foregroundStyle(textFieldForegroundColor)
+            .foregroundStyle(Color.contentNeutral01)
             .onReceive(textDidChange) { notification in
                 textChangeNotifationReceived(notification)
             }
@@ -170,10 +177,6 @@ private extension FloatingLabelInput {
             }
     }
 
-    var textFieldForegroundColor: Color {
-        isValid || isFocused ? Color.contentNeutral01 : Color.contentNegative01
-    }
-
     var textDidChange: NotificationCenter.Publisher {
         NotificationCenter.default.publisher(for: UITextField.textDidChangeNotification)
     }
@@ -182,14 +185,12 @@ private extension FloatingLabelInput {
 
     var accessoryStack: some View {
         VStack(alignment: .trailing, spacing: .zero) {
-            if isFocused {
+            if text.count > 0 {
                 if characterLimit != nil {
                     characterCountLabel
                 }
-
+                
                 clearButton
-            } else if !isValid {
-                errorIcon
             }
         }
     }
@@ -233,12 +234,26 @@ private extension FloatingLabelInput {
 
 // MARK: - Hint accessory
 private extension FloatingLabelInput {
+    @ViewBuilder
     private var hintAccessoryView: some View {
-        Text(hintText)
-            .foregroundStyle(isValid ? Color.contentNeutral02 : Color.contentNegative01)
-            .typography(.bodyMediumS)
+        if isValid {
+            Text(supportingText ?? "")
+                .foregroundStyle(Color.contentNeutral02)
+                .typography(.bodyMediumS)
+                .padding(.top, .spaceXs)
+                .padding(.leading, .spaceM)
+        } else {
+            HStack(alignment: .center) {
+                errorIcon
+                
+                Text(errorText ?? "")
+                    .foregroundStyle(Color.contentNegative01)
+                    .typography(.bodyMediumS)
+                    
+            }
             .padding(.top, .spaceXs)
             .padding(.leading, .spaceM)
+        }
     }
 
     private var hintText: String {
@@ -295,7 +310,7 @@ struct DummyForm: View {
                     characterLimit: 10,
                     supportingText: "Keep it short",
                     errorText: "Character limit reached",
-                    isValid: true
+                    isValid: false
                 )
                 
                 Text(verbatim: "Tip: Tap any field to edit and see the floating label + clear button.")
@@ -305,13 +320,12 @@ struct DummyForm: View {
             .padding(.horizontal, 8)
             .padding(.vertical, 16)
         }
-        .background(Color.l2Elevated01)
+        .background(Color.l1Neutral02)
     }
 }
 
 struct FloatingLabelInput_Previews: PreviewProvider {
     static var previews: some View {
         DummyForm()
-            .background(Color.l2Elevated01)
     }
 }
