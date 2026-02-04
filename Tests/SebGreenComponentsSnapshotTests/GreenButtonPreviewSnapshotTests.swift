@@ -12,7 +12,7 @@ import SnapshotTesting
 
 final class GreenButtonPreviewSnapshotTests: XCTestCase {
     override class func setUp() {
-        isRecording = true
+        isRecording = false
     }
     
     // MARK: - Text only
