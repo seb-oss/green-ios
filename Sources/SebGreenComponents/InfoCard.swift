@@ -96,14 +96,14 @@ public struct InfoCardView: View {
     public var body: some View {
         card
     }
-
+    
     private var card: some View {
         ZStack(alignment: .topTrailing) {
             cardContent
             closeButton
         }
     }
-
+    
     private var cardContent: some View {
         VStack(alignment: .leading, spacing: .space3xs) {
             titleView
@@ -116,7 +116,7 @@ public struct InfoCardView: View {
         .overlay(cardBorder)
         .accessibilityElement(children: .contain)
     }
-
+    
     private var titleView: some View {
         Text(model.title)
             .typography(.headingXs)
@@ -124,13 +124,13 @@ public struct InfoCardView: View {
             .fixedSize(horizontal: false, vertical: true)
             .padding(.trailing, 56)
     }
-
+    
     private var messageView: some View {
         Text(model.message)
             .typography(.detailRegularS)
             .padding(.bottom, .spaceXs)
     }
-
+    
     @ViewBuilder
     private var ctaView: some View {
         if let title = model.ctaTitle,
@@ -138,7 +138,7 @@ public struct InfoCardView: View {
             secondaryButton(title: title, action: action)
         }
     }
-
+    
     @ViewBuilder
     private var closeButton: some View {
         if let onClose = actions.onClose {
@@ -147,15 +147,15 @@ public struct InfoCardView: View {
                 primaryLayerColor: model.variant.closeButtonColor,
                 secondaryLayerColor: model.variant.closeButtonBackgroundColor
             )
-                .padding(8)
-                .offset(y: -4)
+            .padding(8)
+            .offset(y: -4)
         }
     }
-
+    
     private var cardShape: some Shape {
         RoundedRectangle(cornerRadius: 16, style: .continuous)
     }
-
+    
     private var cardBorder: some View {
         cardShape
             .stroke(model.variant.borderColor, lineWidth: 1)
@@ -180,7 +180,7 @@ private struct CloseButton: View {
     let action: () -> Void
     let primaryLayerColor: Color
     let secondaryLayerColor: Color
-
+    
     var body: some View {
         Button(action: action) {
             Image(systemName: "xmark.circle.fill")
@@ -188,10 +188,8 @@ private struct CloseButton: View {
                 .typography(.detailRegularM)
                 .foregroundStyle(primaryLayerColor , secondaryLayerColor)
                 .frame(width: 24, height: 24)
-    
+            
         }
-        .buttonStyle(.plain)
-        .accessibilityLabel(Text("Close"))
     }
 }
 
