@@ -16,7 +16,7 @@ public struct InfoCardView: View {
             case .information:
                 return Color.l2Neutral02
             case .informationHd:
-                return Color.l2Neutral03 // TODO: Color Token missing
+                return Color.l2Neutral01
             }
         }
         
@@ -76,49 +76,70 @@ public struct InfoCardView: View {
     }
     
     public var body: some View {
-        VStack(alignment: .leading, spacing: .space3xs) {
-            header
-            
-            Text(model.message)
-                .typography(.detailRegularS)
-                .padding(.bottom, .spaceXs)
-            
-            if let ctaTitle = model.ctaTitle,
-               let ctaAction = actions.cta {
-                primaryButton(
-                    title: ctaTitle,
-                    action: ctaAction
-                )
-            }
+        card
+    }
+
+    private var card: some View {
+        ZStack(alignment: .topTrailing) {
+            cardContent
+            closeButton
         }
-        .padding(12)
+    }
+
+    private var cardContent: some View {
+        VStack(alignment: .leading, spacing: .space3xs) {
+            titleView
+            messageView
+            ctaView
+        }
+        .padding(16)
         .background(model.variant.backgroundColor)
-        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-        .overlay(
-            RoundedRectangle(cornerRadius: 16, style: .continuous)
-                .stroke(borderColor, lineWidth: 1)
-        )
+        .clipShape(cardShape)
+        .overlay(cardBorder)
         .accessibilityElement(children: .contain)
     }
-    
-    // MARK: - Subviews
-    
-    private var header: some View {
-        HStack(alignment: .top, spacing: 10) {
-            Text(model.title)
-                .typography(.headingXs)
-                .foregroundStyle(.primary)
-                .fixedSize(horizontal: false, vertical: true)
-            
-            Spacer(minLength: 8)
-            
-            if let onClose = actions.onClose {
-                CloseButton(action: onClose)
-            }
+
+    private var titleView: some View {
+        Text(model.title)
+            .typography(.headingXs)
+            .foregroundStyle(.primary)
+            .fixedSize(horizontal: false, vertical: true)
+            .padding(.trailing, 56)
+    }
+
+    private var messageView: some View {
+        Text(model.message)
+            .typography(.detailRegularS)
+            .padding(.bottom, .spaceXs)
+    }
+
+    @ViewBuilder
+    private var ctaView: some View {
+        if let title = model.ctaTitle,
+           let action = actions.cta {
+            secondaryButton(title: title, action: action)
         }
     }
+
+    @ViewBuilder
+    private var closeButton: some View {
+        if let onClose = actions.onClose {
+            CloseButton(action: onClose)
+                .padding(8)
+                .offset(y: -4)
+        }
+    }
+
+    private var cardShape: some Shape {
+        RoundedRectangle(cornerRadius: 16, style: .continuous)
+    }
+
+    private var cardBorder: some View {
+        cardShape
+            .stroke(model.variant.borderColor, lineWidth: 1)
+    }
     
-    private func primaryButton(
+    private func secondaryButton(
         title: String,
         action: @escaping (() -> Void)
     ) -> some View {
@@ -128,10 +149,6 @@ public struct InfoCardView: View {
             size: .small,
             action: action
         )
-    }
-    
-    private var borderColor: Color {
-        Color.borderInformation02
     }
 }
 
@@ -146,7 +163,7 @@ private struct CloseButton: View {
                 .typography(.detailRegularM)
                 .foregroundStyle(Color.contentNeutral02)
                 .frame(width: 24, height: 24)
-            
+    
         }
         .buttonStyle(.plain)
         .accessibilityLabel(Text("Close"))
