@@ -97,7 +97,6 @@ struct GreenButton_Previews: PreviewProvider {
             }
             .padding(20)
         }
-//        .previewLayout(.sizeThatFits)
     }
 }
 
