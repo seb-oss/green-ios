@@ -100,6 +100,8 @@ public struct InfoCardView: View {
     private var card: some View {
         ZStack(alignment: .topTrailing) {
             cardContent
+                .onTapIfAvailable(actions.onTap)
+            
             closeButton
         }
     }
@@ -189,6 +191,17 @@ private struct CloseButton: View {
                 .foregroundStyle(primaryLayerColor , secondaryLayerColor)
                 .frame(width: 24, height: 24)
             
+        }
+    }
+}
+
+private extension View {
+    @ViewBuilder
+    func onTapIfAvailable(_ action: (() -> Void)?) -> some View {
+        if let action {
+            self.onTapGesture(perform: action)
+        } else {
+            self
         }
     }
 }
