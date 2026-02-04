@@ -16,7 +16,7 @@ public struct InfoCardView: View {
             case .information:
                 return Color.l2Neutral02
             case .informationHd:
-                return Color.l2Neutral01
+                return Color.l2NeutralLoud
             }
         }
         
@@ -26,6 +26,24 @@ public struct InfoCardView: View {
                 return Color.borderInformation02
             case .informationHd:
                 return Color.clear
+            }
+        }
+        
+        var closeButtonBackgroundColor: Color {
+            switch self {
+            case .information:
+                return Color.l3Neutral02
+            case .informationHd:
+                return Color.l3NeutralTone
+            }
+        }
+        
+        var closeButtonColor: Color {
+            switch self {
+            case .information:
+                return Color.contentNeutral02
+            case .informationHd:
+                return Color.contentInversed
             }
         }
     }
@@ -124,7 +142,11 @@ public struct InfoCardView: View {
     @ViewBuilder
     private var closeButton: some View {
         if let onClose = actions.onClose {
-            CloseButton(action: onClose)
+            CloseButton(
+                action: onClose,
+                primaryLayerColor: model.variant.closeButtonColor,
+                secondaryLayerColor: model.variant.closeButtonBackgroundColor
+            )
                 .padding(8)
                 .offset(y: -4)
         }
@@ -156,12 +178,15 @@ public struct InfoCardView: View {
 
 private struct CloseButton: View {
     let action: () -> Void
-    
+    let primaryLayerColor: Color
+    let secondaryLayerColor: Color
+
     var body: some View {
         Button(action: action) {
             Image(systemName: "xmark.circle.fill")
+                .symbolRenderingMode(.palette)
                 .typography(.detailRegularM)
-                .foregroundStyle(Color.contentNeutral02)
+                .foregroundStyle(primaryLayerColor , secondaryLayerColor)
                 .frame(width: 24, height: 24)
     
         }
@@ -169,7 +194,6 @@ private struct CloseButton: View {
         .accessibilityLabel(Text("Close"))
     }
 }
-
 
 // MARK: - Previews
 
