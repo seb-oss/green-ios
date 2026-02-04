@@ -12,6 +12,7 @@ import SnapshotTesting
 @testable import SebGreenComponents
 
 final class FloatingLabelInputSnapshotTests: XCTestCase {
+    private static let recordSnapshots = false
     
     func testFloatingLabelInput_Default() {
         let view = FloatingLabelInput(
@@ -24,7 +25,7 @@ final class FloatingLabelInputSnapshotTests: XCTestCase {
         .background(Color.l2Elevated01)
 
         withSnapshotTesting(record: false) {
-            assertSnapshot(of: view, as: .image(layout: .sizeThatFits))
+            assertSnapshot(of: view, as: .image(layout: .sizeThatFits), record: Self.recordSnapshots)
         }
     }
 
@@ -39,7 +40,7 @@ final class FloatingLabelInputSnapshotTests: XCTestCase {
         .background(Color.l2Elevated01)
 
         withSnapshotTesting(record: false) {
-            assertSnapshot(of: view, as: .image(layout: .sizeThatFits))
+            assertSnapshot(of: view, as: .image(layout: .sizeThatFits), record: Self.recordSnapshots)
         }
     }
 
@@ -55,7 +56,7 @@ final class FloatingLabelInputSnapshotTests: XCTestCase {
         .background(Color.l2Elevated01)
 
         withSnapshotTesting(record: false) {
-            assertSnapshot(of: view, as: .image(layout: .sizeThatFits))
+            assertSnapshot(of: view, as: .image(layout: .sizeThatFits), record: Self.recordSnapshots)
         }
     }
 }
