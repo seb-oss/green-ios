@@ -76,7 +76,6 @@ public struct InfoCardView: View {
     
     // MARK: - Actions
     public struct Actions {
-        
         public struct CallToAction {
             public var title: String
             public var action: () -> Void
@@ -131,7 +130,7 @@ public struct InfoCardView: View {
             messageView
             callToActionView
         }
-        .padding(16)
+        .padding(.spaceM)
         .background(model.variant.backgroundColor)
         .clipShape(cardShape)
         .overlay(cardBorder)
@@ -143,7 +142,7 @@ public struct InfoCardView: View {
             .typography(.detailBookM)
             .foregroundColor(model.variant.textForegroundColor)
             .fixedSize(horizontal: false, vertical: true)
-            .padding(.trailing, 56)
+            .padding(.trailing, .space4xl)
     }
     
     private var messageView: some View {
@@ -157,7 +156,10 @@ public struct InfoCardView: View {
     private var callToActionView: some View {
         if let title = actions.callToAction?.title,
            let action = actions.callToAction?.action {
-            secondaryButton(title: title, action: action)
+            secondaryButton(
+                title: title,
+                action: action
+            )
         }
     }
     
@@ -169,13 +171,16 @@ public struct InfoCardView: View {
                 primaryLayerColor: model.variant.closeButtonColor,
                 secondaryLayerColor: model.variant.closeButtonBackgroundColor
             )
-            .padding(8)
-            .offset(y: -4)
+            .padding(.spaceXs)
+            .offset(y: -(.space3xs))
         }
     }
     
     private var cardShape: some Shape {
-        RoundedRectangle(cornerRadius: 16, style: .continuous)
+        RoundedRectangle(
+            cornerRadius: 16,
+            style: .continuous
+        )
     }
     
     private var cardBorder: some View {
