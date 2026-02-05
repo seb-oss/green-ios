@@ -27,7 +27,7 @@ public struct InfoCardView: View {
             self.closeButtonColor = closeButtonColor
             self.textForegroundColor = textForegroundColor
         }
-
+        
         public static let information = Variant(
             backgroundColor: .l2Neutral02,
             borderColor: .borderInformation02,
@@ -35,7 +35,7 @@ public struct InfoCardView: View {
             closeButtonColor: .contentNeutral02,
             textForegroundColor: .contentNeutral01
         )
-
+        
         public static let informationHd = Variant(
             backgroundColor: .l2NeutralLoud,
             borderColor: .clear,
@@ -195,7 +195,7 @@ private struct CloseButton: View {
     let action: () -> Void
     let primaryLayerColor: Color
     let secondaryLayerColor: Color
-
+    
     var body: some View {
         Button(action: action) {
             Image(systemName: "xmark.circle.fill")
@@ -232,7 +232,7 @@ private extension View {
             ),
             actions: .init(onClose: {})
         )
-
+        
         InfoCardView(
             model: .init(
                 title: "Spärra ditt kort snabbt i appen",
@@ -244,7 +244,7 @@ private extension View {
                 callToAction: .init(title: "Spärra kort", action: {})
             )
         )
-
+        
         InfoCardView(
             model: .init(
                 title: "Spärra ditt kort snabbt i appen",
@@ -267,7 +267,7 @@ private extension View {
             ),
             actions: .init(onClose: {})
         )
-
+        
         InfoCardView(
             model: .init(
                 title: "Spärra ditt kort snabbt i appen",
@@ -279,7 +279,7 @@ private extension View {
                 callToAction: .init(title: "Spärra kort", action: {})
             )
         )
-
+        
         InfoCardView(
             model: .init(
                 title: "Spärra ditt kort snabbt i appen",
