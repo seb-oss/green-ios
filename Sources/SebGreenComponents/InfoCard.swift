@@ -7,54 +7,42 @@
 import SwiftUI
 
 public struct InfoCardView: View {
-    public enum Variant {
-        case information
-        case informationHd
+    public struct Variant: Equatable {
+        public let backgroundColor: Color
+        public let borderColor: Color
+        public let closeButtonBackgroundColor: Color
+        public let closeButtonColor: Color
+        public let textForegroundColor: Color
         
-        var backgroundColor: Color {
-            switch self {
-            case .information:
-                return Color.l2Neutral02
-            case .informationHd:
-                return Color.l2NeutralLoud
-            }
+        init(
+            backgroundColor: Color,
+            borderColor: Color,
+            closeButtonBackgroundColor: Color,
+            closeButtonColor: Color,
+            textForegroundColor: Color
+        ) {
+            self.backgroundColor = backgroundColor
+            self.borderColor = borderColor
+            self.closeButtonBackgroundColor = closeButtonBackgroundColor
+            self.closeButtonColor = closeButtonColor
+            self.textForegroundColor = textForegroundColor
         }
-        
-        var borderColor: Color {
-            switch self {
-            case .information:
-                return Color.borderInformation02
-            case .informationHd:
-                return Color.clear
-            }
-        }
-        
-        var closeButtonBackgroundColor: Color {
-            switch self {
-            case .information:
-                return Color.l3Neutral02
-            case .informationHd:
-                return Color.l3NeutralTone
-            }
-        }
-        
-        var closeButtonColor: Color {
-            switch self {
-            case .information:
-                return Color.contentNeutral02
-            case .informationHd:
-                return Color.contentInversed
-            }
-        }
-        
-        var textForegroundColor: Color {
-            switch self {
-            case .information:
-                return Color.contentNeutral01
-            case .informationHd:
-                return Color.contentInversed
-            }
-        }
+
+        public static let information = Variant(
+            backgroundColor: .l2Neutral02,
+            borderColor: .borderInformation02,
+            closeButtonBackgroundColor: .l3Neutral02,
+            closeButtonColor: .contentNeutral02,
+            textForegroundColor: .contentNeutral01
+        )
+
+        public static let informationHd = Variant(
+            backgroundColor: .l2NeutralLoud,
+            borderColor: .clear,
+            closeButtonBackgroundColor: .l3NeutralTone,
+            closeButtonColor: .contentInversed,
+            textForegroundColor: .contentInversed
+        )
     }
     
     // MARK: - Model
