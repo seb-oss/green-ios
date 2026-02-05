@@ -46,6 +46,15 @@ public struct InfoCardView: View {
                 return Color.contentInversed
             }
         }
+        
+        var textForegroundColor: Color {
+            switch self {
+            case .information:
+                return Color.contentNeutral01
+            case .informationHd:
+                return Color.contentInversed
+            }
+        }
     }
     
     // MARK: - Model
@@ -121,8 +130,8 @@ public struct InfoCardView: View {
     
     private var titleView: some View {
         Text(model.title)
-            .typography(.headingXs)
-            .foregroundStyle(.primary)
+            .typography(.detailBookM)
+            .foregroundColor(model.variant.textForegroundColor)
             .fixedSize(horizontal: false, vertical: true)
             .padding(.trailing, 56)
     }
@@ -130,6 +139,7 @@ public struct InfoCardView: View {
     private var messageView: some View {
         Text(model.message)
             .typography(.detailRegularS)
+            .foregroundColor(model.variant.textForegroundColor)
             .padding(.bottom, .spaceXs)
     }
     
@@ -188,10 +198,11 @@ private struct CloseButton: View {
             Image(systemName: "xmark.circle.fill")
                 .symbolRenderingMode(.palette)
                 .typography(.detailRegularM)
-                .foregroundStyle(primaryLayerColor , secondaryLayerColor)
+                .foregroundStyle(primaryLayerColor, secondaryLayerColor)
                 .frame(width: 24, height: 24)
-            
+                .contentShape(Rectangle())
         }
+        .buttonStyle(.plain)
     }
 }
 
