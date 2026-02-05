@@ -61,35 +61,45 @@ public struct InfoCardView: View {
     public struct Model: Equatable {
         public var title: String
         public var message: String
-        public var ctaTitle: String?
         public var variant: Variant
         
         public init(
             title: String,
             message: String,
-            ctaTitle: String? = nil,
             variant: Variant
         ) {
             self.title = title
             self.message = message
-            self.ctaTitle = ctaTitle
             self.variant = variant
         }
     }
     
     // MARK: - Actions
     public struct Actions {
+        
+        public struct CallToAction {
+            public var title: String
+            public var action: () -> Void
+            
+            public init(
+                title: String,
+                action: @escaping () -> Void
+            ) {
+                self.title = title
+                self.action = action
+            }
+        }
         public var onClose: (() -> Void)?
-        public var cta: (() -> Void)?
+        public var callToAction: CallToAction?
         public var onTap: (() -> Void)?
         
         public init(
             onClose: (() -> Void)? = nil,
             onTap: (() -> Void)? = nil,
-            cta: (() -> Void)? = nil
+            callToAction: CallToAction? = nil
         ) {
             self.onClose = onClose
-            self.cta = cta
+            self.callToAction = callToAction
             self.onTap = onTap
         }
     }
@@ -119,7 +129,7 @@ public struct InfoCardView: View {
         VStack(alignment: .leading, spacing: .space3xs) {
             titleView
             messageView
-            ctaView
+            callToActionView
         }
         .padding(16)
         .background(model.variant.backgroundColor)
@@ -144,9 +154,9 @@ public struct InfoCardView: View {
     }
     
     @ViewBuilder
-    private var ctaView: some View {
-        if let title = model.ctaTitle,
-           let action = actions.cta {
+    private var callToActionView: some View {
+        if let title = actions.callToAction?.title,
+           let action = actions.callToAction?.action {
             secondaryButton(title: title, action: action)
         }
     }
@@ -192,7 +202,7 @@ private struct CloseButton: View {
     let action: () -> Void
     let primaryLayerColor: Color
     let secondaryLayerColor: Color
-    
+
     var body: some View {
         Button(action: action) {
             Image(systemName: "xmark.circle.fill")
@@ -229,26 +239,27 @@ private extension View {
             ),
             actions: .init(onClose: {})
         )
-        
-        InfoCardView(
-            model: .init(
-                title: "Spärra ditt kort snabbt i appen",
-                message: "Välj kontot som kortet är kopplat till och sen Hantera kort.",
-                ctaTitle: "Spärra kort",
-                variant: .information
-            ),
-            actions: .init(onClose: {}, cta: {})
-        )
-        
+
         InfoCardView(
             model: .init(
                 title: "Spärra ditt kort snabbt i appen",
                 message: "Välj kontot som kortet är kopplat till och sen Hantera kort.",
                 variant: .information
             ),
-            actions: .init()
+            actions: .init(
+                onClose: {},
+                callToAction: .init(title: "Spärra kort", action: {})
+            )
         )
-        
+
+        InfoCardView(
+            model: .init(
+                title: "Spärra ditt kort snabbt i appen",
+                message: "Välj kontot som kortet är kopplat till och sen Hantera kort.",
+                variant: .information
+            ),
+            actions: .init(onTap: {})
+        )
     }
     .padding()
 }
@@ -263,26 +274,27 @@ private extension View {
             ),
             actions: .init(onClose: {})
         )
-        
-        InfoCardView(
-            model: .init(
-                title: "Spärra ditt kort snabbt i appen",
-                message: "Välj kontot som kortet är kopplat till och sen Hantera kort.",
-                ctaTitle: "Spärra kort",
-                variant: .informationHd
-            ),
-            actions: .init(onClose: {}, cta: {})
-        )
-        
+
         InfoCardView(
             model: .init(
                 title: "Spärra ditt kort snabbt i appen",
                 message: "Välj kontot som kortet är kopplat till och sen Hantera kort.",
                 variant: .informationHd
             ),
-            actions: .init()
+            actions: .init(
+                onClose: {},
+                callToAction: .init(title: "Spärra kort", action: {})
+            )
         )
-        
+
+        InfoCardView(
+            model: .init(
+                title: "Spärra ditt kort snabbt i appen",
+                message: "Välj kontot som kortet är kopplat till och sen Hantera kort.",
+                variant: .informationHd
+            ),
+            actions: .init(onTap: {})
+        )
     }
     .padding()
 }
