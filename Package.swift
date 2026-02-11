@@ -16,7 +16,7 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/seb-oss/green-tokens-ios",
-            branch: "feature/updated-gds-colors-from-figma-export"
+            exact: "0.0.6"
         ),
         .package(
             url: "https://github.com/pointfreeco/swift-snapshot-testing",

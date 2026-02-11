@@ -1,13 +1,13 @@
 {
-  "originHash" : "f6484de46408c95f774a1563df39329650548eb660e754c5278d14a5b4127c6a",
+  "originHash" : "3487cb80d71d8e515fc5b29148dbb4245d0e7e47092d323939561a843690f8c8",
   "pins" : [
     {
       "identity" : "green-tokens-ios",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/seb-oss/green-tokens-ios",
       "state" : {
-        "branch" : "feature/updated-gds-colors-from-figma-export",
-        "revision" : "54b7dc913cc063d3411237715226bf8a45fa83d1"
+        "revision" : "9f37a89ba487a054d1e86aa10599bcc7562d5663",
+        "version" : "0.0.6"
       }
     },
     {
