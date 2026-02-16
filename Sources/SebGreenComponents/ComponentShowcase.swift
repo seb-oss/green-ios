@@ -5,7 +5,7 @@ import GdsKit
 
 /// A single view displaying every component in the SebGreenComponents package,
 /// split into two segments to avoid nesting scroll views (GreenList owns its own ScrollView).
-struct ComponentShowcase: View {
+public struct ComponentShowcase: View {
     enum Segment: String, CaseIterable {
         case components = "Components"
         case lists = "Lists"
@@ -21,7 +21,7 @@ struct ComponentShowcase: View {
     @State private var outsideFilled = "Prefilled"
     @State private var outsideError = "Bad input"
 
-    var body: some View {
+    public var body: some View {
         VStack(spacing: 0) {
             Picker("Section", selection: $segment) {
                 ForEach(Segment.allCases, id: \.self) { s in
