@@ -20,6 +20,10 @@ public struct ComponentShowcase: View {
     @State private var outsideText = ""
     @State private var outsideFilled = "Prefilled"
     @State private var outsideError = "Bad input"
+    
+    public init() {
+        
+    }
 
     public var body: some View {
         VStack(spacing: 0) {
