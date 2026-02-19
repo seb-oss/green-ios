@@ -59,6 +59,8 @@ extension InputField where Label == Text {
 }
 
 private struct DefaultInputField<Label: View, TextField: View>: View {
+    @Environment(\.verticalSizeClass) private var verticalSizeClass
+    
     @FocusState private var isFocused: Bool
     @Binding var text: String
 
@@ -74,6 +76,10 @@ private struct DefaultInputField<Label: View, TextField: View>: View {
         self.label = label()
         self.textField = textField()
     }
+    
+    private var minimumFrameHeight: CGFloat {
+        verticalSizeClass == .compact ? 54 : 64
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -82,7 +88,7 @@ private struct DefaultInputField<Label: View, TextField: View>: View {
             textField
                 .focused($isFocused)
                 .padding(.horizontal, 16)
-                .frame(minHeight: 64)
+                .frame(minHeight: minimumFrameHeight)
                 .background {
                     RoundedRectangle(cornerRadius: 16)
                         .fill(Color.l2Neutral02)
@@ -101,10 +107,10 @@ private struct DefaultInputField<Label: View, TextField: View>: View {
 
 private struct FloatingInputField<Label: View, TextField: View>: View {
 
-    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    @Environment(\.verticalSizeClass) private var verticalSizeClass
 
     private var minimumFrameHeight: CGFloat {
-        horizontalSizeClass == .compact ? 64 : 72
+        verticalSizeClass == .compact ? 64 : 72
     }
 
     @FocusState private var isFocused: Bool
