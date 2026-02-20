@@ -17,6 +17,7 @@ struct InputField<Accessory: View>: View {
     @Environment(\.inputFieldStyle) private var inputStyle
     @Environment(\.optionalField) private var optionalField
     @Environment(\.validationError) private var validationError
+    @Environment(\.expandTextAreaRange) private var expandTextAreaRange
 
     @State private var text: String = ""  // TODO: Setup a binding text to the parent or just change this to binding depending on requirement
     private let label: any StringProtocol
@@ -76,11 +77,13 @@ struct InputField<Accessory: View>: View {
         Group {
             if #available(iOS 16.0, *) {
                 TextField("", text: $text, axis: .vertical)
+                    .lineLimit(expandTextAreaRange)
             } else {
                 TextField("", text: $text)
             }
         }
         .foregroundStyle(Color.contentNeutral01)
+        .autocorrectionDisabled(true)
     }
     
     private func validationView(_ error: Error) -> some View {
@@ -100,6 +103,8 @@ struct InputField<Accessory: View>: View {
 
 @available(iOS 17, *)
 #Preview {
+    @Previewable @State var supportTextEnabled = false
+    @Previewable @State var isOptional = false
     @Previewable @State var hasError = false
 
     ScrollView {
@@ -108,7 +113,11 @@ struct InputField<Accessory: View>: View {
                 .foregroundStyle(Color.l1Neutral02)
 
             VStack(spacing: 24) {
-                Toggle("Toggle error", isOn: $hasError)
+                VStack {
+                    Toggle("Optional", isOn: $isOptional)
+                    Toggle("Support text", isOn: $supportTextEnabled)
+                    Toggle("Toggle error", isOn: $hasError)
+                }
 
                 Divider()
 
@@ -118,16 +127,18 @@ struct InputField<Accessory: View>: View {
                     }
                 }
                 .inputFieldStyle(.default)
-                .supportiveText("Hello")
-                .optionalField()
+                .supportiveText(supportTextEnabled ? "Hello" : nil)
+                .optionalField(isOptional)
                 .validation(
                     hasError ? NSError(domain: "", code: 999) : nil
                 )
+                .expandTextArea()
 
                 Divider()
 
                 InputField("Floating header 2")
                     .inputFieldStyle(.floating)
+                    .optionalField(isOptional)
                     .clearable()
                     .validation(
                         hasError ? NSError(domain: "", code: 999) : nil
@@ -136,5 +147,8 @@ struct InputField<Accessory: View>: View {
             .padding()
         }
         .animation(.default, value: hasError)
+        .animation(.default, value: isOptional)
+        .animation(.default, value: supportTextEnabled)
     }
+    
 }
