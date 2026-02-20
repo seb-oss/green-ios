@@ -1,203 +1,136 @@
 import SwiftUI
 
+struct InfoButton: View {
+    let action: () -> Void
+    var body: some View {
+        Button("", systemImage: "info.circle", action: action)
+            .foregroundStyle(Color.contentNeutral01)
+    }
+}
+
+extension EnvironmentValues {
+    @Entry var inputFieldStyle: InputFieldStyle = .default
+    @Entry var textInputCharacterLimit: Int?
+    @Entry var optionalInput: Bool = false
+    @Entry var clearButtonEnabled = false
+    @Entry var supportiveText: String?
+}
+
+extension View {
+    func inputFieldStyle(_ style: InputFieldStyle) -> some View {
+        environment(\.inputFieldStyle, style)
+    }
+    
+    func textInputCharacterLimit(_ limit: Int) -> some View {
+        environment(\.textInputCharacterLimit, limit)
+    }
+    
+    func optionalTextInput() -> some View {
+        environment(\.optionalInput, true)
+    }
+    
+    func clearButtonEnabled() -> some View {
+        environment(\.clearButtonEnabled, true)
+    }
+    
+    func supportiveText(_ text: String) -> some View {
+        environment(\.supportiveText, text)
+    }
+}
+
 enum InputFieldStyle {
     case `default`
     case floating
 }
 
-extension EnvironmentValues {
-    @Entry var inputFieldStyle: InputFieldStyle = .default
-}
+@resultBuilder
+public struct AccessoryBuilder {
+    public static func buildBlock() -> EmptyView {
+        EmptyView()
+    }
 
-extension View {
-    func inputFieldStyle(_ style: InputFieldStyle) -> some View {
-        self.environment(\.inputFieldStyle, style)
+    static func buildBlock(_ component: InfoButton) -> some View {
+        component
     }
 }
 
-struct InputField<Label: View>: View {
+struct InputField<Accessory: View>: View {
     @Environment(\.inputFieldStyle) private var inputStyle
+    @Environment(\.optionalInput) private var isOptionalInput
 
     @State private var text: String = ""  // TODO: Setup a binding text to the parent or just change this to binding depending on requirement
-    private let label: Label
+    private let label: any StringProtocol
+    private let accessory: Accessory
+    
+    private var title: any StringProtocol {
+        isOptionalInput ? label.appending(" (optional)") : label
+    }
 
     init(
-        @ViewBuilder label: () -> Label,
+        _ label: any StringProtocol,
+        @AccessoryBuilder accessory: () -> Accessory = AccessoryBuilder.buildBlock
     ) {
-        self.label = label()
+        self.label = label
+        self.accessory = accessory()
     }
 
     var body: some View {
         switch inputStyle {
         case .default:
-            DefaultInputField($text) {
-                label
-            } textField: {
-                textField
-            }
+            DefaultLabel(
+                title,
+                text: $text,
+                textField: textField,
+                accessory: accessory
+            )
         case .floating:
-            FloatingInputField($text) {
-                label
-            } textField: {
-                textField
-            }
+            FloatingLabel(
+                title,
+                text: $text,
+                textField: textField,
+                accessory: accessory
+            )
         }
     }
 
     private var textField: some View {
-        TextField("", text: $text)
-            .foregroundStyle(Color.contentNeutral01)
-    }
-}
-
-extension InputField where Label == Text {
-    init(
-        _ title: any StringProtocol,
-    ) {
-        self.label = Text(title)
-    }
-}
-
-private struct DefaultInputField<Label: View, TextField: View>: View {
-    @Environment(\.verticalSizeClass) private var verticalSizeClass
-    
-    @FocusState private var isFocused: Bool
-    @Binding var text: String
-
-    let label: Label
-    let textField: TextField
-
-    init(
-        _ text: Binding<String>,
-        @ViewBuilder label: () -> Label,
-        @ViewBuilder textField: () -> TextField,
-    ) {
-        self._text = text
-        self.label = label()
-        self.textField = textField()
-    }
-    
-    private var minimumFrameHeight: CGFloat {
-        verticalSizeClass == .compact ? 54 : 64
-    }
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            label
-                .padding(.horizontal, 16)
-            textField
-                .focused($isFocused)
-                .padding(.horizontal, 16)
-                .frame(minHeight: minimumFrameHeight)
-                .background {
-                    RoundedRectangle(cornerRadius: 16)
-                        .fill(Color.l2Neutral02)
-                }
-                .background {
-                    RoundedRectangle(cornerRadius: 16)
-                        .stroke(style: .init(lineWidth: 1))
-                }
-                .contentShape(.rect(cornerRadius: 16))
-                .onTapGesture {
-                    isFocused = true
-                }
-        }
-    }
-}
-
-private struct FloatingInputField<Label: View, TextField: View>: View {
-
-    @Environment(\.verticalSizeClass) private var verticalSizeClass
-
-    private var minimumFrameHeight: CGFloat {
-        verticalSizeClass == .compact ? 64 : 72
-    }
-
-    @FocusState private var isFocused: Bool
-    @Binding var text: String
-
-    let label: Label
-    let textField: TextField
-
-    @State private var isEditing = false
-
-    private var presentTextField: Bool {
-        isEditing || !text.isEmpty
-    }
-
-    init(
-        _ text: Binding<String>,
-        @ViewBuilder label: () -> Label,
-        @ViewBuilder textField: () -> TextField,
-    ) {
-        self._text = text
-        self.label = label()
-        self.textField = textField()
-    }
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: .zero) {
-            floatingLabel
-
-            if presentTextField {
-                textField
-                    .focused($isFocused)
-                    .onChange(of: isFocused) { newValue in
-                        isEditing = newValue
-                    }
+        Group {
+            if #available(iOS 16.0, *) {
+                TextField("", text: $text, axis: .vertical)
+            } else {
+                TextField("", text: $text)
             }
         }
-        .padding(.horizontal, .spaceM)
-        .frame(
-            maxWidth: .infinity,
-            minHeight: minimumFrameHeight,
-            alignment: .leading
-        )
-        .background {
-            RoundedRectangle(cornerRadius: 16)
-                .fill(Color.l2Neutral02)
-        }
-        .contentShape(.rect(cornerRadius: 16))
-        .onTapGesture {
-            isEditing = true
-            isFocused = true
-        }
-    }
-
-    private var floatingLabel: some View {
-        label
-            .typography(
-                presentTextField ? .bodyBookS : .bodyBookL
-            )
-            .foregroundColor(.contentNeutral02)
-            .animation(.snappy, value: presentTextField)
+        .foregroundStyle(Color.contentNeutral01)
     }
 }
 
 #Preview {
-    VStack(spacing: 24) {
-        InputField("Custom header")
-            .inputFieldStyle(.default)
-
-        Divider()
-
-        InputField {
-            HStack {
-                Text("Sicky header")
-                Spacer()
-                Button("", systemImage: "info") {}
+    ScrollView {
+        ZStack {
+            RoundedRectangle(cornerRadius: 16)
+                .foregroundStyle(Color.l1Neutral02)
+            
+            VStack(spacing: 24) {
+                InputField("Custom header") {
+                    InfoButton {
+                        
+                    }
+                }
+                .inputFieldStyle(.default)
+                .supportiveText("Hello")
+                .optionalTextInput()
+                
+                Divider()
+                
+                InputField("Floating header 2") {
+                    InfoButton {
+                        
+                    }
+                }
+                .inputFieldStyle(.floating)
             }
+            .padding()
         }
-
-        Divider()
-
-        InputField("Floating header 2")
-            .inputFieldStyle(.floating)
     }
-    .padding()
-    .background {
-        RoundedRectangle(cornerRadius: 16)
-            .foregroundStyle(Color.l1Neutral02)
-    }
-    .padding(.horizontal)
 }
