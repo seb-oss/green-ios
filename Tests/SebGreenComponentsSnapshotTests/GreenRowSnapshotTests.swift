@@ -99,7 +99,7 @@ final class GreenRowSnapshotTests: XCTestCase {
             .frame(width: 375)
             .background(Color.l1Neutral02)
 
-        let traits = UITraitCollection(preferredContentSizeCategory: .accessibility1)
+        let traits = UITraitCollection(preferredContentSizeCategory: .accessibilityLarge)
         assertSnapshot(
             of: view,
             as: .image(layout: .sizeThatFits, traits: traits),

@@ -68,9 +68,9 @@ final class GreenListSnapshotTests: XCTestCase {
     }
 
     // MARK: - Dynamic Type emphasis
-    func test_GreenList_grouped_dynamicType_AX3() {
+    func test_GreenList_grouped_dynamicType_accessibilityXXXL() {
         let view = list(style: .grouped)
-        let traits = UITraitCollection(preferredContentSizeCategory: .accessibility3)
+        let traits = UITraitCollection(preferredContentSizeCategory: .accessibilityExtraExtraExtraLarge)
         assertSnapshot(
             of: view,
             as: .image(layout: .fixed(width: canvasWidth, height: canvasHeight), traits: traits),
@@ -80,21 +80,29 @@ final class GreenListSnapshotTests: XCTestCase {
 
     // MARK: - Helpers
 
-    private func list(style: GreenList<EmptyView>.Style) -> some View {
+    private func list(style: GreenList<ListFixtureContent>.Style) -> some View {
+        list(style: style) { ListFixtureContent() }
+    }
+
+    private func list<Content: View>(style: GreenList<Content>.Style, @ViewBuilder content: @escaping () -> Content) -> some View {
         GreenList(style: style) {
-            ListFixtureContent()
+            content()
         }
         .background(Color.l1Neutral02)
     }
 
-    private func elevatedContainer(style: GreenList<EmptyView>.Style) -> some View {
+    private func elevatedContainer(style: GreenList<ListFixtureContent>.Style) -> some View {
+        elevatedContainer(style: style) { ListFixtureContent() }
+    }
+
+    private func elevatedContainer<Content: View>(style: GreenList<Content>.Style, @ViewBuilder content: @escaping () -> Content) -> some View {
         ZStack(alignment: .top) {
             Color.black
                 .frame(height: 56)
                 .ignoresSafeArea(edges: .top)
 
             GreenList(style: style) {
-                ListFixtureContent()
+                content()
             }
         }
         .background(Color.l1Neutral02)
@@ -178,3 +186,4 @@ private struct ListFixtureContent: View {
         }
     }
 }
+
