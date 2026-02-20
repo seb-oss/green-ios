@@ -7,6 +7,7 @@ extension EnvironmentValues {
     @Entry var clearButtonEnabled = false
     @Entry var supportiveText: String?
     @Entry var validationError: Error?
+    @Entry var expandTextAreaRange: PartialRangeFrom<Int> = 1...
 }
 
 extension View {
@@ -32,5 +33,9 @@ extension View {
 
     public func validation(_ error: Error?) -> some View {
         environment(\.validationError, error)
+    }
+    
+    public func expandTextArea(_ range: PartialRangeFrom<Int> = 4...) -> some View {
+        environment(\.expandTextAreaRange, range)
     }
 }
