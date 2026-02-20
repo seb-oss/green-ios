@@ -96,6 +96,7 @@ struct InputField<Accessory: View>: View {
 
         }
         .foregroundColor(Color.contentNegative01)
+        .padding(.horizontal, 14) // Needs to be 14px due to 2px border.
     }
 }
 
