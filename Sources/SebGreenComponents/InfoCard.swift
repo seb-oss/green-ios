@@ -160,7 +160,6 @@ public struct InfoCardView: View {
                 secondaryLayerColor: model.variant.closeButtonBackgroundColor
             )
             .padding(.spaceXs)
-            .offset(y: -(.space3xs))
         }
     }
     
@@ -200,9 +199,8 @@ private struct CloseButton: View {
         Button(action: action) {
             Image(systemName: "xmark.circle.fill")
                 .symbolRenderingMode(.palette)
-                .typography(.detailRegularM)
+                .typography(.bodyBookL)
                 .foregroundStyle(primaryLayerColor, secondaryLayerColor)
-                .frame(width: 24, height: 24)
                 .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
