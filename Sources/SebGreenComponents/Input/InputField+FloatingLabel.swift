@@ -3,6 +3,7 @@ import SwiftUI
 extension InputField {
     struct FloatingLabel<TextField: View>: View {
         @Environment(\.verticalSizeClass) private var verticalSizeClass
+        @Environment(\.validationError) private var validationError
 
         @Binding var text: String
         @FocusState private var isFocused: Bool
@@ -19,6 +20,10 @@ extension InputField {
 
         private var presentTextField: Bool {
             isEditing || !text.isEmpty
+        }
+
+        private var hasValidationError: Bool {
+            validationError != nil
         }
 
         init(
@@ -60,6 +65,14 @@ extension InputField {
             .background {
                 RoundedRectangle(cornerRadius: 16)
                     .fill(Color.l2Neutral02)
+            }
+            .overlay {
+                RoundedRectangle(cornerRadius: 16)
+                    .stroke(style: .init(lineWidth: hasValidationError ? 2 : 1))
+                    .foregroundStyle(
+                        hasValidationError
+                            ? Color.borderNegative01 : Color.clear
+                    )
             }
             .contentShape(.rect(cornerRadius: 16))
             .onTapGesture {
