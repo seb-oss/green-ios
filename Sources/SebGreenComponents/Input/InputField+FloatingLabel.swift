@@ -3,6 +3,7 @@ import SwiftUI
 extension InputField {
     struct FloatingLabel<TextField: View>: View {
         @Environment(\.verticalSizeClass) private var verticalSizeClass
+        @Environment(\.expandTextAreaRange) private var expandTextAreaRange
         @Environment(\.validationError) private var validationError
 
         @Binding var text: String
@@ -19,7 +20,8 @@ extension InputField {
         }
 
         private var presentTextField: Bool {
-            isEditing || !text.isEmpty
+            let isSingleLine = expandTextAreaRange.lowerBound == 1
+            return !isSingleLine || isEditing || !text.isEmpty
         }
 
         private var hasValidationError: Bool {
