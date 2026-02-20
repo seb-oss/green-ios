@@ -4,6 +4,7 @@ extension InputField {
     struct DefaultLabel<TextField: View>: View {
         @Environment(\.verticalSizeClass) private var verticalSizeClass
         @Environment(\.supportiveText) private var supportiveText
+        @Environment(\.validationError) private var validationError
 
         @FocusState private var isFocused: Bool
         @Binding var text: String
@@ -28,25 +29,39 @@ extension InputField {
             verticalSizeClass == .compact ? 54 : 64
         }
 
+        private var hasValidationError: Bool {
+            validationError != nil
+        }
+
         var body: some View {
             VStack(alignment: .leading, spacing: 8) {
                 header
                 textField
                     .focused($isFocused)
-                    .padding(.horizontal, 16)
+                    .padding(16)
                     .frame(minHeight: minimumFrameHeight)
                     .background {
                         RoundedRectangle(cornerRadius: 16)
                             .fill(Color.l2Neutral02)
                     }
-                    .background {
+                    .overlay {
                         RoundedRectangle(cornerRadius: 16)
-                            .stroke(style: .init(lineWidth: 1))
+                            .stroke(
+                                style: .init(
+                                    lineWidth: hasValidationError ? 2 : 1
+                                )
+                            )
+                            .foregroundStyle(
+                                hasValidationError
+                                    ? Color.borderNegative01
+                                    : Color.borderInteractive
+                            )
                     }
                     .contentShape(.rect(cornerRadius: 16))
                     .onTapGesture {
                         isFocused = true
                     }
+                    .animation(.default, value: hasValidationError)
             }
         }
 
@@ -61,7 +76,7 @@ extension InputField {
 
                     accessory
                 }
-                if let supportiveText {
+                if let supportiveText, !supportiveText.isEmpty {
                     Text(supportiveText)
                         .typography(.bodyBookS)
                         .foregroundStyle(Color.contentNeutral02)
