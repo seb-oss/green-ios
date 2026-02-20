@@ -2,8 +2,8 @@
 //  InfoCardSnapshotTests.swift
 //  SebGreenComponents
 //
-//  Created by Chakraborty, Sujata on 2026-02-05.
 //
+
 import SwiftUI
 import XCTest
 import SnapshotTesting
@@ -11,67 +11,71 @@ import SnapshotTesting
 
 final class InfoCardPreviewSnapshotTests: XCTestCase {
     private static let recordSnapshots = false
-
+    
     // MARK: - Information
-
+    
     func test_InfoCard_information_close() {
-        let view = infoCard(
-            variant: .information,
-            actions: .init(onClose: {})
+        assertOnAllDevices(
+            name: "information_close",
+            view: infoCard(variant: .information, actions: .init(onClose: {})),
+            record: Self.recordSnapshots
         )
-        assertSnapshot(of: view, as: .image(layout: .sizeThatFits), record: Self.recordSnapshots)
     }
-
+    
     func test_InfoCard_information_closeAndCTA() {
-        let view = infoCard(
-            variant: .information,
-            actions: .init(
-                onClose: {},
-                callToAction: .init(title: "Spärra kort", action: {})
-            )
+        assertOnAllDevices(
+            name: "information_closeAndCTA",
+            view: infoCard(
+                variant: .information,
+                actions: .init(
+                    onClose: {},
+                    callToAction: .init(title: "Spärra kort", action: {})
+                )
+            ),
+            record: Self.recordSnapshots
         )
-        assertSnapshot(of: view, as: .image(layout: .sizeThatFits), record: Self.recordSnapshots)
     }
-
+    
     func test_InfoCard_information_tap() {
-        let view = infoCard(
-            variant: .information,
-            actions: .init(onTap: {})
+        assertOnAllDevices(
+            name: "information_tap",
+            view: infoCard(variant: .information, actions: .init(onTap: {})),
+            record: Self.recordSnapshots
         )
-        assertSnapshot(of: view, as: .image(layout: .sizeThatFits), record: Self.recordSnapshots)
     }
-
+    
     // MARK: - InformationHd
-
+    
     func test_InfoCard_informationHd_close() {
-        let view = infoCard(
-            variant: .informationHd,
-            actions: .init(onClose: {})
+        assertOnAllDevices(
+            name: "informationHd_close",
+            view: infoCard(variant: .informationHd, actions: .init(onClose: {})),
+            record: Self.recordSnapshots
         )
-        assertSnapshot(of: view, as: .image(layout: .sizeThatFits), record: Self.recordSnapshots)
     }
-
+    
     func test_InfoCard_informationHd_closeAndCTA() {
-        let view = infoCard(
-            variant: .informationHd,
-            actions: .init(
-                onClose: {},
-                callToAction: .init(title: "Spärra kort", action: {})
-            )
+        assertOnAllDevices(
+            name: "informationHd_closeAndCTA",
+            view: infoCard(
+                variant: .informationHd,
+                actions: .init(
+                    onClose: {},
+                    callToAction: .init(title: "Spärra kort", action: {})
+                )
+            ),
+            record: Self.recordSnapshots
         )
-        assertSnapshot(of: view, as: .image(layout: .sizeThatFits), record: Self.recordSnapshots)
     }
-
+    
     func test_InfoCard_informationHd_tap() {
-        let view = infoCard(
-            variant: .informationHd,
-            actions: .init(onTap: {})
+        assertOnAllDevices(
+            name: "informationHd_tap",
+            view: infoCard(variant: .informationHd, actions: .init(onTap: {})),
+            record: Self.recordSnapshots
         )
-        assertSnapshot(of: view, as: .image(layout: .sizeThatFits), record: Self.recordSnapshots)
     }
-
     // MARK: - Helpers
-
     private func infoCard(
         variant: InfoCardView.Variant,
         actions: InfoCardView.Actions
