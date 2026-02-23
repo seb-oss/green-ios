@@ -3,6 +3,7 @@ import SwiftUI
 extension InputField {
     struct FloatingLabel<TextField: View>: View {
         @Environment(\.verticalSizeClass) private var verticalSizeClass
+        @Environment(\.textInputCharacterLimit) private var characterLimit
         @Environment(\.expandTextAreaRange) private var expandTextAreaRange
         @Environment(\.validationError) private var validationError
 
@@ -13,7 +14,7 @@ extension InputField {
 
         private let label: any StringProtocol
         private let textField: TextField
-        private let accessory: Accessory
+        private let infoContainer: InfoContainer
 
         private var minimumFrameHeight: CGFloat {
             verticalSizeClass == .compact ? 64 : 72
@@ -27,21 +28,22 @@ extension InputField {
         private var hasValidationError: Bool {
             validationError != nil
         }
-
+        
+        private var hasInfoContainer: Bool { InfoContainer.self != EmptyView.self }
         init(
             _ label: any StringProtocol,
             text: Binding<String>,
-            textField: TextField,
-            accessory: Accessory,
+            infoContainer: InfoContainer,
+            @ViewBuilder textField: () -> TextField,
         ) {
             self._text = text
             self.label = label
-            self.textField = textField
-            self.accessory = accessory
+            self.textField = textField()
+            self.infoContainer = infoContainer
         }
 
         var body: some View {
-            HStack {
+            HStack(alignment: .top, spacing: 0) {
                 VStack(alignment: .leading, spacing: .zero) {
                     floatingLabel
 
@@ -53,12 +55,36 @@ extension InputField {
                             }
                     }
                 }
+                
+                Spacer(minLength: .spaceM)
 
-                Spacer()
-
-                accessory
+                VStack {
+                    if !text.isEmpty || isEditing {
+                        if let characterLimit {
+                            CharacterLimitView(
+                                characterCount: text.count,
+                                maxLimit: characterLimit.limit
+                            )
+                        }
+                        if hasInfoContainer {
+                            HStack(spacing: .space3xs) {
+                                infoContainer
+                                if isEditing {
+                                    ClearButton(text: $text)
+                                }
+                            }
+                        } else if isEditing {
+                            ClearButton(text: $text)
+                        }
+                    }
+                }
+                .frame(
+                    alignment: presentTextField ? .top : .center
+                )
+                .padding(.trailing, .spaceM)
             }
-            .padding(.spaceM)
+            .padding(.vertical, .spaceM)
+            .padding(.leading, .spaceM)
             .frame(
                 maxWidth: .infinity,
                 minHeight: minimumFrameHeight,
@@ -96,7 +122,7 @@ extension InputField {
 }
 
 #Preview {
-    InputField("Floating")
+    InputField("Floating", text: .constant(""))
         .inputFieldStyle(.floating)
         .padding()
         .background {

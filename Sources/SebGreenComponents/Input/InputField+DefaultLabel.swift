@@ -3,6 +3,7 @@ import SwiftUI
 extension InputField {
     struct DefaultLabel<TextField: View>: View {
         @Environment(\.verticalSizeClass) private var verticalSizeClass
+        @Environment(\.textInputCharacterLimit) private var characterLimit
         @Environment(\.supportiveText) private var supportiveText
         @Environment(\.validationError) private var validationError
 
@@ -10,86 +11,120 @@ extension InputField {
         @Binding var text: String
 
         private let label: any StringProtocol
+        private let infoContainer: InfoContainer
         private let textField: TextField
-        private let accessory: Accessory
 
         init(
             _ label: any StringProtocol,
             text: Binding<String>,
-            textField: TextField,
-            accessory: Accessory
+            infoContainer: InfoContainer,
+            @ViewBuilder textField: () -> TextField
         ) {
             self._text = text
             self.label = label
-            self.textField = textField
-            self.accessory = accessory
-        }
-
-        private var minimumFrameHeight: CGFloat {
-            verticalSizeClass == .compact ? 54 : 64
+            self.infoContainer = infoContainer
+            self.textField = textField()
         }
 
         private var hasValidationError: Bool {
             validationError != nil
         }
 
+        private var hasInfoContainer: Bool {
+            InfoContainer.self != EmptyView.self
+        }
+
+        private var borderWidth: CGFloat {
+            isEditing || hasValidationError ? 2 : 1
+        }
+
+        @State private var isEditing = false
+
         var body: some View {
-            VStack(alignment: .leading, spacing: 8) {
+            VStack(alignment: .leading, spacing: .spaceXs) {
                 header
-                textField
-                    .focused($isFocused)
-                    .padding(16)
-                    .frame(minHeight: minimumFrameHeight)
-                    .background {
-                        RoundedRectangle(cornerRadius: 16)
-                            .fill(Color.l2Neutral02)
-                    }
-                    .overlay {
-                        RoundedRectangle(cornerRadius: 16)
-                            .stroke(
-                                style: .init(
-                                    lineWidth: hasValidationError ? 2 : 1
-                                )
-                            )
-                            .foregroundStyle(
-                                hasValidationError
-                                    ? Color.borderNegative01
-                                    : Color.borderInteractive
-                            )
-                    }
-                    .contentShape(.rect(cornerRadius: 16))
-                    .onTapGesture {
-                        isFocused = true
-                    }
-                    .animation(.default, value: hasValidationError)
+
+                HStack(alignment: .center, spacing: .spaceM) {
+                    textField
+                        .focused($isFocused)
+
+                    accessoryContainer
+                }
+                .padding(.spaceM)
+                .background {
+                    RoundedRectangle(cornerRadius: 16)
+                        .fill(Color.l2Neutral02)
+                        .animation(.snappy, value: text)
+                }
+                .overlay {
+                    RoundedRectangle(cornerRadius: 16)
+                        .stroke(style: .init(lineWidth: borderWidth))
+                        .foregroundStyle(
+                            hasValidationError
+                                ? Color.borderNegative01
+                                : Color.borderInteractive
+                        )
+                        .animation(.snappy, value: text)
+                }
+                .contentShape(.rect(cornerRadius: 16))
+                .frame(minHeight: 64)
+                .animation(.default, value: isFocused)
+                .animation(.default, value: isEditing)
+                .onTapGesture {
+                    isFocused = true
+                }
+                .animation(.default, value: hasValidationError)
+                .onChange(of: isFocused) {
+                    isEditing = $0
+                }
             }
         }
 
         private var header: some View {
-            VStack(alignment: .leading, spacing: 0) {
+            VStack(alignment: .leading, spacing: .space5xs) {
                 HStack {
                     Text(label)
-                        .typography(.bodyBookM)
+                        .typography(.detailBookM)
                         .foregroundStyle(Color.contentNeutral01)
 
-                    Spacer()
+                    Spacer(minLength: .zero)
 
-                    accessory
+                    infoContainer
+                        .typography(.detailBookM)
                 }
+
                 if let supportiveText, !supportiveText.isEmpty {
                     Text(supportiveText)
-                        .typography(.bodyBookS)
+                        .typography(.detailBookS)
                         .foregroundStyle(Color.contentNeutral02)
-                        .padding(.trailing, 16)
                 }
             }
-            .padding(.leading, 16)
+            .padding(.horizontal, .spaceM)
+        }
+
+        private var accessoryContainer: some View {
+            VStack(alignment: .trailing, spacing: .zero) {
+                if let characterLimit {
+                    CharacterLimitView(
+                        characterCount: text.count,
+                        maxLimit: characterLimit.limit
+                    )
+                    .opacity(isEditing ? 1 : 0)
+                }
+
+                ClearButton(text: $text)
+                    .opacity(
+                        text.count >= 1 && isEditing ? 1 : 0
+                    )
+                    .animation(.snappy, value: text)
+                    .frame(maxHeight: .infinity, alignment: .center)
+            }
         }
     }
 }
 
 #Preview {
-    InputField("Floating")
+    InputField("Floating", text: .constant(""))
         .inputFieldStyle(.default)
         .padding()
         .background {
