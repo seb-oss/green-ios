@@ -9,7 +9,7 @@ import XCTest
 import SnapshotTesting
 @testable import SebGreenComponents
 
-final class InfoCardPreviewSnapshotTests: XCTestCase {
+final class InfoCardPreviewSnapshotTests: SEBViewImageSnapshotTesting {
     private static let recordSnapshots = false
 
     // MARK: - Information

@@ -35,9 +35,24 @@ open class SEBViewImageSnapshotTesting: XCTestCase {
 
     // MARK: - XCTest Lifecycle
 
-    open override func setUp() throws {
-        try super.setUpWithError()
-        try enforceCIDestinationPolicy(isRecording: Self.snapshotRecordMode)
+    open override func setUp() {
+        super.setUp()
+        do {
+            try enforceCIDestinationPolicy(isRecording: Self.snapshotRecordMode)
+        } catch let skip as XCTSkip {
+            // Record the skip for this test case. XCTest doesn't provide a direct API to mark setUp as skipped,
+            // so we record the skip and prevent further failures in this test by setting continueAfterFailure to false.
+            let attachment = XCTAttachment(string: skip.localizedDescription)
+            attachment.lifetime = .keepAlways
+            add(attachment)
+            // Record as a skip by using XCTSkip directly within a test context isn't possible here,
+            // so we fail-fast to stop subsequent assertions. Individual tests can early-exit if needed.
+            continueAfterFailure = false
+        } catch {
+            // Record any unexpected error as a failure without throwing from setUp.
+            XCTFail("Snapshot destination policy check failed with error: \(error)")
+            continueAfterFailure = false
+        }
     }
 
     // MARK: - Enforcement

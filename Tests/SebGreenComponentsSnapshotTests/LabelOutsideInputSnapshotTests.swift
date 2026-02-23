@@ -10,7 +10,7 @@ import XCTest
 import SnapshotTesting
 @testable import SebGreenComponents
 
-final class LabelOutsideInputSnapshotTests: XCTestCase {
+final class LabelOutsideInputSnapshotTests: SEBViewImageSnapshotTesting {
     private static let recordSnapshots = false
     
     func testLabelOutsideInput_Default() {

@@ -11,7 +11,7 @@ import XCTest
 import SnapshotTesting
 @testable import SebGreenComponents
 
-final class FloatingLabelInputSnapshotTests: XCTestCase {
+final class FloatingLabelInputSnapshotTests: SEBViewImageSnapshotTesting {
     private static let recordSnapshots = false
     
     func testFloatingLabelInput_Default() {
