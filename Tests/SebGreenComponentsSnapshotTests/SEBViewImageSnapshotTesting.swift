@@ -35,16 +35,16 @@ open class SEBViewImageSnapshotTesting: XCTestCase {
 
     // MARK: - XCTest Lifecycle
 
-    open override func setUp() {
-        super.setUp()
-        enforceCIDestinationPolicy(isRecording: Self.snapshotRecordMode)
+    open override func setUp() throws {
+        try super.setUpWithError()
+        try enforceCIDestinationPolicy(isRecording: Self.snapshotRecordMode)
     }
 
     // MARK: - Enforcement
 
     /// Enforces that snapshot tests run on the agreed simulator when not recording.
     /// Allows any destination while recording so developers can preview visuals.
-    public func enforceCIDestinationPolicy(isRecording: Bool, file: StaticString = #filePath, line: UInt = #line) {
+    public func enforceCIDestinationPolicy(isRecording: Bool, file: StaticString = #filePath, line: UInt = #line) throws {
         let env = ProcessInfo.processInfo.environment
         let deviceName = env["SIMULATOR_DEVICE_NAME"] ?? UIDevice.current.name
         let osVersion = UIDevice.current.systemVersion
