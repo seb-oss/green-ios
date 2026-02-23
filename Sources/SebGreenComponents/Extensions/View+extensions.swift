@@ -2,7 +2,7 @@ import SwiftUI
 
 extension EnvironmentValues {
     @Entry var inputFieldStyle: InputFieldStyle = .default
-    @Entry var textInputCharacterLimit: Int?
+    @Entry var textInputCharacterLimit: CharacterLimit?
     @Entry var optionalField = false
     @Entry var clearButtonEnabled = false
     @Entry var supportiveText: String?
@@ -15,7 +15,8 @@ extension View {
         environment(\.inputFieldStyle, style)
     }
 
-    func textInputCharacterLimit(_ limit: Int) -> some View {
+    // TODO: Make a ViewModifier out of this one
+    func textInputCharacterLimit(_ limit: CharacterLimit) -> some View {
         environment(\.textInputCharacterLimit, limit)
     }
 
@@ -34,7 +35,7 @@ extension View {
     func validation(_ error: Error?) -> some View {
         environment(\.validationError, error)
     }
-    
+
     func expandTextArea(_ range: PartialRangeFrom<Int> = 4...) -> some View {
         environment(\.expandTextAreaRange, range)
     }

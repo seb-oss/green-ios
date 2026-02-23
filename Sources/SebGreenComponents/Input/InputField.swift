@@ -1,10 +1,13 @@
 import SwiftUI
 
+// TODO: Remove later
 struct InfoButton: View {
     let action: () -> Void
     var body: some View {
-        Button("", systemImage: "info.circle", action: action)
-            .foregroundStyle(Color.contentNeutral01)
+        Button(action: action) {
+            Image(systemName: "info.circle")
+                .foregroundStyle(Color.contentNeutral01)
+        }
     }
 }
 
@@ -13,15 +16,40 @@ enum InputFieldStyle {
     case floating
 }
 
-struct InputField<Accessory: View>: View {
+enum CharacterLimit {
+    case hard(limit: Int)
+    case soft(limit: Int)
+    
+    var limit: Int {
+        switch self {
+        case .hard(let limit): limit
+        case .soft(let limit): limit
+        }
+    }
+
+    enum Error: LocalizedError {
+        case reachedLimit
+
+        var errorDescription: String? {
+            switch self {
+            case .reachedLimit:
+                String(localized: "GreeniOS.Error.ReachedLimit")
+            }
+        }
+    }
+}
+
+// TODO: Add sensory feedback for hard + soft validation
+
+struct InputField<InfoContainer: View>: View {
     @Environment(\.inputFieldStyle) private var inputStyle
     @Environment(\.optionalField) private var optionalField
     @Environment(\.validationError) private var validationError
     @Environment(\.expandTextAreaRange) private var expandTextAreaRange
 
-    @State private var text: String = ""  // TODO: Setup a binding text to the parent or just change this to binding depending on requirement
+    @Binding private var text: String
     private let label: any StringProtocol
-    private let accessory: Accessory
+    private let infoContainer: InfoContainer
 
     private var title: any StringProtocol {
         guard optionalField else { return label }
@@ -35,11 +63,12 @@ struct InputField<Accessory: View>: View {
 
     init(
         _ label: any StringProtocol,
-        @AccessoryBuilder accessory: () -> Accessory = AccessoryBuilder
-            .buildBlock
+        text: Binding<String>,
+        @ViewBuilder infoContainer: () -> InfoContainer
     ) {
         self.label = label
-        self.accessory = accessory()
+        self._text = text
+        self.infoContainer = infoContainer()
     }
 
     var body: some View {
@@ -52,7 +81,7 @@ struct InputField<Accessory: View>: View {
         }
         .animation(.default, value: hasValidationError)
     }
-    
+
     @ViewBuilder
     private var inputField: some View {
         switch inputStyle {
@@ -60,16 +89,18 @@ struct InputField<Accessory: View>: View {
             DefaultLabel(
                 title,
                 text: $text,
-                textField: textField,
-                accessory: accessory
-            )
+                infoContainer: infoContainer
+            ) {
+                textField
+            }
         case .floating:
             FloatingLabel(
                 title,
                 text: $text,
-                textField: textField,
-                accessory: accessory
-            )
+                infoContainer: infoContainer
+            ) {
+                textField
+            }
         }
     }
 
@@ -82,30 +113,44 @@ struct InputField<Accessory: View>: View {
                 TextField("", text: $text)
             }
         }
+        .typography(.detailBookM)
         .foregroundStyle(Color.contentNeutral01)
         .autocorrectionDisabled(true)
     }
-    
+
     private func validationView(_ error: Error) -> some View {
-        HStack {
+        HStack(alignment: .firstTextBaseline) {
             Image(systemName: "exclamationmark.square.fill")
                 .accessibilityHidden(true)
             Text(error.localizedDescription)
-                .typography(.bodyBookS)
+                .typography(.detailBookS)
                 .fixedSize(horizontal: false, vertical: true)
 
         }
         .foregroundColor(Color.contentNegative01)
-        .padding(.horizontal, 14) // Needs to be 14px due to 2px border.
+        .padding(.horizontal, 14)  // Needs to be 14px due to 2px border.
     }
 }
 
+extension InputField where InfoContainer == EmptyView {
+    init(_ label: any StringProtocol, text: Binding<String>) {
+        self.label = label
+        self._text = text
+        self.infoContainer = EmptyView()
+    }
+}
 
 @available(iOS 17, *)
 #Preview {
     @Previewable @State var supportTextEnabled = false
     @Previewable @State var isOptional = false
     @Previewable @State var hasError = false
+    
+    @Previewable @State var text = """
+    Toggle("Optional", isOn: $isOptional)
+    Toggle("Support text", isOn: $supportTextEnabled)
+    Toggle("Toggle error", isOn: $hasError)
+"""
 
     ScrollView {
         ZStack {
@@ -121,10 +166,8 @@ struct InputField<Accessory: View>: View {
 
                 Divider()
 
-                InputField("Custom header") {
-                    InfoButton {
-
-                    }
+                InputField("Custom header", text: $text) {
+                    InfoButton {}
                 }
                 .inputFieldStyle(.default)
                 .supportiveText(supportTextEnabled ? "Hello" : nil)
@@ -132,23 +175,29 @@ struct InputField<Accessory: View>: View {
                 .validation(
                     hasError ? NSError(domain: "", code: 999) : nil
                 )
-                .expandTextArea()
+                .clearable()
+                .textInputCharacterLimit(.soft(limit: 50))
 
                 Divider()
+                
+                TextField("", text: $text)
 
-                InputField("Floating header 2")
-                    .inputFieldStyle(.floating)
-                    .optionalField(isOptional)
-                    .clearable()
-                    .validation(
-                        hasError ? NSError(domain: "", code: 999) : nil
-                    )
+//                InputField("Floating header 2", text: $text) {
+//                    InfoButton {}
+//                }
+//                .inputFieldStyle(.floating)
+//                .optionalField(isOptional)
+//                .clearable()
+//                .validation(
+//                    hasError ? NSError(domain: "", code: 999) : nil
+//                )
+//                .clearable()
+
             }
-            .padding()
+            .padding(16)
         }
         .animation(.default, value: hasError)
         .animation(.default, value: isOptional)
         .animation(.default, value: supportTextEnabled)
     }
-    
 }
