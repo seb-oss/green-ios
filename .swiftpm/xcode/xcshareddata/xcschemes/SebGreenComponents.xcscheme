@@ -30,7 +30,7 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <TestPlans>
          <TestPlanReference
-            reference = "container:.swiftpm/SebGreenComponents.xctestplan"
+            reference = "container:Test Snapshots.xctestplan"
             default = "YES">
          </TestPlanReference>
       </TestPlans>
