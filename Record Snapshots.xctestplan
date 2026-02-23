@@ -1,7 +1,7 @@
 {
   "configurations" : [
     {
-      "id" : "3285C632-488D-4C85-AE31-4F17A6E0FEBC",
+      "id" : "A0BD1952-C264-4335-99E8-4EBA1CE775E8",
       "name" : "Configuration 1",
       "options" : {
 
@@ -12,7 +12,7 @@
     "environmentVariableEntries" : [
       {
         "key" : "SNAPSHOT_RECORD",
-        "value" : "0"
+        "value" : "1"
       }
     ],
     "testTimeoutsEnabled" : true
