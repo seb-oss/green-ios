@@ -10,7 +10,7 @@ import XCTest
 import SnapshotTesting
 @testable import SebGreenComponents
 
-final class GreenListSnapshotTests: XCTestCase {
+final class GreenListSnapshotTests: SEBViewImageSnapshotTesting {
     private static let recordSnapshots = false
 
     // Canvas sizes approximating iPhone portrait safe area

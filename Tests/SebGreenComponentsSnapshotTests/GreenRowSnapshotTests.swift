@@ -11,7 +11,7 @@ import SnapshotTesting
 import GdsKit
 @testable import SebGreenComponents
 
-final class GreenRowSnapshotTests: XCTestCase {
+final class GreenRowSnapshotTests: SEBViewImageSnapshotTesting {
     private static let recordSnapshots = false
 
     // MARK: - list56 gallery
