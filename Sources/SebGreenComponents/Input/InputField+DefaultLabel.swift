@@ -3,7 +3,6 @@ import SwiftUI
 extension InputField {
     struct DefaultLabel<TextField: View>: View {
         @Environment(\.verticalSizeClass) private var verticalSizeClass
-        @Environment(\.textInputCharacterLimit) private var characterLimit
         @Environment(\.supportiveText) private var supportiveText
         @Environment(\.validationError) private var validationError
 
@@ -48,7 +47,7 @@ extension InputField {
                     textField
                         .focused($isFocused)
 
-                    accessoryContainer
+                    AccessoryContainer($text, isEditing: isEditing)
                 }
                 .padding(.spaceM)
                 .background {
@@ -68,12 +67,13 @@ extension InputField {
                 }
                 .contentShape(.rect(cornerRadius: 16))
                 .frame(minHeight: 64)
+                .fixedSize(horizontal: false, vertical: true)
                 .animation(.default, value: isFocused)
                 .animation(.default, value: isEditing)
+                .animation(.default, value: hasValidationError)
                 .onTapGesture {
                     isFocused = true
                 }
-                .animation(.default, value: hasValidationError)
                 .onChange(of: isFocused) {
                     isEditing = $0
                 }
@@ -100,25 +100,6 @@ extension InputField {
                 }
             }
             .padding(.horizontal, .spaceM)
-        }
-
-        private var accessoryContainer: some View {
-            VStack(alignment: .trailing, spacing: .zero) {
-                if let characterLimit {
-                    CharacterLimitView(
-                        characterCount: text.count,
-                        maxLimit: characterLimit.limit
-                    )
-                    .opacity(isEditing ? 1 : 0)
-                }
-
-                ClearButton(text: $text)
-                    .opacity(
-                        text.count >= 1 && isEditing ? 1 : 0
-                    )
-                    .animation(.snappy, value: text)
-                    .frame(maxHeight: .infinity, alignment: .center)
-            }
         }
     }
 }
