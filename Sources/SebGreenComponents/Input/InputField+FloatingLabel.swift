@@ -3,7 +3,6 @@ import SwiftUI
 extension InputField {
     struct FloatingLabel<TextField: View>: View {
         @Environment(\.verticalSizeClass) private var verticalSizeClass
-        @Environment(\.textInputCharacterLimit) private var characterLimit
         @Environment(\.expandTextAreaRange) private var expandTextAreaRange
         @Environment(\.validationError) private var validationError
 
@@ -28,8 +27,10 @@ extension InputField {
         private var hasValidationError: Bool {
             validationError != nil
         }
-        
-        private var hasInfoContainer: Bool { InfoContainer.self != EmptyView.self }
+
+        private var hasInfoContainer: Bool {
+            InfoContainer.self != EmptyView.self
+        }
         init(
             _ label: any StringProtocol,
             text: Binding<String>,
@@ -43,7 +44,7 @@ extension InputField {
         }
 
         var body: some View {
-            HStack(alignment: .top, spacing: 0) {
+            HStack(alignment: .center, spacing: .zero) {
                 VStack(alignment: .leading, spacing: .zero) {
                     floatingLabel
 
@@ -55,36 +56,13 @@ extension InputField {
                             }
                     }
                 }
-                
+
                 Spacer(minLength: .spaceM)
 
-                VStack {
-                    if !text.isEmpty || isEditing {
-                        if let characterLimit {
-                            CharacterLimitView(
-                                characterCount: text.count,
-                                maxLimit: characterLimit.limit
-                            )
-                        }
-                        if hasInfoContainer {
-                            HStack(spacing: .space3xs) {
-                                infoContainer
-                                if isEditing {
-                                    ClearButton(text: $text)
-                                }
-                            }
-                        } else if isEditing {
-                            ClearButton(text: $text)
-                        }
-                    }
-                }
-                .frame(
-                    alignment: presentTextField ? .top : .center
-                )
-                .padding(.trailing, .spaceM)
+                AccessoryContainer($text, isEditing: isEditing)
             }
-            .padding(.vertical, .spaceM)
-            .padding(.leading, .spaceM)
+            .fixedSize(horizontal: false, vertical: true)
+            .padding(.spaceM)
             .frame(
                 maxWidth: .infinity,
                 minHeight: minimumFrameHeight,
@@ -93,6 +71,7 @@ extension InputField {
             .background {
                 RoundedRectangle(cornerRadius: 16)
                     .fill(Color.l2Neutral02)
+                    .animation(.snappy, value: text)
             }
             .overlay {
                 RoundedRectangle(cornerRadius: 16)
@@ -101,6 +80,7 @@ extension InputField {
                         hasValidationError
                             ? Color.borderNegative01 : Color.clear
                     )
+                    .animation(.snappy, value: text)
             }
             .contentShape(.rect(cornerRadius: 16))
             .onTapGesture {
@@ -112,7 +92,7 @@ extension InputField {
         private var floatingLabel: some View {
             Text(label)
                 .typography(
-                    presentTextField ? .bodyBookS : .bodyBookL
+                    presentTextField ? .detailBookXs : .detailBookM
                 )
                 .fixedSize(horizontal: false, vertical: true)
                 .foregroundStyle(Color.contentNeutral02)
