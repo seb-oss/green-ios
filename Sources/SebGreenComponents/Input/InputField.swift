@@ -16,30 +16,6 @@ enum InputFieldStyle {
     case floating
 }
 
-// TODO: Add sensory feedback for hard + soft validation
-enum CharacterLimit {
-    case hard(limit: Int)
-    case soft(limit: Int)
-
-    var limit: Int {
-        switch self {
-        case .hard(let limit): limit
-        case .soft(let limit): limit
-        }
-    }
-
-    enum Error: LocalizedError {
-        case reachedLimit
-
-        var errorDescription: String? {
-            switch self {
-            case .reachedLimit:
-                String(localized: "GreeniOS.Error.ReachedLimit")
-            }
-        }
-    }
-}
-
 struct InputField<InfoContainer: View>: View {
     @Environment(\.inputFieldStyle) private var inputStyle
     @Environment(\.optionalField) private var optionalField
@@ -69,6 +45,14 @@ struct InputField<InfoContainer: View>: View {
         self._text = text
         self.infoContainer = infoContainer()
     }
+
+    //    init(
+    //        _ title: String,
+    //        value: Binding<F.FormatInput?>,
+    //        format: F,
+    //        prompt: Text? = nil,
+    //        rules: Rule...
+    //    )
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -139,26 +123,25 @@ extension InputField where InfoContainer == EmptyView {
     }
 }
 
-@available(iOS 17, *)
-#Preview {
-    @Previewable @State var supportTextEnabled = false
-    @Previewable @State var isOptional = false
-    @Previewable @State var hasError = false
+@available(iOS 16.0, *)
+public struct InputFieldPreview: View {
+    @State var supportTextEnabled = false
+    @State var isOptional = true
+    @State var hasError = false
+    @State var text = ""
+    @State var text2 = ""
 
-    @Previewable @State var text = ""
-    @Previewable @State var text2 = ""
+    public init() {}
 
-    ScrollView {
-        ZStack {
-            RoundedRectangle(cornerRadius: 16)
-                .foregroundStyle(Color.l1Neutral02)
-
+    public var body: some View {
+        ScrollView {
             VStack(spacing: 24) {
                 VStack {
                     Toggle("Optional", isOn: $isOptional)
                     Toggle("Support text", isOn: $supportTextEnabled)
                     Toggle("Toggle error", isOn: $hasError)
                 }
+                .tint(.l3Positive01)
 
                 Divider()
 
@@ -167,27 +150,28 @@ extension InputField where InfoContainer == EmptyView {
                 }
                 .supportiveText(supportTextEnabled ? "Hello" : nil)
                 .optionalField(isOptional)
-                .validation(
-                    hasError ? NSError(domain: "", code: 999) : nil
+                .applyRules(
+                    to: $text,
+                    rules: .maxCharacters(5)
                 )
-                .textInputCharacterLimit(.soft(limit: 50))
 
                 Divider()
 
                 InputField("Floating header 2", text: $text2)
                     .inputFieldStyle(.floating)
                     .optionalField(isOptional)
-                    .validation(
-                        hasError ? NSError(domain: "", code: 999) : nil
-                    )
-                    .textInputCharacterLimit(.soft(limit: 50))
-
-                TextField("", text: .constant(""))
+                    .applyRules(to: $text2, rules: .maxCharacters(10))
             }
             .padding(16)
+            .animation(.default, value: hasError)
+            .animation(.default, value: isOptional)
+            .animation(.default, value: supportTextEnabled)
         }
-        .animation(.default, value: hasError)
-        .animation(.default, value: isOptional)
-        .animation(.default, value: supportTextEnabled)
+        .background(Color.l1Neutral02)
     }
+}
+
+@available(iOS 16.0, *)
+#Preview {
+    InputFieldPreview()
 }
