@@ -16,7 +16,7 @@ struct AccessoryContainer: View {
             if let characterLimit {
                 CharacterLimitView(
                     characterCount: text.count,
-                    maxLimit: characterLimit.limit
+                    maxLimit: characterLimit
                 )
                 .opacity(isEditing ? 1 : 0)
             }
