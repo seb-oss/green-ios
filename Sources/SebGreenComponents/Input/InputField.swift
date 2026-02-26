@@ -16,10 +16,11 @@ enum InputFieldStyle {
     case floating
 }
 
+// TODO: Add sensory feedback for hard + soft validation
 enum CharacterLimit {
     case hard(limit: Int)
     case soft(limit: Int)
-    
+
     var limit: Int {
         switch self {
         case .hard(let limit): limit
@@ -38,8 +39,6 @@ enum CharacterLimit {
         }
     }
 }
-
-// TODO: Add sensory feedback for hard + soft validation
 
 struct InputField<InfoContainer: View>: View {
     @Environment(\.inputFieldStyle) private var inputStyle
@@ -145,12 +144,9 @@ extension InputField where InfoContainer == EmptyView {
     @Previewable @State var supportTextEnabled = false
     @Previewable @State var isOptional = false
     @Previewable @State var hasError = false
-    
-    @Previewable @State var text = """
-    Toggle("Optional", isOn: $isOptional)
-    Toggle("Support text", isOn: $supportTextEnabled)
-    Toggle("Toggle error", isOn: $hasError)
-"""
+
+    @Previewable @State var text = ""
+    @Previewable @State var text2 = ""
 
     ScrollView {
         ZStack {
@@ -169,30 +165,24 @@ extension InputField where InfoContainer == EmptyView {
                 InputField("Custom header", text: $text) {
                     InfoButton {}
                 }
-                .inputFieldStyle(.default)
                 .supportiveText(supportTextEnabled ? "Hello" : nil)
                 .optionalField(isOptional)
                 .validation(
                     hasError ? NSError(domain: "", code: 999) : nil
                 )
-                .clearable()
                 .textInputCharacterLimit(.soft(limit: 50))
 
                 Divider()
-                
-                TextField("", text: $text)
 
-//                InputField("Floating header 2", text: $text) {
-//                    InfoButton {}
-//                }
-//                .inputFieldStyle(.floating)
-//                .optionalField(isOptional)
-//                .clearable()
-//                .validation(
-//                    hasError ? NSError(domain: "", code: 999) : nil
-//                )
-//                .clearable()
+                InputField("Floating header 2", text: $text2)
+                    .inputFieldStyle(.floating)
+                    .optionalField(isOptional)
+                    .validation(
+                        hasError ? NSError(domain: "", code: 999) : nil
+                    )
+                    .textInputCharacterLimit(.soft(limit: 50))
 
+                TextField("", text: .constant(""))
             }
             .padding(16)
         }

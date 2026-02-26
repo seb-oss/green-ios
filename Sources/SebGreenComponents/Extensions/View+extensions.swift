@@ -4,7 +4,6 @@ extension EnvironmentValues {
     @Entry var inputFieldStyle: InputFieldStyle = .default
     @Entry var textInputCharacterLimit: CharacterLimit?
     @Entry var optionalField = false
-    @Entry var clearButtonEnabled = false
     @Entry var supportiveText: String?
     @Entry var validationError: Error?
     @Entry var expandTextAreaRange: PartialRangeFrom<Int> = 1...
@@ -22,10 +21,6 @@ extension View {
 
     func optionalField(_ isOptional: Bool = true) -> some View {
         environment(\.optionalField, isOptional)
-    }
-
-    func clearable(_ isClearable: Bool = true) -> some View {
-        environment(\.clearButtonEnabled, isClearable)
     }
 
     func supportiveText(_ text: String?) -> some View {
