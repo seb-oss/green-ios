@@ -11,8 +11,7 @@ import SnapshotTesting
 import GdsKit
 @testable import SebGreenComponents
 
-final class GreenRowSnapshotTests: XCTestCase {
-    private static let recordSnapshots = false
+final class GreenRowSnapshotTests: SEBViewImageSnapshotTesting {
 
     // MARK: - list56 gallery
     func test_GreenRow_allStates_list56_light() {
@@ -23,7 +22,7 @@ final class GreenRowSnapshotTests: XCTestCase {
         assertSnapshot(
             of: view,
             as: .image(layout: .sizeThatFits),
-            record: Self.recordSnapshots
+            record: Self.snapshotRecordMode
         )
     }
 
@@ -36,7 +35,7 @@ final class GreenRowSnapshotTests: XCTestCase {
         assertSnapshot(
             of: view,
             as: .image(layout: .sizeThatFits, traits: traits),
-            record: Self.recordSnapshots
+            record: Self.snapshotRecordMode
         )
     }
 
@@ -49,7 +48,7 @@ final class GreenRowSnapshotTests: XCTestCase {
         assertSnapshot(
             of: view,
             as: .image(layout: .sizeThatFits),
-            record: Self.recordSnapshots
+            record: Self.snapshotRecordMode
         )
     }
 
@@ -89,7 +88,7 @@ final class GreenRowSnapshotTests: XCTestCase {
         assertSnapshot(
             of: view,
             as: .image(layout: .sizeThatFits),
-            record: Self.recordSnapshots
+            record: Self.snapshotRecordMode
         )
     }
 
@@ -103,7 +102,7 @@ final class GreenRowSnapshotTests: XCTestCase {
         assertSnapshot(
             of: view,
             as: .image(layout: .sizeThatFits, traits: traits),
-            record: Self.recordSnapshots
+            record: Self.snapshotRecordMode
         )
     }
 }

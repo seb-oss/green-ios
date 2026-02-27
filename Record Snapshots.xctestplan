@@ -1,0 +1,30 @@
+{
+  "configurations" : [
+    {
+      "id" : "A0BD1952-C264-4335-99E8-4EBA1CE775E8",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "environmentVariableEntries" : [
+      {
+        "key" : "SNAPSHOT_RECORD",
+        "value" : "1"
+      }
+    ],
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "SebGreenComponentsSnapshotTests",
+        "name" : "SebGreenComponentsSnapshotTests"
+      }
+    }
+  ],
+  "version" : 1
+}
