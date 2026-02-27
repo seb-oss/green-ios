@@ -11,7 +11,6 @@ import SnapshotTesting
 @testable import SebGreenComponents
 
 final class LabelOutsideInputSnapshotTests: SEBViewImageSnapshotTesting {
-    private static let recordSnapshots = false
     
     func testLabelOutsideInput_Default() {
         let view = LabelOutsideInput(
@@ -23,7 +22,7 @@ final class LabelOutsideInputSnapshotTests: SEBViewImageSnapshotTesting {
         .padding(.spaceM)
         .background(Color.l2Elevated01)
 
-        assertSnapshot(of: view, as: .image(layout: .sizeThatFits), record: Self.recordSnapshots)
+        assertSnapshot(of: view, as: .image(layout: .sizeThatFits), record: Self.snapshotRecordMode)
     }
 
     func testLabelOutsideInput_Filled() {
@@ -36,7 +35,7 @@ final class LabelOutsideInputSnapshotTests: SEBViewImageSnapshotTesting {
         .padding(.spaceM)
         .background(Color.l2Elevated01)
 
-        assertSnapshot(of: view, as: .image(layout: .sizeThatFits), record: Self.recordSnapshots)
+        assertSnapshot(of: view, as: .image(layout: .sizeThatFits), record: Self.snapshotRecordMode)
     }
 
     func testLabelOutsideInput_Error() {
@@ -51,7 +50,7 @@ final class LabelOutsideInputSnapshotTests: SEBViewImageSnapshotTesting {
         .padding(.spaceM)
         .background(Color.l2Elevated01)
 
-        assertSnapshot(of: view, as: .image(layout: .sizeThatFits), record: Self.recordSnapshots)
+        assertSnapshot(of: view, as: .image(layout: .sizeThatFits), record: Self.snapshotRecordMode)
     }
 }
 

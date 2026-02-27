@@ -166,4 +166,3 @@ final class GreenButtonPreviewSnapshotTests: SEBViewImageSnapshotTesting {
         assertSnapshot(of: view, as: .image(layout: .sizeThatFits), record: Self.snapshotRecordMode)
     }
 }
-

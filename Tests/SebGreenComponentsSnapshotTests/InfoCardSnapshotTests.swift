@@ -10,7 +10,6 @@ import SnapshotTesting
 @testable import SebGreenComponents
 
 final class InfoCardPreviewSnapshotTests: SEBViewImageSnapshotTesting {
-    private static let recordSnapshots = false
 
     // MARK: - Information
 
@@ -19,7 +18,7 @@ final class InfoCardPreviewSnapshotTests: SEBViewImageSnapshotTesting {
             variant: .information,
             actions: .init(onClose: {})
         )
-        assertSnapshot(of: view, as: .image(layout: .sizeThatFits), record: Self.recordSnapshots)
+        assertSnapshot(of: view, as: .image(layout: .sizeThatFits), record: Self.snapshotRecordMode)
     }
 
     func test_InfoCard_information_closeAndCTA() {
@@ -30,7 +29,7 @@ final class InfoCardPreviewSnapshotTests: SEBViewImageSnapshotTesting {
                 callToAction: .init(title: "Spärra kort", action: {})
             )
         )
-        assertSnapshot(of: view, as: .image(layout: .sizeThatFits), record: Self.recordSnapshots)
+        assertSnapshot(of: view, as: .image(layout: .sizeThatFits), record: Self.snapshotRecordMode)
     }
 
     func test_InfoCard_information_tap() {
@@ -38,7 +37,7 @@ final class InfoCardPreviewSnapshotTests: SEBViewImageSnapshotTesting {
             variant: .information,
             actions: .init(onTap: {})
         )
-        assertSnapshot(of: view, as: .image(layout: .sizeThatFits), record: Self.recordSnapshots)
+        assertSnapshot(of: view, as: .image(layout: .sizeThatFits), record: Self.snapshotRecordMode)
     }
 
     // MARK: - InformationHd
@@ -48,7 +47,7 @@ final class InfoCardPreviewSnapshotTests: SEBViewImageSnapshotTesting {
             variant: .informationHd,
             actions: .init(onClose: {})
         )
-        assertSnapshot(of: view, as: .image(layout: .sizeThatFits), record: Self.recordSnapshots)
+        assertSnapshot(of: view, as: .image(layout: .sizeThatFits), record: Self.snapshotRecordMode)
     }
 
     func test_InfoCard_informationHd_closeAndCTA() {
@@ -59,7 +58,7 @@ final class InfoCardPreviewSnapshotTests: SEBViewImageSnapshotTesting {
                 callToAction: .init(title: "Spärra kort", action: {})
             )
         )
-        assertSnapshot(of: view, as: .image(layout: .sizeThatFits), record: Self.recordSnapshots)
+        assertSnapshot(of: view, as: .image(layout: .sizeThatFits), record: Self.snapshotRecordMode)
     }
 
     func test_InfoCard_informationHd_tap() {
@@ -67,7 +66,7 @@ final class InfoCardPreviewSnapshotTests: SEBViewImageSnapshotTesting {
             variant: .informationHd,
             actions: .init(onTap: {})
         )
-        assertSnapshot(of: view, as: .image(layout: .sizeThatFits), record: Self.recordSnapshots)
+        assertSnapshot(of: view, as: .image(layout: .sizeThatFits), record: Self.snapshotRecordMode)
     }
 
     // MARK: - Helpers

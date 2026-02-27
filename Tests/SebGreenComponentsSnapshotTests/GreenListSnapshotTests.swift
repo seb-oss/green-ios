@@ -11,8 +11,6 @@ import SnapshotTesting
 @testable import SebGreenComponents
 
 final class GreenListSnapshotTests: SEBViewImageSnapshotTesting {
-    private static let recordSnapshots = false
-
     // Canvas sizes approximating iPhone portrait safe area
     private let canvasWidth: CGFloat = 375
     private let canvasHeight: CGFloat = 800
@@ -23,7 +21,7 @@ final class GreenListSnapshotTests: SEBViewImageSnapshotTesting {
         assertSnapshot(
             of: view,
             as: .image(layout: .fixed(width: canvasWidth, height: canvasHeight)),
-            record: Self.recordSnapshots
+            record: Self.snapshotRecordMode
         )
     }
 
@@ -33,7 +31,7 @@ final class GreenListSnapshotTests: SEBViewImageSnapshotTesting {
         assertSnapshot(
             of: view,
             as: .image(layout: .fixed(width: canvasWidth, height: canvasHeight), traits: traits),
-            record: Self.recordSnapshots
+            record: Self.snapshotRecordMode
         )
     }
 
@@ -43,7 +41,7 @@ final class GreenListSnapshotTests: SEBViewImageSnapshotTesting {
         assertSnapshot(
             of: view,
             as: .image(layout: .fixed(width: canvasWidth, height: canvasHeight)),
-            record: Self.recordSnapshots
+            record: Self.snapshotRecordMode
         )
     }
 
@@ -53,7 +51,7 @@ final class GreenListSnapshotTests: SEBViewImageSnapshotTesting {
         assertSnapshot(
             of: view,
             as: .image(layout: .fixed(width: canvasWidth, height: canvasHeight)),
-            record: Self.recordSnapshots
+            record: Self.snapshotRecordMode
         )
     }
 
@@ -63,7 +61,7 @@ final class GreenListSnapshotTests: SEBViewImageSnapshotTesting {
         assertSnapshot(
             of: view,
             as: .image(layout: .fixed(width: canvasWidth, height: canvasHeight)),
-            record: Self.recordSnapshots
+            record: Self.snapshotRecordMode
         )
     }
 
@@ -74,7 +72,7 @@ final class GreenListSnapshotTests: SEBViewImageSnapshotTesting {
         assertSnapshot(
             of: view,
             as: .image(layout: .fixed(width: canvasWidth, height: canvasHeight), traits: traits),
-            record: Self.recordSnapshots
+            record: Self.snapshotRecordMode
         )
     }
 
