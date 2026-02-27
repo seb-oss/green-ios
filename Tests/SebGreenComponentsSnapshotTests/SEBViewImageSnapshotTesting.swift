@@ -11,7 +11,7 @@ import UIKit
 /// Policy
 /// - CI and committed snapshots must be captured and verified on: iPhone 17 Pro (iOS 26.1)
 /// - Developers may iterate locally on any simulator when recording is enabled
-/// - When not recording and destination mismatches, tests fail with guidance and are skipped
+/// - When not recording: on CI, a destination mismatch fails fast; locally, a mismatch cleanly skips with guidance
 ///
 /// Usage
 /// - Subclass this type instead of XCTestCase in your snapshot suites
@@ -33,26 +33,14 @@ open class SEBViewImageSnapshotTesting: XCTestCase {
         ProcessInfo.processInfo.environment["SNAPSHOT_RECORD"] == "1"
     }
 
+    /// Ensures we only log the recording notice once per test suite to reduce attachment noise
+    private static var didLogRecordingNotice = false
+
     // MARK: - XCTest Lifecycle
 
-    open override func setUp() {
-        super.setUp()
-        do {
-            try enforceCIDestinationPolicy(isRecording: Self.snapshotRecordMode)
-        } catch let skip as XCTSkip {
-            // Record the skip for this test case. XCTest doesn't provide a direct API to mark setUp as skipped,
-            // so we record the skip and prevent further failures in this test by setting continueAfterFailure to false.
-            let attachment = XCTAttachment(string: skip.localizedDescription)
-            attachment.lifetime = .keepAlways
-            add(attachment)
-            // Record as a skip by using XCTSkip directly within a test context isn't possible here,
-            // so we fail-fast to stop subsequent assertions. Individual tests can early-exit if needed.
-            continueAfterFailure = false
-        } catch {
-            // Record any unexpected error as a failure without throwing from setUp.
-            XCTFail("Snapshot destination policy check failed with error: \(error)")
-            continueAfterFailure = false
-        }
+    open override func setUpWithError() throws {
+        try super.setUpWithError()
+        try enforceCIDestinationPolicy(isRecording: Self.snapshotRecordMode)
     }
 
     // MARK: - Enforcement
@@ -65,11 +53,14 @@ open class SEBViewImageSnapshotTesting: XCTestCase {
         let osVersion = UIDevice.current.systemVersion
 
         if isRecording {
-            // Log guidance for developers when recording on a non-CI destination
-            let message = "Recording snapshots on \(deviceName) (iOS \(osVersion)). CI expects \(Self.requiredDeviceName) (\(Self.requiredOSVersionPrefix)).\nThis is fine for local iteration, but please switch to the CI destination before committing recordings."
-            let attachment = XCTAttachment(string: message)
-            attachment.lifetime = .keepAlways
-            add(attachment)
+            // Log guidance once per suite when recording on a non-CI destination
+            if !Self.didLogRecordingNotice {
+                let message = "Recording snapshots on \(deviceName) (iOS \(osVersion)). CI expects \(Self.requiredDeviceName) (\(Self.requiredOSVersionPrefix)).\nThis is fine for local iteration, but please switch to the CI destination before committing recordings."
+                let attachment = XCTAttachment(string: message)
+                attachment.lifetime = .deleteOnSuccess
+                add(attachment)
+                Self.didLogRecordingNotice = true
+            }
             return
         }
 
@@ -78,9 +69,16 @@ open class SEBViewImageSnapshotTesting: XCTestCase {
 
         if !(isCorrectDevice && isCorrectOS) {
             let guidance = "Snapshot tests must run on \(Self.requiredDeviceName) (\(Self.requiredOSVersionPrefix)).\nCurrent: \(deviceName) (iOS \(osVersion)).\nDevelopers may record/preview on any simulator by enabling recording (SNAPSHOT_RECORD=1), but verification must target the CI destination to avoid false diffs."
-            XCTFail(guidance, file: file, line: line)
-            // Skip remaining test execution to avoid generating misleading failures/artifacts
-            throw XCTSkip(guidance)
+            let isCI = (env["CI"] != nil)
+            if isCI {
+                // Enforce strictly on CI: fail fast and abort the test
+                XCTFail(guidance, file: file, line: line)
+                struct Abort: Error {}
+                throw Abort()
+            } else {
+                // Be developer-friendly locally: clean skip with guidance
+                throw XCTSkip(guidance)
+            }
         }
     }
 }
