@@ -2,6 +2,7 @@ import SwiftUI
 
 extension InputField {
     struct FloatingLabel<TextField: View>: View {
+        @Environment(\.accessibilityVoiceOverEnabled) private var isVoiceOverEnabled
         @Environment(\.verticalSizeClass) private var verticalSizeClass
         @Environment(\.expandTextAreaRange) private var expandTextAreaRange
         @Environment(\.validationError) private var validationError
@@ -13,13 +14,14 @@ extension InputField {
 
         private let label: any StringProtocol
         private let textField: TextField
-        private let infoContainer: InfoContainer
 
         private var minimumFrameHeight: CGFloat {
             verticalSizeClass == .compact ? 64 : 72
         }
 
         private var presentTextField: Bool {
+            if isVoiceOverEnabled { return true }
+
             let isSingleLine = expandTextAreaRange.lowerBound == 1
             let hasValue = if let stringValue = value as? String {
                 !stringValue.isEmpty
@@ -33,20 +35,14 @@ extension InputField {
             validationError != nil
         }
 
-        private var hasInfoContainer: Bool {
-            InfoContainer.self != EmptyView.self
-        }
-
         init(
             _ label: any StringProtocol,
             value: Binding<F.FormatInput?>,
-            infoContainer: InfoContainer,
             @ViewBuilder textField: () -> TextField,
         ) {
             self._value = value
             self.label = label
             self.textField = textField()
-            self.infoContainer = infoContainer
         }
 
         var body: some View {
@@ -100,6 +96,7 @@ extension InputField {
                 .fixedSize(horizontal: false, vertical: true)
                 .foregroundStyle(Color.contentNeutral02)
                 .animation(.snappy, value: presentTextField)
+                .accessibilityHidden(true)
         }
         
         private func setFocus() {
