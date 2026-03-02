@@ -1,21 +1,24 @@
 import Foundation
 
 @available(iOS 16, *)
-struct MaxCharacterRule: ValidationRule {
-    typealias Value = String
-    
+public struct MaxCharacterRule: ValidationRule {
     let maxCharacters: Int
-    let enforcement: Enforcement
+    private let enforcement: Enforcement
+    
+    public init(maxCharacters: Int, enforcement: Enforcement) {
+        self.maxCharacters = maxCharacters
+        self.enforcement = enforcement
+    }
 
     /// Defines how the character limit is enforced.
-    enum Enforcement {
+    public enum Enforcement {
         /// Warns the user when exceeding the limit but allows input to continue.
         case soft
         /// Prevents input from exceeding the limit by truncating excess characters.
         case hard
     }
 
-    func transform(_ value: String) -> String? {
+    public func transform(_ value: String) -> String? {
         guard case .hard = enforcement else {
             return nil
         }
@@ -24,7 +27,7 @@ struct MaxCharacterRule: ValidationRule {
             ? String(value.prefix(maxCharacters)) : nil
     }
 
-    func validate(_ value: String) throws(ValidationError) {
+    public func validate(_ value: String) throws(ValidationError) {
         if hasExceededMaxCharacters(value) {
             let localizedError = String(localized: "SebGreenComponents.InputField.Validation.MaxCharacters", bundle: .module)
             throw ValidationError(
@@ -39,7 +42,7 @@ struct MaxCharacterRule: ValidationRule {
 }
 
 @available(iOS 16, *)
-extension ValidationRule where Self == MaxCharacterRule {
+public extension ValidationRule where Self == MaxCharacterRule {
     static func maxCharacters(
         _ count: Int,
         enforcement: MaxCharacterRule.Enforcement = .soft

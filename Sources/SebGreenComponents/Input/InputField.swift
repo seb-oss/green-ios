@@ -1,22 +1,11 @@
 import SwiftUI
 
-// TODO: Remove later
-struct InfoButton: View {
-    let action: () -> Void
-    var body: some View {
-        Button(action: action) {
-            Image(systemName: "info.circle")
-                .foregroundStyle(Color.contentNeutral01)
-        }
-    }
-}
-
 public enum InputFieldStyle {
     case `default`
     case floating
 }
 
-struct InputField<InfoContainer: View>: View {
+public struct InputField<InfoContainer: View>: View {
     @Environment(\.inputFieldStyle) private var inputStyle
     @Environment(\.optionalField) private var optionalField
     @Environment(\.validationError) private var validationError
@@ -36,7 +25,7 @@ struct InputField<InfoContainer: View>: View {
         validationError != nil
     }
 
-    init(
+    public init(
         _ label: any StringProtocol,
         text: Binding<String>,
         @ViewBuilder infoContainer: () -> InfoContainer
@@ -46,15 +35,7 @@ struct InputField<InfoContainer: View>: View {
         self.infoContainer = infoContainer()
     }
 
-    //    init(
-    //        _ title: String,
-    //        value: Binding<F.FormatInput?>,
-    //        format: F,
-    //        prompt: Text? = nil,
-    //        rules: Rule...
-    //    )
-
-    var body: some View {
+    public var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             inputField
 
@@ -115,7 +96,7 @@ struct InputField<InfoContainer: View>: View {
     }
 }
 
-extension InputField where InfoContainer == EmptyView {
+public extension InputField where InfoContainer == EmptyView {
     init(_ label: any StringProtocol, text: Binding<String>) {
         self.label = label
         self._text = text
@@ -146,7 +127,9 @@ public struct InputFieldPreview: View {
                 Divider()
 
                 InputField("Custom header", text: $text) {
-                    InfoButton {}
+                    Button(action: {}) {
+                        Image(systemName: "info.circle")
+                    }
                 }
                 .supportiveText(supportTextEnabled ? "Hello" : nil)
                 .optionalField(isOptional)

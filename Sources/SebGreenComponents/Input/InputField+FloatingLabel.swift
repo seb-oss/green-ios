@@ -31,6 +31,7 @@ extension InputField {
         private var hasInfoContainer: Bool {
             InfoContainer.self != EmptyView.self
         }
+
         init(
             _ label: any StringProtocol,
             text: Binding<String>,

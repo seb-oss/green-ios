@@ -84,14 +84,11 @@ extension InputField {
             VStack(alignment: .leading, spacing: .space5xs) {
                 HStack {
                     Text(label)
-                        .typography(.detailBookM)
-                        .foregroundStyle(Color.contentNeutral01)
-
                     Spacer(minLength: .zero)
-
                     infoContainer
-                        .typography(.detailBookM)
                 }
+                .typography(.detailBookM)
+                .foregroundStyle(Color.contentNeutral01)
 
                 if let supportiveText, !supportiveText.isEmpty {
                     Text(supportiveText)
