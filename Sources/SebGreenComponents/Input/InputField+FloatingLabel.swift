@@ -6,7 +6,7 @@ extension InputField {
         @Environment(\.expandTextAreaRange) private var expandTextAreaRange
         @Environment(\.validationError) private var validationError
 
-        @Binding var text: String
+        @Binding var value: F.FormatInput?
         @FocusState private var isFocused: Bool
 
         @State private var isEditing = false
@@ -21,7 +21,12 @@ extension InputField {
 
         private var presentTextField: Bool {
             let isSingleLine = expandTextAreaRange.lowerBound == 1
-            return !isSingleLine || isEditing || !text.isEmpty
+            let hasValue = if let stringValue = value as? String {
+                !stringValue.isEmpty
+            } else {
+                value != nil
+            }
+            return !isSingleLine || isEditing || hasValue
         }
 
         private var hasValidationError: Bool {
@@ -34,11 +39,11 @@ extension InputField {
 
         init(
             _ label: any StringProtocol,
-            text: Binding<String>,
+            value: Binding<F.FormatInput?>,
             infoContainer: InfoContainer,
             @ViewBuilder textField: () -> TextField,
         ) {
-            self._text = text
+            self._value = value
             self.label = label
             self.textField = textField()
             self.infoContainer = infoContainer
@@ -60,7 +65,7 @@ extension InputField {
 
                 Spacer(minLength: .spaceM)
 
-                AccessoryContainer($text, isEditing: isEditing)
+                AccessoryContainer($value, isEditing: isEditing)
             }
             .fixedSize(horizontal: false, vertical: true)
             .padding(.spaceM)
@@ -72,7 +77,7 @@ extension InputField {
             .background {
                 RoundedRectangle(cornerRadius: 16)
                     .fill(Color.l2Neutral02)
-                    .animation(.snappy, value: text)
+                    .animation(.snappy, value: value)
             }
             .overlay {
                 RoundedRectangle(cornerRadius: 16)
@@ -81,7 +86,7 @@ extension InputField {
                         hasValidationError
                             ? Color.borderNegative01 : Color.clear
                     )
-                    .animation(.snappy, value: text)
+                    .animation(.snappy, value: value)
             }
             .contentShape(.rect(cornerRadius: 16))
             .onTapGesture {
@@ -100,15 +105,4 @@ extension InputField {
                 .animation(.snappy, value: presentTextField)
         }
     }
-}
-
-#Preview {
-    InputField("Floating", text: .constant(""))
-        .inputFieldStyle(.floating)
-        .padding()
-        .background {
-            RoundedRectangle(cornerRadius: 16)
-                .foregroundStyle(Color.l1Neutral02)
-        }
-        .padding(.horizontal)
 }
