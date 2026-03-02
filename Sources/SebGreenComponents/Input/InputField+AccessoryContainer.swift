@@ -4,19 +4,27 @@ extension InputField {
     struct AccessoryContainer: View {
         @Environment(\.textInputCharacterLimit) private var characterLimit
 
-        @Binding var text: String
+        @Binding var value: F.FormatInput?
         private let isEditing: Bool
 
-        init(_ text: Binding<String>, isEditing: Bool) {
-            self._text = text
+        init(_ value: Binding<F.FormatInput?>, isEditing: Bool) {
+            self._value = value
             self.isEditing = isEditing
+        }
+        
+        private var presentClearButton: Bool {
+            if let stringValue = value as? String {
+                !stringValue.isEmpty && isEditing
+            } else {
+                value != nil && isEditing
+            }
         }
 
         var body: some View {
             VStack(alignment: .trailing, spacing: .zero) {
-                if let characterLimit {
+                if let characterLimit, let stringValue = value as? String {
                     CharacterLimitView(
-                        characterCount: text.count,
+                        characterCount: stringValue.count,
                         maxLimit: characterLimit
                     )
                     .opacity(isEditing ? 1 : 0)
@@ -31,16 +39,14 @@ extension InputField {
         private var clearButton: some View {
             Button {
                 withAnimation {
-                    text = String()
+                    value = nil
                 }
             } label: {
                 Image(systemName: "xmark.circle.fill")
                     .foregroundStyle(Color.contentNeutral02)
             }
-            .opacity(
-                text.count >= 1 && isEditing ? 1 : 0
-            )
-            .animation(.snappy, value: text)
+            .opacity(presentClearButton ? 1 : 0)
+            .animation(.snappy, value: value)
         }
     }
 }

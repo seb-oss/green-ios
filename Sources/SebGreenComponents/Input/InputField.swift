@@ -5,13 +5,15 @@ public enum InputFieldStyle {
     case floating
 }
 
-public struct InputField<InfoContainer: View>: View {
+public struct InputField<F: ParseableFormatStyle, InfoContainer: View>: View
+where F.FormatOutput == String, F.FormatInput: Equatable {
     @Environment(\.inputFieldStyle) private var inputStyle
     @Environment(\.optionalField) private var optionalField
     @Environment(\.validationError) private var validationError
     @Environment(\.expandTextAreaRange) private var expandTextAreaRange
 
-    @Binding private var text: String
+    @Binding private var value: F.FormatInput?
+    private let format: F
     private let label: any StringProtocol
     private let infoContainer: InfoContainer
 
@@ -25,13 +27,31 @@ public struct InputField<InfoContainer: View>: View {
         validationError != nil
     }
 
+    private var textBinding: Binding<String> {
+        Binding<String>(
+            get: {
+                if let stringValue = value as? String {
+                    return stringValue
+                } else if let value {
+                    return format.format(value)
+                }
+                return ""
+            },
+            set: {
+                value = try? format.parseStrategy.parse($0)
+            }
+        )
+    }
+
     public init(
         _ label: any StringProtocol,
-        text: Binding<String>,
+        value: Binding<F.FormatInput?>,
+        format: F,
         @ViewBuilder infoContainer: () -> InfoContainer
     ) {
+        self._value = value
+        self.format = format
         self.label = label
-        self._text = text
         self.infoContainer = infoContainer()
     }
 
@@ -52,7 +72,7 @@ public struct InputField<InfoContainer: View>: View {
         case .default:
             DefaultLabel(
                 title,
-                text: $text,
+                value: $value,
                 infoContainer: infoContainer
             ) {
                 textField
@@ -60,7 +80,7 @@ public struct InputField<InfoContainer: View>: View {
         case .floating:
             FloatingLabel(
                 title,
-                text: $text,
+                value: $value,
                 infoContainer: infoContainer
             ) {
                 textField
@@ -71,10 +91,10 @@ public struct InputField<InfoContainer: View>: View {
     private var textField: some View {
         Group {
             if #available(iOS 16.0, *) {
-                TextField("", text: $text, axis: .vertical)
+                TextField("", text: textBinding, axis: .vertical)
                     .lineLimit(expandTextAreaRange)
             } else {
-                TextField("", text: $text)
+                TextField("", text: textBinding)
             }
         }
         .typography(.detailBookM)
@@ -96,10 +116,44 @@ public struct InputField<InfoContainer: View>: View {
     }
 }
 
-public extension InputField where InfoContainer == EmptyView {
-    init(_ label: any StringProtocol, text: Binding<String>) {
+extension InputField where InfoContainer == EmptyView {
+    public init(
+        _ label: any StringProtocol,
+        value: Binding<F.FormatInput?>,
+        format: F
+    ) {
+        self._value = value
+        self.format = format
         self.label = label
-        self._text = text
+        self.infoContainer = EmptyView()
+    }
+}
+
+extension InputField where F == StringFormatStyle {
+    public init(
+        _ label: any StringProtocol,
+        text: Binding<String>,
+        @ViewBuilder infoContainer: () -> InfoContainer
+    ) where F.FormatInput == String {
+        self.label = label
+        self._value = Binding(
+            get: { text.wrappedValue },
+            set: { text.wrappedValue = $0 ?? "" }
+        )
+        self.format = StringFormatStyle()
+        self.infoContainer = infoContainer()
+    }
+}
+
+extension InputField where F == StringFormatStyle, InfoContainer == EmptyView {
+    public init(_ label: any StringProtocol, text: Binding<String>)
+    where F.FormatInput == String {
+        self.label = label
+        self._value = Binding(
+            get: { text.wrappedValue },
+            set: { text.wrappedValue = $0 ?? "" }
+        )
+        self.format = StringFormatStyle()
         self.infoContainer = EmptyView()
     }
 }
@@ -111,6 +165,7 @@ public struct InputFieldPreview: View {
     @State var hasError = false
     @State var text = ""
     @State var text2 = ""
+    @State var money: Decimal? = 5
 
     public init() {}
 
@@ -144,6 +199,12 @@ public struct InputFieldPreview: View {
                     .inputFieldStyle(.floating)
                     .optionalField(isOptional)
                     .applyRules(to: $text2, rules: .maxCharacters(10))
+
+                InputField(
+                    "Belopp",
+                    value: $money,
+                    format: .currency(code: "SEK")
+                )
             }
             .padding(16)
             .animation(.default, value: hasError)

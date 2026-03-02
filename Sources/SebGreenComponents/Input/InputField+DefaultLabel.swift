@@ -7,7 +7,8 @@ extension InputField {
         @Environment(\.validationError) private var validationError
 
         @FocusState private var isFocused: Bool
-        @Binding var text: String
+        @Binding var value: F.FormatInput?
+        @State private var isEditing = false
 
         private let label: any StringProtocol
         private let infoContainer: InfoContainer
@@ -15,11 +16,11 @@ extension InputField {
 
         init(
             _ label: any StringProtocol,
-            text: Binding<String>,
+            value: Binding<F.FormatInput?>,
             infoContainer: InfoContainer,
             @ViewBuilder textField: () -> TextField
         ) {
-            self._text = text
+            self._value = value
             self.label = label
             self.infoContainer = infoContainer
             self.textField = textField()
@@ -37,8 +38,6 @@ extension InputField {
             isEditing || hasValidationError ? 2 : 1
         }
 
-        @State private var isEditing = false
-
         var body: some View {
             VStack(alignment: .leading, spacing: .spaceXs) {
                 header
@@ -47,13 +46,13 @@ extension InputField {
                     textField
                         .focused($isFocused)
 
-                    AccessoryContainer($text, isEditing: isEditing)
+                    AccessoryContainer($value, isEditing: isEditing)
                 }
                 .padding(.spaceM)
                 .background {
                     RoundedRectangle(cornerRadius: 16)
                         .fill(Color.l2Neutral02)
-                        .animation(.snappy, value: text)
+                        .animation(.snappy, value: value)
                 }
                 .overlay {
                     RoundedRectangle(cornerRadius: 16)
@@ -63,7 +62,7 @@ extension InputField {
                                 ? Color.borderNegative01
                                 : Color.borderInteractive
                         )
-                        .animation(.snappy, value: text)
+                        .animation(.snappy, value: value)
                 }
                 .contentShape(.rect(cornerRadius: 16))
                 .frame(minHeight: 64)
@@ -99,15 +98,4 @@ extension InputField {
             .padding(.horizontal, .spaceM)
         }
     }
-}
-
-#Preview {
-    InputField("Floating", text: .constant(""))
-        .inputFieldStyle(.default)
-        .padding()
-        .background {
-            RoundedRectangle(cornerRadius: 16)
-                .foregroundStyle(Color.l1Neutral02)
-        }
-        .padding(.horizontal)
 }
