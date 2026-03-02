@@ -3,7 +3,7 @@
 /// Validation rules are applied in two phases:
 /// 1. **Transform phase**: `transform(_:)` is called first. If it returns a non-nil value, the input is replaced and validation stops for this cycle.
 /// 2. **Validate phase**: `validate(_:)` is called to check the value and throw errors if invalid.
-protocol ValidationRule<Value> {
+public protocol ValidationRule<Value> {
     associatedtype Value: Equatable
 
     /// Transforms the value before validation occurs.
