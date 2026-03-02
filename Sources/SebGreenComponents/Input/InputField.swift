@@ -30,12 +30,7 @@ where F.FormatOutput == String, F.FormatInput: Equatable {
     private var textBinding: Binding<String> {
         Binding<String>(
             get: {
-                if let stringValue = value as? String {
-                    return stringValue
-                } else if let value {
-                    return format.format(value)
-                }
-                return ""
+                value.map { format.format($0) } ?? ""
             },
             set: {
                 value = try? format.parseStrategy.parse($0)
