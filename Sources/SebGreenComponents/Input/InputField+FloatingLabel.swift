@@ -57,8 +57,8 @@ extension InputField {
                     if presentTextField {
                         textField
                             .focused($isFocused)
-                            .onChange(of: isFocused) { newValue in
-                                isEditing = newValue
+                            .onChange(of: isFocused) {
+                                isEditing = $0
                             }
                     }
                 }
@@ -89,10 +89,7 @@ extension InputField {
                     .animation(.snappy, value: value)
             }
             .contentShape(.rect(cornerRadius: 16))
-            .onTapGesture {
-                isEditing = true
-                isFocused = true
-            }
+            .onTapGesture(perform: setFocus)
         }
 
         private var floatingLabel: some View {
@@ -103,6 +100,17 @@ extension InputField {
                 .fixedSize(horizontal: false, vertical: true)
                 .foregroundStyle(Color.contentNeutral02)
                 .animation(.snappy, value: presentTextField)
+        }
+        
+        private func setFocus() {
+            isEditing = true
+            Task {
+                if #available(iOS 16.0, *) {
+                    // Ensure text field is visible before focusing
+                    try? await Task.sleep(for: .seconds(0.1))
+                }
+                isFocused = true
+            }
         }
     }
 }
