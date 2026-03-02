@@ -11,6 +11,8 @@ where F.FormatOutput == String, F.FormatInput: Equatable {
     @Environment(\.optionalField) private var optionalField
     @Environment(\.validationError) private var validationError
     @Environment(\.expandTextAreaRange) private var expandTextAreaRange
+    @Environment(\.supportiveText) private var supportiveText
+    @Environment(\.textInputCharacterLimit) private var characterLimit
 
     @Binding private var value: F.FormatInput?
     private let format: F
@@ -19,7 +21,7 @@ where F.FormatOutput == String, F.FormatInput: Equatable {
 
     private var title: any StringProtocol {
         guard optionalField else { return label }
-        let optional = String(localized: "optional")
+        let optional = String(localized: "GreeniOS.optional", bundle: .module)
         return "\(label) (\(optional))"
     }
 
@@ -75,8 +77,7 @@ where F.FormatOutput == String, F.FormatInput: Equatable {
         case .floating:
             FloatingLabel(
                 title,
-                value: $value,
-                infoContainer: infoContainer
+                value: $value
             ) {
                 textField
             }
@@ -90,11 +91,51 @@ where F.FormatOutput == String, F.FormatInput: Equatable {
                     .lineLimit(expandTextAreaRange)
             } else {
                 TextField("", text: textBinding)
+                    .textFieldStyle(.roundedBorder)
             }
         }
         .typography(.detailBookM)
         .foregroundStyle(Color.contentNeutral01)
         .autocorrectionDisabled(true)
+        .accessibilityLabel(accessibilityLabel)
+        .accessibilityAction(
+            named: String(
+                localized: "GreeniOS.Accessibility.ClearField",
+                bundle: .module,
+                comment: "VoiceOver action to clear the text field"
+            )
+        ) {
+            value = nil
+        }
+        .accessibilityCustomContent(.characterCount, accessibilityCustomCharacterCountText)
+        .accessibilityCustomContent(
+            .inputError,
+            accessibilityCustomErrorText,
+            importance: .high
+        )
+    }
+    
+    private var accessibilityCustomErrorText: Text? {
+        validationError.map { Text($0.localizedDescription) }
+    }
+    
+    private var accessibilityCustomCharacterCountText: Text? {
+        characterLimit.map { limit in
+            Text(
+                "GreeniOS.Accessibility.CharacterCountValue \(textBinding.wrappedValue.count) \(limit)",
+                bundle: .module,
+                comment:
+                    "Accessibility value for character count, e.g. '5 of 50 possible characters written.'"
+            )
+        }
+    }
+
+    private var accessibilityLabel: String {
+        var components: [String] = [String(title)]
+        if let supportiveText, !supportiveText.isEmpty {
+            components.append(supportiveText)
+        }
+        return components.joined(separator: ", ")
     }
 
     private func validationView(_ error: Error) -> some View {
@@ -108,6 +149,7 @@ where F.FormatOutput == String, F.FormatInput: Equatable {
         }
         .foregroundColor(Color.contentNegative01)
         .padding(.horizontal, 14)  // Needs to be 14px due to 2px border.
+        .accessibilityHidden(true)
     }
 }
 
@@ -185,7 +227,7 @@ public struct InputFieldPreview: View {
                 .optionalField(isOptional)
                 .applyRules(
                     to: $text,
-                    rules: .maxCharacters(5)
+                    rules: .maxCharacters(2)
                 )
 
                 Divider()
@@ -208,6 +250,24 @@ public struct InputFieldPreview: View {
         }
         .background(Color.l1Neutral02)
     }
+}
+
+extension AccessibilityCustomContentKey {
+    fileprivate static let inputError = AccessibilityCustomContentKey(
+        Text(
+            "GreeniOS.Accessibility.CustomContent.InputFieldError",
+            bundle: .module
+        ),
+        id: "inputFieldError"
+    )
+    
+    fileprivate static let characterCount = AccessibilityCustomContentKey(
+        Text(
+            "GreeniOS.Accessibility.CustomContent.CharacterCount",
+            bundle: .module
+        ),
+        id: "characterCount"
+    )
 }
 
 @available(iOS 16.0, *)

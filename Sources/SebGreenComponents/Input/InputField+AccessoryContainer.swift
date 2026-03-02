@@ -34,19 +34,22 @@ extension InputField {
                     .frame(maxHeight: .infinity, alignment: .center)
             }
             .animation(.default, value: isEditing)
+            .accessibilityHidden(true)
         }
 
         private var clearButton: some View {
-            Button {
-                withAnimation {
-                    value = nil
-                }
-            } label: {
+            Button(action: clearField) {
                 Image(systemName: "xmark.circle.fill")
                     .foregroundStyle(Color.contentNeutral02)
             }
             .opacity(presentClearButton ? 1 : 0)
             .animation(.snappy, value: value)
+        }
+        
+        private func clearField() {
+            withAnimation {
+                value = nil
+            }
         }
     }
 }

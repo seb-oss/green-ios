@@ -83,6 +83,7 @@ extension InputField {
             VStack(alignment: .leading, spacing: .space5xs) {
                 HStack {
                     Text(label)
+                        .accessibilityHidden(true)
                     Spacer(minLength: .zero)
                     infoContainer
                 }
@@ -93,6 +94,7 @@ extension InputField {
                     Text(supportiveText)
                         .typography(.detailBookS)
                         .foregroundStyle(Color.contentNeutral02)
+                        .accessibilityHidden(true)
                 }
             }
             .padding(.horizontal, .spaceM)

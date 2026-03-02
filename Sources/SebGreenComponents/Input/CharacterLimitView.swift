@@ -8,7 +8,6 @@ struct CharacterLimitView: View {
         Text("\(characterCount)/\(maxLimit)")
             .typography(.detailRegularXs)
             .foregroundStyle(Color.contentNeutral01)
-            .accessibilityLabel("\(characterCount) of \(maxLimit)")
             // No animation wanted
             .animation(nil, value: characterCount)
     }
