@@ -16,7 +16,7 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/seb-oss/green-tokens-ios",
-            exact: "0.0.6"
+            exact: "0.0.7"
         ),
         .package(
             url: "https://github.com/pointfreeco/swift-snapshot-testing",
