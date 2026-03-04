@@ -179,12 +179,9 @@ public struct InfoCardView: View {
         title: String,
         action: @escaping (() -> Void)
     ) -> some View {
-        GreenButton(
-            title: title,
-            kind: .secondary,
-            size: .small,
-            action: action
-        )
+        Button(title, action: action)
+            .buttonStyle(.seb(.secondary.dimensions(.small)))
+            .level(.level2)
     }
 }
 
