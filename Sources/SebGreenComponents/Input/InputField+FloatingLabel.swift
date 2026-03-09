@@ -2,8 +2,10 @@ import SwiftUI
 
 extension InputField {
     struct FloatingLabel<TextField: View>: View {
-        @Environment(\.accessibilityVoiceOverEnabled) private var isVoiceOverEnabled
+        @Environment(\.accessibilityVoiceOverEnabled) private
+            var isVoiceOverEnabled
         @Environment(\.verticalSizeClass) private var verticalSizeClass
+        @Environment(\.inputFieldStyle) private var inputFieldStyle
         @Environment(\.expandTextAreaRange) private var expandTextAreaRange
         @Environment(\.validationError) private var validationError
 
@@ -24,10 +26,10 @@ extension InputField {
 
             let isSingleLine = expandTextAreaRange.lowerBound == 1
             let hasValue = if let stringValue = value as? String {
-                !stringValue.isEmpty
-            } else {
-                value != nil
-            }
+                    !stringValue.isEmpty
+                } else {
+                    value != nil
+                }
             return !isSingleLine || isEditing || hasValue
         }
 
@@ -72,7 +74,7 @@ extension InputField {
             )
             .background {
                 RoundedRectangle(cornerRadius: 16)
-                    .fill(Color.l2Neutral02)
+                    .fill(inputFieldStyle.background.color)
                     .animation(.snappy, value: value)
             }
             .overlay {
@@ -98,7 +100,7 @@ extension InputField {
                 .animation(.snappy, value: presentTextField)
                 .accessibilityHidden(true)
         }
-        
+
         private func setFocus() {
             isEditing = true
             Task {

@@ -1,10 +1,5 @@
 import SwiftUI
 
-public enum InputFieldStyle {
-    case `default`
-    case floating
-}
-
 public struct InputField<F: ParseableFormatStyle, InfoContainer: View>: View
 where F.FormatOutput == String, F.FormatInput: Equatable {
     @Environment(\.inputFieldStyle) private var inputStyle
@@ -65,7 +60,7 @@ where F.FormatOutput == String, F.FormatInput: Equatable {
 
     @ViewBuilder
     private var inputField: some View {
-        switch inputStyle {
+        switch inputStyle.variant {
         case .default:
             DefaultLabel(
                 title,
@@ -107,18 +102,21 @@ where F.FormatOutput == String, F.FormatInput: Equatable {
         ) {
             value = nil
         }
-        .accessibilityCustomContent(.characterCount, accessibilityCustomCharacterCountText)
+        .accessibilityCustomContent(
+            .characterCount,
+            accessibilityCustomCharacterCountText
+        )
         .accessibilityCustomContent(
             .inputError,
             accessibilityCustomErrorText,
             importance: .high
         )
     }
-    
+
     private var accessibilityCustomErrorText: Text? {
         validationError.map { Text($0.localizedDescription) }
     }
-    
+
     private var accessibilityCustomCharacterCountText: Text? {
         characterLimit.map { limit in
             Text(
@@ -260,7 +258,7 @@ extension AccessibilityCustomContentKey {
         ),
         id: "inputFieldError"
     )
-    
+
     fileprivate static let characterCount = AccessibilityCustomContentKey(
         Text(
             "GreeniOS.Accessibility.CustomContent.CharacterCount",

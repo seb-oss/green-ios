@@ -3,6 +3,7 @@ import SwiftUI
 extension InputField {
     struct DefaultLabel<TextField: View>: View {
         @Environment(\.verticalSizeClass) private var verticalSizeClass
+        @Environment(\.inputFieldStyle) private var inputFieldStyle
         @Environment(\.supportiveText) private var supportiveText
         @Environment(\.validationError) private var validationError
 
@@ -51,7 +52,7 @@ extension InputField {
                 .padding(.spaceM)
                 .background {
                     RoundedRectangle(cornerRadius: 16)
-                        .fill(Color.l2Neutral02)
+                        .fill(inputFieldStyle.background.color)
                         .animation(.snappy, value: value)
                 }
                 .overlay {
