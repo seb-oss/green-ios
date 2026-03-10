@@ -13,8 +13,8 @@ public struct SebGreenToggleStyle: ToggleStyle {
     private let imageResource: ImageResource = ImageResource(name: "circle-check", bundle: .module)
     private let activeColor: Color = .l3Positive01
     private let inactiveColor: Color = .l3Neutral03
-    private let width: CGFloat = 51
-    private let height: CGFloat = 31
+    private let width: CGFloat = 64
+    private let height: CGFloat = 28
     private let circlePadding: CGFloat = 2
     private let offset: CGFloat = 10
 
@@ -28,32 +28,45 @@ public struct SebGreenToggleStyle: ToggleStyle {
 
             Spacer()
 
-            Capsule(style: .circular)
-                .fill(configuration.isOn ? activeColor : inactiveColor)
-                .overlay {
-                    circle(isOn: configuration.isOn)
-                }
-                .frame(width: width, height: height)
-                .clipped()
-                .onTapGesture {
-                    withAnimation(.spring()) {
-                        configuration.isOn.toggle()
+            if #available(iOS 26.0, *) {
+                Capsule(style: .continuous)
+                    .fill(configuration.isOn ? activeColor : inactiveColor)
+                    .overlay {
+                        circle(isOn: configuration.isOn)
                     }
-                }
+                    .frame(width: width, height: height)
+                    .clipped()
+                    .onTapGesture {
+                        withAnimation(.spring()) {
+                            configuration.isOn.toggle()
+                        }
+                    }
+                    .glassEffect()
+            } else {
+                Capsule(style: .continuous)
+                    .fill(configuration.isOn ? activeColor : inactiveColor)
+                    .overlay {
+                        circle(isOn: configuration.isOn)
+                    }
+                    .frame(width: width, height: height)
+                    .clipped()
+                    .onTapGesture {
+                        withAnimation(.spring()) {
+                            configuration.isOn.toggle()
+                        }
+                    }
+            }
         }
     }
 
     private func circle(isOn: Bool) -> some View {
-        Circle()
-            .fill(.white)
+        Capsule(style: .continuous)
+            .frame(width: 39, height: 24)
+            .foregroundStyle(Color.white)
             .padding(.vertical, circlePadding)
-            .overlay {
-                Image(imageResource)
-                    .opacity(isOn ? 1 : 0)
-                    .foregroundColor(isOn ? activeColor : inactiveColor)
-            }
-            .shadow(color: Color.black.opacity(0.07), radius: 2, x: 2, y: 2)
+            .cornerRadius(12)
             .offset(x: isOn ? offset : -offset)
+            
     }
 }
 
