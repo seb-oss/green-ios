@@ -35,7 +35,7 @@ public struct InputFieldDemo: View {
         DemoContainer("InputField", contentPadding: .zero) {
             configuration
         } content: {
-            VStack(spacing: 24) {
+            VStack(spacing: .spaceXl) {
                 defaultLabel
                     .applyRules(
                         to: $defaultText,
@@ -75,7 +75,7 @@ public struct InputFieldDemo: View {
             }
             .optionalField(isOptional)
             .expandTextArea(expandTextArea ? 4... : 1...)
-            .padding(16)
+            .padding(.spaceM)
             .background(
                 textfieldBackground == .white ? Color.l1Neutral02 : .l1Neutral01
             )
