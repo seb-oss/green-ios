@@ -16,6 +16,7 @@ extension InputField {
 
         private let label: any StringProtocol
         private let textField: TextField
+        private let cornerRadius: CGFloat = 16
 
         private var minimumFrameHeight: CGFloat {
             verticalSizeClass == .compact ? 64 : 72
@@ -73,12 +74,12 @@ extension InputField {
                 alignment: .leading
             )
             .background {
-                RoundedRectangle(cornerRadius: 16)
+                RoundedRectangle(cornerRadius: cornerRadius)
                     .fill(inputFieldStyle.background.color)
                     .animation(.snappy, value: value)
             }
             .overlay {
-                RoundedRectangle(cornerRadius: 16)
+                RoundedRectangle(cornerRadius: cornerRadius)
                     .stroke(style: .init(lineWidth: hasValidationError ? 2 : 1))
                     .foregroundStyle(
                         hasValidationError
@@ -86,7 +87,7 @@ extension InputField {
                     )
                     .animation(.snappy, value: value)
             }
-            .contentShape(.rect(cornerRadius: 16))
+            .contentShape(.rect(cornerRadius: cornerRadius))
             .onTapGesture(perform: setFocus)
         }
 
