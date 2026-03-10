@@ -49,6 +49,15 @@ public extension SEBGreenButtonStyle {
             iconPosition: .leading
         )
     }
+    
+    static var notice: SEBGreenButtonStyle {
+        SEBGreenButtonStyle(
+            configuration: .notice,
+            dimensions: .large,
+            layoutBehavior: .fill,
+            iconPosition: .leading
+        )
+    }
 }
 
 /// Provides fluent API methods for customizing button style properties.
@@ -148,6 +157,19 @@ public extension SEBGreenButtonStyle {
     ) -> SEBGreenButtonStyle {
         SEBGreenButtonStyle(
             configuration: .negative,
+            dimensions: dimensions,
+            layoutBehavior: layoutBehavior,
+            iconPosition: iconPosition
+        )
+    }
+    
+    static func notice(
+        dimensions: Dimensions = .large,
+        layoutBehavior: LayoutBehavior = .fill,
+        iconPosition: IconPosition = .leading
+    ) -> SEBGreenButtonStyle {
+        SEBGreenButtonStyle(
+            configuration: .notice,
             dimensions: dimensions,
             layoutBehavior: layoutBehavior,
             iconPosition: iconPosition

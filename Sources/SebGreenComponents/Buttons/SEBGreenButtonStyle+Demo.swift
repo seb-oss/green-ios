@@ -109,6 +109,20 @@ public struct SEBGreenButtonStyleDemo: View {
                 .buttonStyle(.seb(.negative.iconPosition(iconPosition).dimensions(buttonDimensions).layoutBehavior(buttonLayoutBehavior)))
                 
                 Divider()
+                
+                // Notice with Label and icon
+                Button {
+                    print("Hello")
+                } label: {
+                    Label {
+                        Text("Notice button")
+                    } icon: {
+                        Image(systemName: "info.circle")
+                    }
+                }
+                .buttonStyle(.seb(.notice.iconPosition(iconPosition).dimensions(buttonDimensions).layoutBehavior(buttonLayoutBehavior)))
+                
+                Divider()
             }
             .level(.level1)
             .disabled(isDisabled)

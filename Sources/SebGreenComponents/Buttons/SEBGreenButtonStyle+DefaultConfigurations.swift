@@ -68,4 +68,16 @@ extension SEBGreenButtonStyle.Configuration {
             disabled: Color.contentDisabled01
         )
     )
+    
+    static let notice = Self(
+        background: StatefulStyle(
+            normal: Color.l3Notice01,
+            pressed: Color.stateDarkButtons,
+            disabled: Color.l3Disabled03
+        ),
+        foreground: StatefulStyle(
+            normal: Color.contentInversed,
+            disabled: Color.contentDisabled01
+        )
+    )
 }
