@@ -6,8 +6,12 @@ private struct ValidationRuleModifier<Value: Equatable>: ViewModifier {
     private let isEnabled: Bool
     @Binding var value: Value
 
-    @State private var validationError: ValidationError?
+    @State private var validationError: Error?
+    @State private var sensoryFeedback: HapticFeedback?
     @State private var toggle = false
+
+    @available( iOS, deprecated: 17, message: "Just use .onChange(of: initial:) instead of this hacky workaround")
+    @State private var initialValueSet = false
 
     init(
         rules: [any ValidationRule<Value>],
@@ -20,12 +24,26 @@ private struct ValidationRuleModifier<Value: Equatable>: ViewModifier {
     }
 
     func body(content: Content) -> some View {
-        content
-            .onChange(of: value, perform: validateValue)
-            .environment(\.validationError, validationError)
-            .sensoryFeedbackIfAvailable(trigger: toggle) {
-                validationError?.sensoryFeedback
+        Group {
+            if #available(iOS 17, *) {
+                content
+                    .onChange(of: value, initial: true) {
+                        validateValue(value)
+                    }
+            } else {
+                content
+                    .onChange(of: value, perform: validateValue)
+                    .onAppear {
+                        guard !initialValueSet else { return }
+                        initialValueSet = true
+                        validateValue(value)
+                    }
             }
+        }
+        .environment(\.validationError, validationError)
+        .sensoryFeedbackIfAvailable(trigger: toggle) {
+            sensoryFeedback
+        }
     }
 
     private func validateValue(_ newValue: Value) {
@@ -37,10 +55,11 @@ private struct ValidationRuleModifier<Value: Equatable>: ViewModifier {
 
         // Return immediately on first transformation
         for rule in rules {
-            guard let transformed = rule.transform(newValue) else {
+            guard let result = rule.transform(newValue) else {
                 continue
             }
-            value = transformed
+            value = result.value
+            trigger(result.feedback)
             return
         }
 
@@ -50,11 +69,16 @@ private struct ValidationRuleModifier<Value: Equatable>: ViewModifier {
                 try rule.validate(newValue)
             } catch {
                 validationError = error
-                if error.sensoryFeedback != nil {
-                    toggle.toggle()
-                }
+                trigger(error.sensoryFeedback)
                 return
             }
+        }
+    }
+
+    private func trigger(_ feedback: HapticFeedback?) {
+        sensoryFeedback = feedback
+        if feedback != nil {
+            toggle.toggle()
         }
     }
 }
@@ -80,6 +104,9 @@ extension View {
                     isEnabled: isEnabled
                 )
             )
-            .environment(\.textInputCharacterLimit, isEnabled ? maxCharacters : nil)
+            .environment(
+                \.textInputCharacterLimit,
+                isEnabled ? maxCharacters : nil
+            )
     }
 }

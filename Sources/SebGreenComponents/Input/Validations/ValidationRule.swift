@@ -11,8 +11,8 @@ public protocol ValidationRule<Value> {
     /// Called before `validate(_:)`. Return a transformed value to modify the input,
     /// or `nil` if no transformation is needed.
     /// - Parameter value: The current input value.
-    /// - Returns: A transformed value, or `nil` to leave unchanged.
-    func transform(_ value: Value) -> Value?
+    /// - Returns: A `ValidationTransform`, or `nil` to leave unchanged.
+    func transform(_ value: Value) -> ValidationTransformResult<Value>?
 
     /// Validates the value and throws an error if invalid.
     ///
@@ -24,5 +24,5 @@ public protocol ValidationRule<Value> {
 }
 
 extension ValidationRule {
-    func transform(_ value: Value) -> Value? { nil }
+    func transform(_ value: Value) -> ValidationTransformResult<Value>? { nil }
 }

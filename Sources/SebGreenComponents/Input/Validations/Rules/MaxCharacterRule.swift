@@ -18,13 +18,16 @@ public struct MaxCharacterRule: ValidationRule {
         case hard
     }
 
-    public func transform(_ value: String) -> String? {
-        guard case .hard = enforcement else {
+    public func transform(_ value: String) -> ValidationTransformResult<String>? {
+        guard case .hard = enforcement,
+              hasExceededMaxCharacters(value) else {
             return nil
         }
 
-        return hasExceededMaxCharacters(value)
-            ? String(value.prefix(maxCharacters)) : nil
+        return .init(
+            value: String(value.prefix(maxCharacters)),
+            feedback: .impact
+        )
     }
 
     public func validate(_ value: String) throws(ValidationError) {
