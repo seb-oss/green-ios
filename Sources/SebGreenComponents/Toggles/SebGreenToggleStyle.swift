@@ -11,8 +11,8 @@ import SwiftUI
 public struct SebGreenToggleStyle: ToggleStyle {
 
     private let imageResource: ImageResource = ImageResource(name: "circle-check", bundle: .module)
-    private let activeColor: Color = .contentPositive01
-    private let inactiveColor: Color = Color(.systemGray5)
+    private let activeColor: Color = .l3Positive01
+    private let inactiveColor: Color = .l3Neutral03
     private let width: CGFloat = 51
     private let height: CGFloat = 31
     private let circlePadding: CGFloat = 2
