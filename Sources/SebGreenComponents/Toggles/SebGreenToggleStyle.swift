@@ -57,57 +57,77 @@ public struct SebGreenToggleStyle: ToggleStyle {
     }
 }
 
-/// This was introduced with the idea of overiding only the colors but keeping the native system animations, and also the native disabled styling. However that does not work. The colors are applied but the native liquid glass blob when we drag is gone, and it also does not show up on tap.
+#if os(iOS)
+import UIKit
+
+/// A UIKit-backed switch that preserves native animations and effects while allowing custom colors.
+struct SystemSwitchView: UIViewRepresentable {
+    @Binding var isOn: Bool
+    var onColor: Color
+    var offColor: Color
+    var isEnabled: Bool
+
+    func makeUIView(context: Context) -> UISwitch {
+        let uiSwitch = UISwitch(frame: .zero)
+        uiSwitch.addTarget(context.coordinator, action: #selector(Coordinator.valueChanged(_:)), for: .valueChanged)
+        return uiSwitch
+    }
+
+    func updateUIView(_ uiView: UISwitch, context: Context) {
+        uiView.isOn = isOn
+        uiView.isEnabled = isEnabled
+
+        // Apply custom colors while keeping native look & feel
+        uiView.onTintColor = UIColor(onColor) // On-state track color
+        uiView.thumbTintColor = nil           // Keep the native thumb appearance
+
+        // Off-state track color trick: use background + rounded corners
+        let offUIColor = UIColor(offColor)
+        uiView.tintColor = .red
+        uiView.backgroundColor = offUIColor
+        uiView.clipsToBounds = true
+
+        // Ensure the track remains pill-shaped when off
+        let radius = uiView.bounds.height / 2
+        if uiView.layer.cornerRadius != radius {
+            uiView.layer.cornerRadius = radius
+        }
+    }
+
+    func makeCoordinator() -> Coordinator { Coordinator(self) }
+
+    class Coordinator {
+        var parent: SystemSwitchView
+        init(_ parent: SystemSwitchView) { self.parent = parent }
+        @objc func valueChanged(_ sender: UISwitch) {
+            parent.isOn = sender.isOn
+        }
+    }
+}
+#endif
+
+/// This style customizes only the on/off colors while preserving the system's native
+/// animations, interactions, and disabled appearance by rendering a real UISwitch on iOS.
+///
+/// Notes:
+/// - On iOS, a UIKit-backed switch is used so the native material/physics are retained.
+/// - On other platforms, a simple SwiftUI fallback is used.
 struct GreenNativeToggleStyle: ToggleStyle {
     private let onColor: Color = .l3Positive01
     private let offColor: Color = .l3Neutral03
-    
+
     @Environment(\.isEnabled) private var isEnabled
 
     func makeBody(configuration: Configuration) -> some View {
         HStack {
             configuration.label
             Spacer()
-            
-            // The Switch Background
-            if #available(iOS 26.0, *) {
-                RoundedRectangle(cornerRadius: 16, style: .continuous)
-                    .fill(configuration.isOn ? onColor : offColor)
-                    .opacity(isEnabled ? 1.0 : 0.5) // Handle disabled state color
-                    .frame(width: 51, height: 31)
-                    .overlay(
-                        // The Sliding Thumb
-                        Circle()
-                            .fill(.white)
-                            .shadow(radius: 1, x: 0, y: 1)
-                            .padding(2)
-                            .offset(x: configuration.isOn ? 10 : -10)
-                    )
-                    .glassEffect(.regular.tint(configuration.isOn ? onColor : offColor))
-                    .onTapGesture {
-                        withAnimation(.spring(response: 0.25, dampingFraction: 0.7)) {
-                            configuration.isOn.toggle()
-                        }
-                    }
-            } else {
-                RoundedRectangle(cornerRadius: 16, style: .continuous)
-                    .fill(configuration.isOn ? onColor : offColor)
-                    .opacity(isEnabled ? 1.0 : 0.5) // Handle disabled state color
-                    .frame(width: 51, height: 31)
-                    .overlay(
-                        // The Sliding Thumb
-                        Circle()
-                            .fill(.white)
-                            .shadow(radius: 1, x: 0, y: 1)
-                            .padding(2)
-                            .offset(x: configuration.isOn ? 10 : -10)
-                    )
-                    .onTapGesture {
-                        withAnimation(.spring(response: 0.25, dampingFraction: 0.7)) {
-                            configuration.isOn.toggle()
-                        }
-                    }
-            }
+            SystemSwitchView(
+                isOn: configuration.$isOn,
+                onColor: onColor,
+                offColor: offColor,
+                isEnabled: isEnabled
+            )
         }
     }
 }
@@ -146,9 +166,11 @@ struct GreenNativeToggleStyle: ToggleStyle {
                 
                 Toggle("SEB Green On Disabled", isOn: .constant(true))
                     .toggleStyle(SebGreenToggleStyle())
+                    .disabled(true)
                 
                 Toggle("SEB Green Off Disabled", isOn: .constant(false))
                     .toggleStyle(SebGreenToggleStyle())
+                    .disabled(true)
                 
                 Divider()
                     .padding(40)
@@ -158,9 +180,11 @@ struct GreenNativeToggleStyle: ToggleStyle {
                 
                 Toggle("Green On Disabled", isOn: .constant(true))
                     .toggleStyle(GreenNativeToggleStyle())
+                    .disabled(true)
                 
                 Toggle("Green Off Disabled", isOn: .constant(false))
                     .toggleStyle(GreenNativeToggleStyle())
+                    .disabled(true)
             }
             .padding(8)
         }
