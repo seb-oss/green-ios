@@ -193,63 +193,6 @@ extension InputField where F == StringFormatStyle, InfoContainer == EmptyView {
     }
 }
 
-@available(iOS 16.0, *)
-public struct InputFieldPreview: View {
-    @State var supportTextEnabled = false
-    @State var isOptional = true
-    @State var hasError = false
-    @State var text = ""
-    @State var text2 = ""
-    @State var money: Decimal? = 5
-
-    public init() {}
-
-    public var body: some View {
-        ScrollView {
-            VStack(spacing: 24) {
-                VStack {
-                    Toggle("Optional", isOn: $isOptional)
-                    Toggle("Support text", isOn: $supportTextEnabled)
-                    Toggle("Toggle error", isOn: $hasError)
-                }
-                .tint(.l3Positive01)
-
-                Divider()
-
-                InputField("Custom header", text: $text) {
-                    Button(action: {}) {
-                        Image(systemName: "info.circle")
-                    }
-                }
-                .supportiveText(supportTextEnabled ? "Hello" : nil)
-                .optionalField(isOptional)
-                .applyRules(
-                    to: $text,
-                    rules: .maxCharacters(2)
-                )
-
-                Divider()
-
-                InputField("Floating header 2", text: $text2)
-                    .inputFieldStyle(.floating)
-                    .optionalField(isOptional)
-                    .applyRules(to: $text2, rules: .maxCharacters(10))
-
-                InputField(
-                    "Belopp",
-                    value: $money,
-                    format: .currency(code: "SEK")
-                )
-            }
-            .padding(16)
-            .animation(.default, value: hasError)
-            .animation(.default, value: isOptional)
-            .animation(.default, value: supportTextEnabled)
-        }
-        .background(Color.l1Neutral02)
-    }
-}
-
 extension AccessibilityCustomContentKey {
     fileprivate static let inputError = AccessibilityCustomContentKey(
         Text(
@@ -270,5 +213,5 @@ extension AccessibilityCustomContentKey {
 
 @available(iOS 16.0, *)
 #Preview {
-    InputFieldPreview()
+    InputFieldDemo()
 }
