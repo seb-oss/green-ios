@@ -3,6 +3,7 @@ import SwiftUI
 @available(iOS 16.0, *)
 private struct ValidationRuleModifier<Value: Equatable>: ViewModifier {
     private let rules: [any ValidationRule<Value>]
+    private let isEnabled: Bool
     @Binding var value: Value
 
     @State private var validationError: ValidationError?
@@ -10,9 +11,11 @@ private struct ValidationRuleModifier<Value: Equatable>: ViewModifier {
 
     init(
         rules: [any ValidationRule<Value>],
-        value: Binding<Value>
+        value: Binding<Value>,
+        isEnabled: Bool
     ) {
         self.rules = rules
+        self.isEnabled = isEnabled
         self._value = value
     }
 
@@ -26,6 +29,10 @@ private struct ValidationRuleModifier<Value: Equatable>: ViewModifier {
     }
 
     private func validateValue(_ newValue: Value) {
+        guard isEnabled else {
+            validationError = nil
+            return
+        }
         guard !rules.isEmpty else { return }
 
         // Return immediately on first transformation
@@ -57,7 +64,8 @@ extension View {
     @ViewBuilder
     public func applyRules<V: Equatable>(
         to value: Binding<V>,
-        rules: any ValidationRule<V>...
+        rules: any ValidationRule<V>...,
+        isEnabled: Bool = true
     ) -> some View {
         let maxCharacters =
             rules
@@ -66,8 +74,12 @@ extension View {
 
         self
             .modifier(
-                ValidationRuleModifier(rules: rules, value: value)
+                ValidationRuleModifier(
+                    rules: rules,
+                    value: value,
+                    isEnabled: isEnabled
+                )
             )
-            .environment(\.textInputCharacterLimit, maxCharacters)
+            .environment(\.textInputCharacterLimit, isEnabled ? maxCharacters : nil)
     }
 }
