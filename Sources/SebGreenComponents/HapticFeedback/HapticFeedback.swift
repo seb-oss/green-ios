@@ -13,6 +13,7 @@ public enum HapticFeedback: Sendable {
     case alignment
     case levelChange
     case pathComplete
+    case impact
     case impactWeight(weight: HapticFeedback.Weight, intensity: Double)
     case impactFlexibility(flexibility: HapticFeedback.Flexibility, intensity: Double)
 
@@ -53,6 +54,8 @@ extension SensoryFeedback {
             self = .warning
         case .error:
             self = .error
+        case .impact:
+            self = .impact
         case .impactWeight(let weight, intensity: let intensity):
             self = .impact(weight: .init(weight), intensity: intensity)
         case .impactFlexibility(let flexibility, intensity: let intensity):
