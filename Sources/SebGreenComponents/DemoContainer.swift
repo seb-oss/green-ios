@@ -1,8 +1,36 @@
 import GdsKit
 import SwiftUI
 
+@available(iOS 16, *)
+struct DemoSection<Content: View>: View {
+    private let title: String
+    private let content: Content
+    
+    init(
+        _ title: String,
+        @ViewBuilder content: () -> Content
+    ) {
+        self.title = title
+        self.content = content()
+    }
+    
+    var body: some View {
+        Section {
+            VStack(spacing: .space3xs) {
+                content
+            }
+        } header: {
+            Text(title)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .font(.footnote)
+                .bold()
+        }
+    }
+}
+
 struct DemoContainer<Configuration: View, Content: View>: View {
     private let title: String
+    private let contentPadding: CGFloat
     private let configuration: Configuration
     private let content: Content
     private let storageKey: String
@@ -13,10 +41,12 @@ struct DemoContainer<Configuration: View, Content: View>: View {
     
     init(
         _ title: String,
+        contentPadding: CGFloat = .spaceM,
         @ViewBuilder configuration: () -> Configuration,
         @ViewBuilder content: () -> Content
     ) {
         self.title = title
+        self.contentPadding = contentPadding
         self.configuration = configuration()
         self.content = content()
         
@@ -33,12 +63,14 @@ struct DemoContainer<Configuration: View, Content: View>: View {
             VStack(spacing: .spaceXl) {
                 if shouldShowConfigurationView {
                     configuration
+                        .background(in: .rect(cornerRadius: 16))
+                        .padding(.spaceM)
                 }
                 
                 content
             }
             .frame(maxWidth: .infinity)
-            .padding()
+            .padding(contentPadding)
         }
         .animation(.easeIn, value: shouldShowConfigurationView)
         .background(level.colors.neutral02)
