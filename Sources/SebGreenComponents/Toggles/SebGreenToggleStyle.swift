@@ -57,6 +57,62 @@ public struct SebGreenToggleStyle: ToggleStyle {
     }
 }
 
+/// This was introduced with the idea of overiding only the colors but keeping the native system animations, and also the native disabled styling. However that does not work. The colors are applied but the native liquid glass blob when we drag is gone, and it also does not show up on tap.
+struct GreenNativeToggleStyle: ToggleStyle {
+    private let onColor: Color = .l3Positive01
+    private let offColor: Color = .l3Neutral03
+    
+    @Environment(\.isEnabled) private var isEnabled
+
+    func makeBody(configuration: Configuration) -> some View {
+        HStack {
+            configuration.label
+            Spacer()
+            
+            // The Switch Background
+            if #available(iOS 26.0, *) {
+                RoundedRectangle(cornerRadius: 16, style: .continuous)
+                    .fill(configuration.isOn ? onColor : offColor)
+                    .opacity(isEnabled ? 1.0 : 0.5) // Handle disabled state color
+                    .frame(width: 51, height: 31)
+                    .overlay(
+                        // The Sliding Thumb
+                        Circle()
+                            .fill(.white)
+                            .shadow(radius: 1, x: 0, y: 1)
+                            .padding(2)
+                            .offset(x: configuration.isOn ? 10 : -10)
+                    )
+                    .glassEffect(.regular.tint(configuration.isOn ? onColor : offColor))
+                    .onTapGesture {
+                        withAnimation(.spring(response: 0.25, dampingFraction: 0.7)) {
+                            configuration.isOn.toggle()
+                        }
+                    }
+            } else {
+                RoundedRectangle(cornerRadius: 16, style: .continuous)
+                    .fill(configuration.isOn ? onColor : offColor)
+                    .opacity(isEnabled ? 1.0 : 0.5) // Handle disabled state color
+                    .frame(width: 51, height: 31)
+                    .overlay(
+                        // The Sliding Thumb
+                        Circle()
+                            .fill(.white)
+                            .shadow(radius: 1, x: 0, y: 1)
+                            .padding(2)
+                            .offset(x: configuration.isOn ? 10 : -10)
+                    )
+                    .onTapGesture {
+                        withAnimation(.spring(response: 0.25, dampingFraction: 0.7)) {
+                            configuration.isOn.toggle()
+                        }
+                    }
+            }
+        }
+    }
+}
+
+
 #Preview {
     struct Preview: View {
         @State var isOn = false
