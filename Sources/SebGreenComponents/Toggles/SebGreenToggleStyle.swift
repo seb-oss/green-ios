@@ -118,9 +118,49 @@ struct GreenNativeToggleStyle: ToggleStyle {
         @State var isOn = false
         var body: some View {
             VStack {
-                Toggle("System", isOn: $isOn)
-                Toggle("SEB Green", isOn: $isOn)
+                Toggle("System Enabled", isOn: $isOn)
+                Toggle("System On Disabled", isOn: .constant(true))
+                    .disabled(true)
+                Toggle("System Off Disabled", isOn: .constant(false))
+                    .disabled(true)
+                
+                Divider()
+                    .padding(40)
+                
+                Toggle("System Stylised Enabled", isOn: $isOn)
+                    .tint(Color.l3Positive01)
+                
+                Toggle("System Stylised On Disabled", isOn: .constant(true))
+                    .tint(Color.l3Positive01)
+                    .disabled(true)
+                
+                Toggle("System Stylised Off Disabled", isOn: .constant(false))
+                    .tint(Color.l3Positive01)
+                    .disabled(true)
+                
+                Divider()
+                    .padding(40)
+                
+                Toggle("SEB Green Enabled", isOn: $isOn)
                     .toggleStyle(SebGreenToggleStyle())
+                
+                Toggle("SEB Green On Disabled", isOn: .constant(true))
+                    .toggleStyle(SebGreenToggleStyle())
+                
+                Toggle("SEB Green Off Disabled", isOn: .constant(false))
+                    .toggleStyle(SebGreenToggleStyle())
+                
+                Divider()
+                    .padding(40)
+                
+                Toggle("Green Enabled", isOn: $isOn)
+                    .toggleStyle(GreenNativeToggleStyle())
+                
+                Toggle("Green On Disabled", isOn: .constant(true))
+                    .toggleStyle(GreenNativeToggleStyle())
+                
+                Toggle("Green Off Disabled", isOn: .constant(false))
+                    .toggleStyle(GreenNativeToggleStyle())
             }
             .padding(8)
         }
