@@ -5,18 +5,19 @@
 
 import SwiftUI
 
-/// A ToggleStyle to use with Toggle views to give them SEB Green styling.
-/// * Changing size of the switch subcomponent is not possible.
-/// * This style will override the font and foreground color of the Toggle's label.
-public struct SebGreenToggleStyle: ToggleStyle {
+/// A ToggleStyle that draws a branded capsule switch entirely in SwiftUI.
+/// - Note: Changing the size of the inner thumb is not supported.
+/// - This style overrides the font and foreground color of the Toggle's label.
+public struct GreenCapsuleToggleStyle: ToggleStyle {
 
-    private let imageResource: ImageResource = ImageResource(name: "circle-check", bundle: .module)
-    private let activeColor: Color = .l3Positive01
-    private let inactiveColor: Color = .l3Neutral03
-    private let width: CGFloat = 64
-    private let height: CGFloat = 28
-    private let circlePadding: CGFloat = 2
-    private let offset: CGFloat = 10
+    private let onTrackColor: Color = .l3Positive01
+    private let offTrackColor: Color = .l3Neutral03
+
+    private let trackWidth: CGFloat = 64
+    private let trackHeight: CGFloat = 28
+
+    private let thumbVerticalPadding: CGFloat = 2
+    private let thumbHorizontalOffset: CGFloat = 10
 
     public init() {}
 
@@ -30,11 +31,11 @@ public struct SebGreenToggleStyle: ToggleStyle {
 
             if #available(iOS 26.0, *) {
                 Capsule(style: .continuous)
-                    .fill(configuration.isOn ? activeColor : inactiveColor)
+                    .fill(configuration.isOn ? onTrackColor : offTrackColor)
                     .overlay {
-                        circle(isOn: configuration.isOn)
+                        thumb(isOn: configuration.isOn)
                     }
-                    .frame(width: width, height: height)
+                    .frame(width: trackWidth, height: trackHeight)
                     .clipped()
                     .onTapGesture {
                         withAnimation(.spring()) {
@@ -44,11 +45,11 @@ public struct SebGreenToggleStyle: ToggleStyle {
                     .glassEffect()
             } else {
                 Capsule(style: .continuous)
-                    .fill(configuration.isOn ? activeColor : inactiveColor)
+                    .fill(configuration.isOn ? onTrackColor : offTrackColor)
                     .overlay {
-                        circle(isOn: configuration.isOn)
+                        thumb(isOn: configuration.isOn)
                     }
-                    .frame(width: width, height: height)
+                    .frame(width: trackWidth, height: trackHeight)
                     .clipped()
                     .onTapGesture {
                         withAnimation(.spring()) {
@@ -59,25 +60,26 @@ public struct SebGreenToggleStyle: ToggleStyle {
         }
     }
 
-    private func circle(isOn: Bool) -> some View {
+    private func thumb(isOn: Bool) -> some View {
         Capsule(style: .continuous)
             .frame(width: 39, height: 24)
             .foregroundStyle(Color.white)
-            .padding(.vertical, circlePadding)
+            .padding(.vertical, thumbVerticalPadding)
             .cornerRadius(12)
-            .offset(x: isOn ? offset : -offset)
-            
+            .offset(x: isOn ? thumbHorizontalOffset : -thumbHorizontalOffset)
     }
 }
+
+public typealias SebGreenToggleStyle = GreenCapsuleToggleStyle
 
 #if os(iOS)
 import UIKit
 
-/// A UIKit-backed switch that preserves native animations and effects while allowing custom colors.
-struct SystemSwitchView: UIViewRepresentable {
+/// A UIKit-backed UISwitch wrapped for SwiftUI that preserves native animations and effects while allowing custom track colors.
+struct UIKitSwitchView: UIViewRepresentable {
     @Binding var isOn: Bool
-    var onColor: Color
-    var offColor: Color
+    var onTrackColor: Color
+    var offTrackColor: Color
     var isEnabled: Bool
 
     func makeUIView(context: Context) -> UISwitch {
@@ -91,12 +93,12 @@ struct SystemSwitchView: UIViewRepresentable {
         uiView.isEnabled = isEnabled
 
         // Apply custom colors while keeping native look & feel
-        uiView.onTintColor = UIColor(onColor) // On-state track color
-        uiView.thumbTintColor = nil           // Keep the native thumb appearance
+        uiView.onTintColor = UIColor(onTrackColor) // On-state track color
+        uiView.thumbTintColor = nil                // Keep the native thumb appearance
 
-        // Off-state track color trick: use background + rounded corners
-        let offUIColor = UIColor(offColor)
-        uiView.tintColor = .red
+        // Off-state track color: use tint/background + rounded corners
+        let offUIColor = UIColor(offTrackColor)
+        uiView.tintColor = offUIColor
         uiView.backgroundColor = offUIColor
         uiView.clipsToBounds = true
 
@@ -110,24 +112,22 @@ struct SystemSwitchView: UIViewRepresentable {
     func makeCoordinator() -> Coordinator { Coordinator(self) }
 
     class Coordinator {
-        var parent: SystemSwitchView
-        init(_ parent: SystemSwitchView) { self.parent = parent }
+        var parent: UIKitSwitchView
+        init(_ parent: UIKitSwitchView) { self.parent = parent }
         @objc func valueChanged(_ sender: UISwitch) {
             parent.isOn = sender.isOn
         }
     }
 }
+
+// Backward compatibility for old references
+typealias SystemSwitchView = UIKitSwitchView
 #endif
 
-/// This style customizes only the on/off colors while preserving the system's native
-/// animations, interactions, and disabled appearance by rendering a real UISwitch on iOS.
-///
-/// Notes:
-/// - On iOS, a UIKit-backed switch is used so the native material/physics are retained.
-/// - On other platforms, a simple SwiftUI fallback is used.
-struct GreenNativeToggleStyle: ToggleStyle {
-    private let onColor: Color = .l3Positive01
-    private let offColor: Color = .l3Neutral03
+/// ToggleStyle that renders a real UISwitch to preserve system animations/effects, while allowing custom track colors.
+struct SystemSwitchToggleStyle: ToggleStyle {
+    private let onTrackColor: Color = .l3Positive01
+    private let offTrackColor: Color = .l3Neutral03
 
     @Environment(\.isEnabled) private var isEnabled
 
@@ -135,15 +135,17 @@ struct GreenNativeToggleStyle: ToggleStyle {
         HStack {
             configuration.label
             Spacer()
-            SystemSwitchView(
+            UIKitSwitchView(
                 isOn: configuration.$isOn,
-                onColor: onColor,
-                offColor: offColor,
+                onTrackColor: onTrackColor,
+                offTrackColor: offTrackColor,
                 isEnabled: isEnabled
             )
         }
     }
 }
+
+typealias GreenNativeToggleStyle = SystemSwitchToggleStyle
 
 
 #Preview {
