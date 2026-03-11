@@ -6,6 +6,8 @@ extension InputField {
         @Environment(\.inputFieldStyle) private var inputFieldStyle
         @Environment(\.supportiveText) private var supportiveText
         @Environment(\.validationError) private var validationError
+        /// Only for snapshot tests
+        @Environment(\.overrideFocusVisibility) private var overrideFocusVisibility
 
         @FocusState private var isFocused: Bool
         @Binding var value: F.FormatInput?
@@ -38,7 +40,7 @@ extension InputField {
         }
 
         private var borderWidth: CGFloat {
-            isEditing || hasValidationError ? 2 : 1
+            overrideFocusVisibility || isEditing || hasValidationError ? 2 : 1
         }
 
         var body: some View {

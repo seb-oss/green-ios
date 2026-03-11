@@ -66,7 +66,6 @@ extension InputField {
 
                 AccessoryContainer($value, isEditing: isEditing)
             }
-            .fixedSize(horizontal: false, vertical: true)
             .padding(.spaceM)
             .frame(
                 maxWidth: .infinity,
@@ -89,6 +88,7 @@ extension InputField {
             }
             .contentShape(.rect(cornerRadius: cornerRadius))
             .onTapGesture(perform: setFocus)
+            .fixedSize(horizontal: false, vertical: true)
         }
 
         private var floatingLabel: some View {
@@ -96,7 +96,6 @@ extension InputField {
                 .typography(
                     presentTextField ? .detailBookXs : .detailBookM
                 )
-                .fixedSize(horizontal: false, vertical: true)
                 .foregroundStyle(Color.contentNeutral02)
                 .animation(.snappy, value: presentTextField)
                 .accessibilityHidden(true)

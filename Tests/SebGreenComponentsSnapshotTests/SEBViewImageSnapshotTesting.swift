@@ -25,7 +25,7 @@ open class SEBViewImageSnapshotTesting: XCTestCase {
 
     /// Required iOS version prefix for CI and committed snapshots
     /// Using a prefix allows minor/patch variations (e.g., 26.1.1)
-    public static let requiredOSVersionPrefix: String = "26.1"
+    public static let requiredOSVersionPrefix: String = "26.2"
 
     /// Global record mode for snapshot tests.
     /// Preferred to toggle via environment variable `SNAPSHOT_RECORD=1` to avoid code churn.

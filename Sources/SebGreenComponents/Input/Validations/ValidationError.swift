@@ -5,8 +5,8 @@ public struct ValidationError: LocalizedError {
     let sensoryFeedback: HapticFeedback?
 
     public init(
-        errorDescription: String?,
-        sensoryFeedback: HapticFeedback? = .error
+        _ errorDescription: String?,
+        sensoryFeedback: HapticFeedback? = nil
     ) {
         self.errorDescription = errorDescription
         self.sensoryFeedback = sensoryFeedback
