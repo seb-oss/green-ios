@@ -153,51 +153,51 @@ typealias GreenNativeToggleStyle = SystemSwitchToggleStyle
         @State var isOn = false
         var body: some View {
             VStack {
-                Toggle("System Enabled", isOn: $isOn)
-                Toggle("System On Disabled", isOn: .constant(true))
+                Toggle("System toggle — Enabled (default renderer)", isOn: $isOn)
+                Toggle("System toggle — Disabled (On) (default renderer)", isOn: .constant(true))
                     .disabled(true)
-                Toggle("System Off Disabled", isOn: .constant(false))
+                Toggle("System toggle — Disabled (Off) (default renderer)", isOn: .constant(false))
                     .disabled(true)
-                
+
                 Divider()
                     .padding(40)
-                
-                Toggle("System Stylised Enabled", isOn: $isOn)
+
+                Toggle("System toggle with .tint — Enabled (brand on color)", isOn: $isOn)
                     .tint(Color.l3Positive01)
-                
-                Toggle("System Stylised On Disabled", isOn: .constant(true))
-                    .tint(Color.l3Positive01)
-                    .disabled(true)
-                
-                Toggle("System Stylised Off Disabled", isOn: .constant(false))
+
+                Toggle("System toggle with .tint — Disabled (On)", isOn: .constant(true))
                     .tint(Color.l3Positive01)
                     .disabled(true)
-                
+
+                Toggle("System toggle with .tint — Disabled (Off)", isOn: .constant(false))
+                    .tint(Color.l3Positive01)
+                    .disabled(true)
+
                 Divider()
                     .padding(40)
-                
-                Toggle("SEB Green Enabled", isOn: $isOn)
+
+                Toggle("SwiftUI capsule ToggleStyle — Enabled (custom-drawn)", isOn: $isOn)
                     .toggleStyle(SebGreenToggleStyle())
-                
-                Toggle("SEB Green On Disabled", isOn: .constant(true))
-                    .toggleStyle(SebGreenToggleStyle())
-                    .disabled(true)
-                
-                Toggle("SEB Green Off Disabled", isOn: .constant(false))
+
+                Toggle("SwiftUI capsule ToggleStyle — Disabled (On)", isOn: .constant(true))
                     .toggleStyle(SebGreenToggleStyle())
                     .disabled(true)
-                
+
+                Toggle("SwiftUI capsule ToggleStyle — Disabled (Off)", isOn: .constant(false))
+                    .toggleStyle(SebGreenToggleStyle())
+                    .disabled(true)
+
                 Divider()
                     .padding(40)
-                
-                Toggle("Green Enabled", isOn: $isOn)
+
+                Toggle("UISwitch-backed ToggleStyle — Enabled (preserves native animations)", isOn: $isOn)
                     .toggleStyle(GreenNativeToggleStyle())
-                
-                Toggle("Green On Disabled", isOn: .constant(true))
+
+                Toggle("UISwitch-backed ToggleStyle — Disabled (On)", isOn: .constant(true))
                     .toggleStyle(GreenNativeToggleStyle())
                     .disabled(true)
-                
-                Toggle("Green Off Disabled", isOn: .constant(false))
+
+                Toggle("UISwitch-backed ToggleStyle — Disabled (Off)", isOn: .constant(false))
                     .toggleStyle(GreenNativeToggleStyle())
                     .disabled(true)
             }
