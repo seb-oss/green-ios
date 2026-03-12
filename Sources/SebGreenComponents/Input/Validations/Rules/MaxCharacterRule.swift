@@ -1,4 +1,7 @@
 import Foundation
+import Accessibility
+// TODO: Remove import UIKit when minimum deployment target is iOS 17+
+import UIKit
 
 @available(iOS 16, *)
 public struct MaxCharacterRule: ValidationRule {
@@ -23,6 +26,8 @@ public struct MaxCharacterRule: ValidationRule {
               hasExceededMaxCharacters(value) else {
             return nil
         }
+        
+        announceMaxCharactersReached()
 
         return .init(
             value: String(value.prefix(maxCharacters)),
@@ -32,7 +37,7 @@ public struct MaxCharacterRule: ValidationRule {
 
     public func validate(_ value: String) throws(ValidationError) {
         if hasExceededMaxCharacters(value) {
-            let localizedError = String(localized: "SebGreenComponents.InputField.Validation.MaxCharacters", bundle: .module)
+            let localizedError = String(localized: "GreeniOS.InputField.Validation.MaxCharacters", bundle: .module)
             throw ValidationError(
                 errorDescription: String(format: localizedError, maxCharacters)
             )
@@ -41,6 +46,26 @@ public struct MaxCharacterRule: ValidationRule {
 
     private func hasExceededMaxCharacters(_ value: String) -> Bool {
         value.count > maxCharacters
+    }
+    
+    private func announceMaxCharactersReached() {
+        let format = String(
+            localized: "GreeniOS.InputField.Accessibility.MaxCharactersReached.Announcement",
+            bundle: .module
+        )
+        let message = String(format: format, maxCharacters)
+
+        if #available(iOS 17, *) {
+            var announcement = AttributedString(message)
+            announcement.accessibilitySpeechAnnouncementPriority = .high
+            AccessibilityNotification.Announcement(announcement)
+                .post()
+        } else {
+            UIAccessibility.post(
+                notification: .announcement,
+                argument: message
+            )
+        }
     }
 }
 

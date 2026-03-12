@@ -71,19 +71,85 @@
         }
       }
     },
-    "GreeniOS.Accessibility.Input.Error %@" : {
+    "GreeniOS.InputField.Accessibility.MaxCharactersReached.Announcement" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Error: %@"
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Maximum %d character reached"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Maximum %d characters reached"
+                }
+              }
+            }
           }
         },
         "sv" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Fel: %@"
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Maximalt %d tecken har nåtts."
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Maximalt %d tecken har nåtts."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "GreeniOS.InputField.Validation.MaxCharacters" : {
+      "comment" : "Max character validation error.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Maximum 1 character reached."
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Maximum %d characters reached."
+                }
+              }
+            }
+          }
+        },
+        "sv" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Maximalt 1 tecken uppnått."
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Maximalt %d tecken uppnått."
+                }
+              }
+            }
           }
         }
       }
@@ -101,48 +167,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Valfritt"
-          }
-        }
-      }
-    },
-    "SebGreenComponents.InputField.Validation.MaxCharacters" : {
-      "comment" : "Max character validation error.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "variations" : {
-            "plural" : {
-              "one" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "You can enter a maximum of one character."
-                }
-              },
-              "other" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "You can enter a maximum of %d characters."
-                }
-              }
-            }
-          }
-        },
-        "sv" : {
-          "variations" : {
-            "plural" : {
-              "one" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "Du kan skriva högst ett tecken."
-                }
-              },
-              "other" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "Du kan skriva högst %d tecken."
-                }
-              }
-            }
           }
         }
       }
