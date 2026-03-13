@@ -206,6 +206,14 @@ public struct ComponentShowcase: View {
 
             Toggle("Enabled toggle (off)", isOn: $toggleOff)
                 .gdsToggleTint()
+            
+            Toggle("Enabled toggle (on)", isOn: $toggleOn)
+                .gdsToggleTint()
+                .disabled(true)
+
+            Toggle("Enabled toggle (off)", isOn: $toggleOff)
+                .gdsToggleTint()
+                .disabled(true)
         }
     }
 
