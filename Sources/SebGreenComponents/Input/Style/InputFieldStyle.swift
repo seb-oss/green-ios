@@ -2,14 +2,9 @@ import SwiftUI
 
 public struct InputFieldStyle {
     let variant: Variant
-    let background: Configuration.Background
 
-    public init(
-        variant: Variant = .default,
-        background: Configuration.Background = .white
-    ) {
+    public init(variant: Variant = .default) {
         self.variant = variant
-        self.background = background
     }
 
     public enum Variant {

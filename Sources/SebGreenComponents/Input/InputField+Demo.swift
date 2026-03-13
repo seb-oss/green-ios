@@ -7,8 +7,7 @@ public struct InputFieldDemo: View {
     @State private var presentInfoButton = true
     @State private var expandTextArea = false
 
-    @State private var textfieldBackground:
-        InputFieldStyle.Configuration.Background = .white
+    @State private var surface: Surface = .neutral02
 
     @State private var defaultText = ""
     @State private var floatingText = ""
@@ -20,39 +19,34 @@ public struct InputFieldDemo: View {
 
     public init() {}
 
-    private var defaultLabel: some View {
-        InputField("Default Label", text: $defaultText) {
-            if presentInfoButton {
-                Button(action: {}) {
-                    Image(systemName: "info.circle")
-                }
-            }
-        }
-        .inputFieldStyle(.default.background(textfieldBackground))
-    }
-
     public var body: some View {
         DemoContainer("InputField", contentPadding: .zero) {
             configuration
         } content: {
             VStack(spacing: .spaceXl) {
-                defaultLabel
-                    .applyRules(
-                        to: $defaultText,
-                        rules: .maxCharacters(
-                            maxCharacters,
-                            enforcement: ruleEnforcement
-                        ),
-                        isEnabled: maxCharacterRuleEnabled
-                    )
-                    .supportiveText(
-                        supportTextEnabled ? "Lorem Ipsum support text" : nil
-                    )
+                InputField("Default Label", text: $defaultText) {
+                    if presentInfoButton {
+                        Button(action: {}) {
+                            Image(systemName: "info.circle")
+                        }
+                    }
+                }
+                .applyRules(
+                    to: $defaultText,
+                    rules: .maxCharacters(
+                        maxCharacters,
+                        enforcement: ruleEnforcement
+                    ),
+                    isEnabled: maxCharacterRuleEnabled
+                )
+                .supportiveText(
+                    supportTextEnabled ? "Lorem Ipsum support text" : nil
+                )
 
                 Divider()
 
                 InputField("Floating Label", text: $floatingText)
-                    .inputFieldStyle(.floating.background(textfieldBackground))
+                    .inputFieldStyle(.floating)
                     .applyRules(
                         to: $floatingText,
                         rules: .maxCharacters(
@@ -69,16 +63,13 @@ public struct InputFieldDemo: View {
                     value: $amount,
                     format: .currency(code: "SEK")
                 )
-                .inputFieldStyle(.default.background(textfieldBackground))
                 .supportiveText(supportTextEnabled ? "Fill in amount" : nil)
                 .keyboardType(.numberPad)
             }
             .optionalField(isOptional)
             .expandTextArea(expandTextArea ? 4... : 1...)
             .padding(.spaceM)
-            .background(
-                textfieldBackground == .white ? Color.l1Neutral02 : .l1Neutral01
-            )
+            .surface(surface)
         }
     }
 
@@ -105,15 +96,15 @@ public struct InputFieldDemo: View {
 
             Divider()
 
-            DemoSection("Textfield background color") {
+            DemoSection("Parent background") {
                 Picker(
-                    "Background",
-                    selection: $textfieldBackground.animation()
+                    "Surface",
+                    selection: $surface.animation()
                 ) {
-                    Text("White")
-                        .tag(InputFieldStyle.Configuration.Background.white)
-                    Text("Gray")
-                        .tag(InputFieldStyle.Configuration.Background.gray)
+                    Text("Neutral 01")
+                        .tag(Surface.neutral01)
+                    Text("Neutral 02")
+                        .tag(Surface.neutral02)
                 }
                 .pickerStyle(.segmented)
             }

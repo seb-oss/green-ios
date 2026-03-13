@@ -75,7 +75,7 @@ extension InputField {
             )
             .background {
                 RoundedRectangle(cornerRadius: cornerRadius)
-                    .fill(inputFieldStyle.background.color)
+                    .fill(.surfaceAware)
                     .animation(.snappy, value: value)
             }
             .overlay {

@@ -14,7 +14,7 @@ extension InputField {
         private let label: any StringProtocol
         private let infoContainer: InfoContainer
         private let textField: TextField
-        
+
         private let cornerRadius: CGFloat = 16
 
         init(
@@ -54,7 +54,7 @@ extension InputField {
                 .padding(.spaceM)
                 .background {
                     RoundedRectangle(cornerRadius: cornerRadius)
-                        .fill(inputFieldStyle.background.color)
+                        .fill(.surfaceAware)
                         .animation(.snappy, value: value)
                 }
                 .overlay {
