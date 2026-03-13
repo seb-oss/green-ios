@@ -205,7 +205,9 @@ public struct GreenRow: View, Identifiable {
             Toggle(isOn: isOnBinding) {
                 EmptyView()
             }
+            .gdsToggleTint()
             .labelsHidden()
+            
         case .checkbox(let isSelected):
             Image(systemName: isSelected ? "checkmark.square.fill" : "square")
                 .imageScale(.medium)

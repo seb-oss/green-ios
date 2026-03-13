@@ -43,6 +43,7 @@ extension View {
             Spacer()
             
             Toggle("", isOn: isOn)
+                .gdsToggleTint()
         }
     }
     
@@ -109,3 +110,4 @@ struct RowItem_Previews: PreviewProvider {
         
     }
 }
+

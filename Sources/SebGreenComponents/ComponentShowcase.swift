@@ -202,10 +202,10 @@ public struct ComponentShowcase: View {
             sectionHeader("Toggle")
 
             Toggle("Enabled toggle (on)", isOn: $toggleOn)
-                .toggleStyle(SebGreenToggleStyle())
+                .gdsToggleTint()
 
             Toggle("Enabled toggle (off)", isOn: $toggleOff)
-                .toggleStyle(SebGreenToggleStyle())
+                .gdsToggleTint()
         }
     }
 
@@ -327,3 +327,4 @@ public struct ComponentShowcase: View {
         .preferredColorScheme(.dark)
         .dynamicTypeSize(.accessibility1)
 }
+
