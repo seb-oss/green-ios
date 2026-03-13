@@ -65,7 +65,7 @@ public struct GreenButton: View {
 // MARK: - Previews
 
 struct GreenButton_Previews: PreviewProvider {
-    static let arrangement: Arrangement = .horizontally
+    static let arrangement: Arrangement = .vertically
     
     static var previews: some View {
         ScrollView {
