@@ -103,10 +103,6 @@ where F.FormatOutput == String, F.FormatInput: Equatable {
             value = nil
         }
         .accessibilityCustomContent(
-            .characterCount,
-            accessibilityCustomCharacterCountText
-        )
-        .accessibilityCustomContent(
             .inputError,
             accessibilityCustomErrorText,
             importance: .high
@@ -117,21 +113,19 @@ where F.FormatOutput == String, F.FormatInput: Equatable {
         validationError.map { Text($0.localizedDescription) }
     }
 
-    private var accessibilityCustomCharacterCountText: Text? {
-        characterLimit.map { limit in
-            Text(
-                "GreeniOS.Accessibility.CharacterCountValue \(textBinding.wrappedValue.count) \(limit)",
-                bundle: .module,
-                comment:
-                    "Accessibility value for character count, e.g. '5 of 50 possible characters written.'"
-            )
-        }
-    }
-
     private var accessibilityLabel: String {
         var components: [String] = [String(title)]
         if let supportiveText, !supportiveText.isEmpty {
             components.append(supportiveText)
+        }
+        
+        if let characterLimit {
+            let currentCount = textBinding.wrappedValue.count
+            let characterLimitText = String(
+                localized: "GreeniOS.Accessibility.CharacterCountValue \(currentCount) \(characterLimit)",
+                bundle: .module
+            )
+            components.append(characterLimitText)
         }
         return components.joined(separator: ", ")
     }
@@ -200,14 +194,6 @@ extension AccessibilityCustomContentKey {
             bundle: .module
         ),
         id: "inputFieldError"
-    )
-
-    fileprivate static let characterCount = AccessibilityCustomContentKey(
-        Text(
-            "GreeniOS.Accessibility.CustomContent.CharacterCount",
-            bundle: .module
-        ),
-        id: "characterCount"
     )
 }
 

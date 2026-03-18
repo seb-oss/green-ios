@@ -37,23 +37,6 @@
         }
       }
     },
-    "GreeniOS.Accessibility.CustomContent.CharacterCount" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Character count"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Antal tecken"
-          }
-        }
-      }
-    },
     "GreeniOS.Accessibility.CustomContent.InputFieldError" : {
       "extractionState" : "manual",
       "localizations" : {
