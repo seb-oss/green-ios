@@ -43,7 +43,7 @@ extension View {
             Spacer()
             
             Toggle("", isOn: isOn)
-                .gdsToggleTint()
+                .toggleStyle(.gds)
         }
     }
     

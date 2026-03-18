@@ -39,23 +39,23 @@ private struct ToggleGdsTintGallery: View {
         VStack(spacing: .spaceL) {
             // On (enabled)
             Toggle("", isOn: .constant(true))
-                .gdsToggleTint()
+                .toggleStyle(.gds)
                 .labelsHidden()
 
             // On (disabled)
             Toggle("", isOn: .constant(true))
-                .gdsToggleTint()
+                .toggleStyle(.gds)
                 .labelsHidden()
                 .disabled(true)
 
             // Off (enabled)
             Toggle("", isOn: .constant(false))
-                .gdsToggleTint()
+                .toggleStyle(.gds)
                 .labelsHidden()
 
             // Off (disabled)
             Toggle("", isOn: .constant(false))
-                .gdsToggleTint()
+                .toggleStyle(.gds)
                 .labelsHidden()
                 .disabled(true)
         }
