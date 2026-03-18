@@ -207,11 +207,11 @@ public struct ComponentShowcase: View {
             Toggle("Enabled toggle (off)", isOn: $toggleOff)
                 .toggleStyle(.gds)
             
-            Toggle("Enabled toggle (on)", isOn: $toggleOn)
+            Toggle("Disabled toggle (on)", isOn: $toggleOn)
                 .toggleStyle(.gds)
                 .disabled(true)
 
-            Toggle("Enabled toggle (off)", isOn: $toggleOff)
+            Toggle("Disabled toggle (off)", isOn: $toggleOff)
                 .toggleStyle(.gds)
                 .disabled(true)
         }
