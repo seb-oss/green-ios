@@ -205,7 +205,7 @@ public struct GreenRow: View, Identifiable {
             Toggle(isOn: isOnBinding) {
                 EmptyView()
             }
-            .gdsToggleTint()
+            .toggleStyle(.gds)
             .labelsHidden()
             
         case .checkbox(let isSelected):
