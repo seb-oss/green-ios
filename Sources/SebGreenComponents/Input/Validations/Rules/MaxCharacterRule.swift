@@ -27,7 +27,12 @@ public struct MaxCharacterRule: ValidationRule {
             return nil
         }
         
-        announceMaxCharactersReached()
+        let format = String(
+            localized: "GreeniOS.InputField.Accessibility.MaxCharactersReached.Announcement",
+            bundle: .module
+        )
+        let message = String(format: format, maxCharacters)
+        accessibilityAnnounce(message)
 
         return .init(
             value: String(value.prefix(maxCharacters)),
@@ -38,9 +43,10 @@ public struct MaxCharacterRule: ValidationRule {
     public func validate(_ value: String) throws(ValidationError) {
         if hasExceededMaxCharacters(value) {
             let localizedError = String(localized: "GreeniOS.InputField.Validation.MaxCharacters", bundle: .module)
-            throw ValidationError(
-                errorDescription: String(format: localizedError, maxCharacters)
-            )
+            let errorMessage = String(format: localizedError, maxCharacters)
+            accessibilityAnnounce(errorMessage)
+            
+            throw ValidationError(errorDescription: errorMessage)
         }
     }
 
@@ -48,13 +54,7 @@ public struct MaxCharacterRule: ValidationRule {
         value.count > maxCharacters
     }
     
-    private func announceMaxCharactersReached() {
-        let format = String(
-            localized: "GreeniOS.InputField.Accessibility.MaxCharactersReached.Announcement",
-            bundle: .module
-        )
-        let message = String(format: format, maxCharacters)
-
+    private func accessibilityAnnounce(_ message: String) {
         if #available(iOS 17, *) {
             var announcement = AttributedString(message)
             announcement.accessibilitySpeechAnnouncementPriority = .high
