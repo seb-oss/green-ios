@@ -3,6 +3,8 @@ import SwiftUI
 extension InputField {
     struct AccessoryContainer: View {
         @Environment(\.textInputCharacterLimit) private var characterLimit
+        /// Only for snapshot tests
+        @Environment(\.overrideFocusVisibility) private var overrideFocusVisibility
 
         @Binding var value: F.FormatInput?
         private let isEditing: Bool
@@ -13,11 +15,17 @@ extension InputField {
         }
         
         private var presentClearButton: Bool {
-            if let stringValue = value as? String {
+            if overrideFocusVisibility {
+                true
+            } else if let stringValue = value as? String {
                 !stringValue.isEmpty && isEditing
             } else {
                 value != nil && isEditing
             }
+        }
+        
+        private var presentCharacterLimit: Bool {
+            overrideFocusVisibility || isEditing
         }
 
         var body: some View {
@@ -27,7 +35,7 @@ extension InputField {
                         characterCount: stringValue.count,
                         maxLimit: characterLimit
                     )
-                    .opacity(isEditing ? 1 : 0)
+                    .opacity(presentCharacterLimit ? 1 : 0)
                 }
 
                 clearButton

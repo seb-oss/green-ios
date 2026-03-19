@@ -46,7 +46,7 @@ public struct MaxCharacterRule: ValidationRule {
             let errorMessage = String(format: localizedError, maxCharacters)
             accessibilityAnnounce(errorMessage)
             
-            throw ValidationError(errorDescription: errorMessage)
+            throw ValidationError(errorMessage, sensoryFeedback: .error)
         }
     }
 
