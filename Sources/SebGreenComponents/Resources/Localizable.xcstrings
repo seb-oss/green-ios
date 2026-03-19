@@ -1,0 +1,159 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "GreeniOS.Accessibility.CharacterCountValue %lld %lld" : {
+      "comment" : "Accessibility value for character count, e.g. '5 of 50 possible characters written.'",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld of %2$lld possible characters written."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$lld av %2$lld möjliga tecken skrivna."
+          }
+        }
+      }
+    },
+    "GreeniOS.Accessibility.ClearField" : {
+      "comment" : "VoiceOver action to clear the text field",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clear field"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rensa fält"
+          }
+        }
+      }
+    },
+    "GreeniOS.Accessibility.CustomContent.InputFieldError" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Input field error"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inmatningsfel"
+          }
+        }
+      }
+    },
+    "GreeniOS.InputField.Accessibility.MaxCharactersReached.Announcement" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Maximum %d character reached"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Maximum %d characters reached"
+                }
+              }
+            }
+          }
+        },
+        "sv" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Maximalt %d tecken har nåtts."
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Maximalt %d tecken har nåtts."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "GreeniOS.InputField.Validation.MaxCharacters" : {
+      "comment" : "Max character validation error.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Maximum 1 character reached."
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Maximum %d characters reached."
+                }
+              }
+            }
+          }
+        },
+        "sv" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Maximalt 1 tecken uppnått."
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Maximalt %d tecken uppnått."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "GreeniOS.optional" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Optional"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Valfritt"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.1"
+}
