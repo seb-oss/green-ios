@@ -133,7 +133,7 @@ where F.FormatOutput == String, F.FormatInput: Equatable {
 
     private func validationView(_ error: Error) -> some View {
         HStack(alignment: .firstTextBaseline) {
-            Image(systemName: "exclamationmark.square.fill")
+            Icon(systemName: "exclamationmark.square.fill")
                 .accessibilityHidden(true)
             Text(error.localizedDescription)
                 .typography(.detailBookS)

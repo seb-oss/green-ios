@@ -26,9 +26,7 @@ public struct InputFieldDemo: View {
             VStack(spacing: .spaceXl) {
                 InputField("Default Label", text: $defaultText) {
                     if presentInfoButton {
-                        Button(action: {}) {
-                            Image(systemName: "info.circle")
-                        }
+                        Button(systemName: "info.circle") {}
                     }
                 }
                 .applyRules(
