@@ -91,6 +91,7 @@ where F.FormatOutput == String, F.FormatInput: Equatable {
         }
         .typography(.detailBookM)
         .foregroundStyle(Color.contentNeutral01)
+        .tint(Color.contentNeutral01)
         .autocorrectionDisabled(true)
         .accessibilityLabel(accessibilityLabel)
         .accessibilityAction(
