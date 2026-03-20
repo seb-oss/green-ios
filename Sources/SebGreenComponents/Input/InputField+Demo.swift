@@ -17,57 +17,84 @@ public struct InputFieldDemo: View {
     @State private var maxCharacters = 25
     @State private var ruleEnforcement: MaxCharacterRule.Enforcement = .soft
 
+    @FocusState private var focusedField: Field?
+
+    private enum Field: Hashable {
+        case defaultField
+        case floatingField
+        case amountField
+    }
+
     public init() {}
 
     public var body: some View {
-        DemoContainer("InputField", contentPadding: .zero) {
-            configuration
-        } content: {
-            VStack(spacing: .spaceXl) {
-                InputField("Default Label", text: $defaultText) {
-                    if presentInfoButton {
-                        Button(systemName: "info.circle") {}
+        ScrollViewReader { proxy in
+            DemoContainer("InputField", contentPadding: .zero) {
+                configuration
+            } content: {
+                VStack(spacing: .spaceXl) {
+                    InputField("Default Label", text: $defaultText) {
+                        if presentInfoButton {
+                            Button(systemName: "info.circle") {}
+                        }
                     }
-                }
-                .applyRules(
-                    to: $defaultText,
-                    rules: .maxCharacters(
-                        maxCharacters,
-                        enforcement: ruleEnforcement
-                    ),
-                    isEnabled: maxCharacterRuleEnabled
-                )
-                .supportiveText(
-                    supportTextEnabled ? "Lorem Ipsum support text" : nil
-                )
-
-                Divider()
-
-                InputField("Floating Label", text: $floatingText)
-                    .inputFieldStyle(.floating)
                     .applyRules(
-                        to: $floatingText,
+                        to: $defaultText,
                         rules: .maxCharacters(
                             maxCharacters,
                             enforcement: ruleEnforcement
                         ),
                         isEnabled: maxCharacterRuleEnabled
                     )
+                    .supportiveText(
+                        supportTextEnabled ? "Lorem Ipsum support text" : nil
+                    )
+                    .scrollFocusField(
+                        focusedField: $focusedField,
+                        equals: .defaultField
+                    )
 
-                Divider()
+                    Divider()
 
-                InputField(
-                    "Formatted Input field",
-                    value: $amount,
-                    format: .currency(code: "SEK")
-                )
-                .supportiveText(supportTextEnabled ? "Fill in amount" : nil)
-                .keyboardType(.numberPad)
+                    InputField("Floating Label", text: $floatingText)
+                        .inputFieldStyle(.floating)
+                        .applyRules(
+                            to: $floatingText,
+                            rules: .maxCharacters(
+                                maxCharacters,
+                                enforcement: ruleEnforcement
+                            ),
+                            isEnabled: maxCharacterRuleEnabled
+                        )
+                        .scrollFocusField(
+                            focusedField: $focusedField,
+                            equals: .floatingField
+                        )
+
+                    Divider()
+
+                    InputField(
+                        "Formatted Input field",
+                        value: $amount,
+                        format: .currency(code: "SEK")
+                    )
+                    .supportiveText(supportTextEnabled ? "Fill in amount" : nil)
+                    .keyboardType(.decimalPad)
+                    .scrollFocusField(
+                        focusedField: $focusedField,
+                        equals: .amountField
+                    )
+                }
+                .optionalField(isOptional)
+                .expandTextArea(expandTextArea ? 4... : 1...)
+                .padding(.spaceM)
+                .surface(surface)
+                .onChange(of: focusedField) { focusedField in
+                    withAnimation {
+                        proxy.scrollTo(focusedField, anchor: .center)
+                    }
+                }
             }
-            .optionalField(isOptional)
-            .expandTextArea(expandTextArea ? 4... : 1...)
-            .padding(.spaceM)
-            .surface(surface)
         }
     }
 
