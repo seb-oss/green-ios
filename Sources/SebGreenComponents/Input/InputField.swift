@@ -9,6 +9,7 @@ where F.FormatOutput == String, F.FormatInput: Equatable {
     @Environment(\.supportiveText) private var supportiveText
     @Environment(\.textInputCharacterLimit) private var characterLimit
 
+    @FocusState private var focusState
     @Binding private var value: F.FormatInput?
     private let format: F
     private let label: any StringProtocol
@@ -92,6 +93,7 @@ where F.FormatOutput == String, F.FormatInput: Equatable {
         .foregroundStyle(Color.contentNeutral01)
         .tint(Color.contentNeutral01)
         .autocorrectionDisabled(true)
+        .focused($focusState)
         .accessibilityLabel(accessibilityLabel)
         .accessibilityAction(
             named: String(
@@ -119,7 +121,7 @@ where F.FormatOutput == String, F.FormatInput: Equatable {
             components.append(supportiveText)
         }
         
-        if let characterLimit {
+        if let characterLimit, focusState {
             let currentCount = textBinding.wrappedValue.count
             let characterLimitText = String(
                 localized: "GreeniOS.Accessibility.CharacterCountValue \(currentCount) \(characterLimit)",
