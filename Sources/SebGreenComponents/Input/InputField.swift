@@ -86,7 +86,6 @@ where F.FormatOutput == String, F.FormatInput: Equatable {
                     .lineLimit(expandTextAreaRange)
             } else {
                 TextField("", text: textBinding)
-                    .textFieldStyle(.roundedBorder)
             }
         }
         .typography(.detailBookM)
