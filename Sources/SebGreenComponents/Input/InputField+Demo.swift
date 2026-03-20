@@ -95,6 +95,7 @@ public struct InputFieldDemo: View {
                     }
                 }
             }
+            .scrollDismissesKeyboard(.interactively)
         }
     }
 
