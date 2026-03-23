@@ -17,59 +17,124 @@ public struct InputFieldDemo: View {
     @State private var maxCharacters = 25
     @State private var ruleEnforcement: MaxCharacterRule.Enforcement = .soft
 
+    @FocusState private var focusedField: Field?
+
+    private enum Field: Hashable {
+        case defaultField
+        case floatingField
+        case amountField
+
+        var next: Field? {
+            switch self {
+            case .defaultField: .floatingField
+            case .floatingField: .amountField
+            case .amountField: nil
+            }
+        }
+
+        var previous: Field? {
+            switch self {
+            case .defaultField: nil
+            case .floatingField: .defaultField
+            case .amountField: .floatingField
+            }
+        }
+    }
+
     public init() {}
 
     public var body: some View {
-        DemoContainer("InputField", contentPadding: .zero) {
-            configuration
-        } content: {
-            VStack(spacing: .spaceXl) {
-                InputField("Default Label", text: $defaultText) {
-                    if presentInfoButton {
-                        Button(action: {}) {
-                            Image(systemName: "info.circle")
+        ScrollViewReader { proxy in
+            DemoContainer("InputField", contentPadding: .zero) {
+                configuration
+            } content: {
+                VStack(spacing: .spaceXl) {
+                    InputField("Default Label", text: $defaultText) {
+                        if presentInfoButton {
+                            Button(systemName: "info.circle") {}
                         }
                     }
-                }
-                .applyRules(
-                    to: $defaultText,
-                    rules: .maxCharacters(
-                        maxCharacters,
-                        enforcement: ruleEnforcement
-                    ),
-                    isEnabled: maxCharacterRuleEnabled
-                )
-                .supportiveText(
-                    supportTextEnabled ? "Lorem Ipsum support text" : nil
-                )
-
-                Divider()
-
-                InputField("Floating Label", text: $floatingText)
-                    .inputFieldStyle(.floating)
                     .applyRules(
-                        to: $floatingText,
+                        to: $defaultText,
                         rules: .maxCharacters(
                             maxCharacters,
                             enforcement: ruleEnforcement
                         ),
                         isEnabled: maxCharacterRuleEnabled
                     )
+                    .supportiveText(
+                        supportTextEnabled ? "Lorem Ipsum support text" : nil
+                    )
+                    .scrollFocusField(
+                        focusedField: $focusedField,
+                        equals: .defaultField
+                    )
+                    .keyboardType(.alphabet)
 
-                Divider()
+                    Divider()
 
-                InputField(
-                    "Formatted Input field",
-                    value: $amount,
-                    format: .currency(code: "SEK")
-                )
-                .supportiveText(supportTextEnabled ? "Fill in amount" : nil)
-                .keyboardType(.numberPad)
+                    InputField("Floating Label", text: $floatingText)
+                        .inputFieldStyle(.floating)
+                        .applyRules(
+                            to: $floatingText,
+                            rules: .maxCharacters(
+                                maxCharacters,
+                                enforcement: ruleEnforcement
+                            ),
+                            isEnabled: maxCharacterRuleEnabled
+                        )
+                        .scrollFocusField(
+                            focusedField: $focusedField,
+                            equals: .floatingField
+                        )
+                        .keyboardType(.alphabet)
+
+                    Divider()
+
+                    InputField(
+                        "Formatted Input field",
+                        value: $amount,
+                        format: .currency(code: "SEK")
+                    )
+                    .supportiveText(supportTextEnabled ? "Fill in amount" : nil)
+                    .keyboardType(.decimalPad)
+                    .scrollFocusField(
+                        focusedField: $focusedField,
+                        equals: .amountField
+                    )
+                }
+                .optionalField(isOptional)
+                .expandTextArea(expandTextArea ? 4... : 1...)
+                .padding(.spaceM)
+                .surface(surface)
+                .onChange(of: focusedField) { focusedField in
+                    withAnimation {
+                        proxy.scrollTo(focusedField, anchor: .center)
+                    }
+                }
+                .toolbar {
+                    ToolbarItemGroup(placement: .keyboard) {
+                        HStack(spacing: .spaceM) {
+                            Button(systemName: "chevron.up") {
+                                focusedField = focusedField?.previous
+                            }
+                            .disabled(focusedField == .defaultField)
+
+                            Button(systemName: "chevron.down") {
+                                focusedField = focusedField?.next
+                            }
+                            .disabled(focusedField == .amountField)
+
+                            Spacer()
+                            Button(systemName: "checkmark") {
+                                focusedField = nil
+                            }
+                        }
+                        .padding(.horizontal, .spaceM)
+                    }
+                }
             }
-            .optionalField(isOptional)
-            .expandTextArea(expandTextArea ? 4... : 1...)
-            .padding(.spaceM)
-            .surface(surface)
+            .scrollDismissesKeyboard(.interactively)
         }
     }
 

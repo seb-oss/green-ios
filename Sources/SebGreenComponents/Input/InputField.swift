@@ -8,7 +8,8 @@ where F.FormatOutput == String, F.FormatInput: Equatable {
     @Environment(\.expandTextAreaRange) private var expandTextAreaRange
     @Environment(\.supportiveText) private var supportiveText
     @Environment(\.textInputCharacterLimit) private var characterLimit
-
+    @Environment(\.isFocused) private var isFocused
+    
     @Binding private var value: F.FormatInput?
     private let format: F
     private let label: any StringProtocol
@@ -86,11 +87,11 @@ where F.FormatOutput == String, F.FormatInput: Equatable {
                     .lineLimit(expandTextAreaRange)
             } else {
                 TextField("", text: textBinding)
-                    .textFieldStyle(.roundedBorder)
             }
         }
         .typography(.detailBookM)
         .foregroundStyle(Color.contentNeutral01)
+        .tint(Color.contentNeutral01)
         .autocorrectionDisabled(true)
         .accessibilityLabel(accessibilityLabel)
         .accessibilityAction(
@@ -119,7 +120,7 @@ where F.FormatOutput == String, F.FormatInput: Equatable {
             components.append(supportiveText)
         }
         
-        if let characterLimit {
+        if let characterLimit, isFocused {
             let currentCount = textBinding.wrappedValue.count
             let characterLimitText = String(
                 localized: "GreeniOS.Accessibility.CharacterCountValue \(currentCount) \(characterLimit)",
@@ -132,7 +133,7 @@ where F.FormatOutput == String, F.FormatInput: Equatable {
 
     private func validationView(_ error: Error) -> some View {
         HStack(alignment: .firstTextBaseline) {
-            Image(systemName: "exclamationmark.square.fill")
+            Icon(systemName: "exclamationmark.square.fill")
                 .accessibilityHidden(true)
             Text(error.localizedDescription)
                 .typography(.detailBookS)
