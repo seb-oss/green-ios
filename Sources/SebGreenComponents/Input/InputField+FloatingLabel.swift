@@ -22,16 +22,19 @@ extension InputField {
             verticalSizeClass == .compact ? 64 : 72
         }
 
-        private var presentTextField: Bool {
-            if isVoiceOverEnabled { return true }
+        private var isExpanded: Bool {
+            isSingleLine ? isFocused || hasValue || isVoiceOverEnabled : true
+        }
 
-            let isSingleLine = expandTextAreaRange.lowerBound == 1
-            let hasValue = if let stringValue = value as? String {
-                    !stringValue.isEmpty
-                } else {
-                    value != nil
-                }
-            return !isSingleLine || isEditing || hasValue
+        private var isSingleLine: Bool {
+            expandTextAreaRange.lowerBound == 1
+        }
+
+        private var hasValue: Bool {
+            if let stringValue = value as? String {
+                return !stringValue.isEmpty
+            }
+            return value != nil
         }
 
         private var hasValidationError: Bool {
@@ -53,13 +56,10 @@ extension InputField {
                 VStack(alignment: .leading, spacing: .zero) {
                     floatingLabel
 
-                    if presentTextField {
-                        textField
-                            .focused($isFocused)
-                            .onChange(of: isFocused) {
-                                isEditing = $0
-                            }
-                    }
+                    textField
+                        .focused($isFocused)
+                        .opacity(isExpanded ? 1 : 0)
+                        .frame(height: isExpanded ? nil : 0)
                 }
 
                 Spacer(minLength: .spaceM)
@@ -87,29 +87,20 @@ extension InputField {
                     .animation(.snappy, value: value)
             }
             .contentShape(.rect(cornerRadius: cornerRadius))
-            .onTapGesture(perform: setFocus)
+            .onTapGesture {
+                isFocused = true
+            }
             .fixedSize(horizontal: false, vertical: true)
         }
 
         private var floatingLabel: some View {
             Text(label)
                 .typography(
-                    presentTextField ? .detailBookXs : .detailBookM
+                    isExpanded ? .detailBookXs : .detailBookM
                 )
                 .foregroundStyle(Color.contentNeutral02)
-                .animation(.snappy, value: presentTextField)
+                .animation(.snappy, value: isExpanded)
                 .accessibilityHidden(true)
-        }
-
-        private func setFocus() {
-            isEditing = true
-            Task {
-                if #available(iOS 16.0, *) {
-                    // Ensure text field is visible before focusing
-                    try? await Task.sleep(for: .seconds(0.1))
-                }
-                isFocused = true
-            }
         }
     }
 }

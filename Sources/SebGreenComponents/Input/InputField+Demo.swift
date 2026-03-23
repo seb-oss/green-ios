@@ -23,6 +23,22 @@ public struct InputFieldDemo: View {
         case defaultField
         case floatingField
         case amountField
+
+        var next: Field? {
+            switch self {
+            case .defaultField: .floatingField
+            case .floatingField: .amountField
+            case .amountField: nil
+            }
+        }
+
+        var previous: Field? {
+            switch self {
+            case .defaultField: nil
+            case .floatingField: .defaultField
+            case .amountField: .floatingField
+            }
+        }
     }
 
     public init() {}
@@ -53,6 +69,7 @@ public struct InputFieldDemo: View {
                         focusedField: $focusedField,
                         equals: .defaultField
                     )
+                    .keyboardType(.alphabet)
 
                     Divider()
 
@@ -70,6 +87,7 @@ public struct InputFieldDemo: View {
                             focusedField: $focusedField,
                             equals: .floatingField
                         )
+                        .keyboardType(.alphabet)
 
                     Divider()
 
@@ -92,6 +110,27 @@ public struct InputFieldDemo: View {
                 .onChange(of: focusedField) { focusedField in
                     withAnimation {
                         proxy.scrollTo(focusedField, anchor: .center)
+                    }
+                }
+                .toolbar {
+                    ToolbarItemGroup(placement: .keyboard) {
+                        HStack(spacing: .spaceM) {
+                            Button(systemName: "chevron.up") {
+                                focusedField = focusedField?.previous
+                            }
+                            .disabled(focusedField == .defaultField)
+
+                            Button(systemName: "chevron.down") {
+                                focusedField = focusedField?.next
+                            }
+                            .disabled(focusedField == .amountField)
+
+                            Spacer()
+                            Button(systemName: "checkmark") {
+                                focusedField = nil
+                            }
+                        }
+                        .padding(.horizontal, .spaceM)
                     }
                 }
             }
