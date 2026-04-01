@@ -4,7 +4,7 @@
 
 import SwiftUI
 
-public struct CommunicationBanner: View {
+public struct Callout: View {
     private let model: Model
     private let actions: Actions
 
@@ -37,7 +37,7 @@ public struct CommunicationBanner: View {
             .frame(maxWidth: .infinity, alignment: .leading)
         }
         .groupBoxStyle(
-            .communicationBanner(
+            .callout(
                 variant: model.variant,
                 onClose: actions.onClose
             )
@@ -45,7 +45,7 @@ public struct CommunicationBanner: View {
     }
 }
 
-extension CommunicationBanner {
+extension Callout {
     public enum Variant: CaseIterable, Equatable {
         case information
         case notice
@@ -116,7 +116,7 @@ extension CommunicationBanner {
 #Preview("Alert") {
     ScrollView {
         VStack(alignment: .leading, spacing: .spaceM) {
-            CommunicationBanner(
+            Callout(
                 model: .init(
                     title: "Information",
                     message:
@@ -125,7 +125,7 @@ extension CommunicationBanner {
                 ),
                 actions: .init(onClose: {})
             )
-            CommunicationBanner(
+            Callout(
                 model: .init(
                     title: "Notice",
                     message:
@@ -142,7 +142,7 @@ extension CommunicationBanner {
                 )
             )
 
-            CommunicationBanner(
+            Callout(
                 model: .init(
                     title: "Warning",
                     message:
@@ -158,7 +158,7 @@ extension CommunicationBanner {
                 )
             )
 
-            CommunicationBanner(
+            Callout(
                 model: .init(
                     title: "Error",
                     message:
