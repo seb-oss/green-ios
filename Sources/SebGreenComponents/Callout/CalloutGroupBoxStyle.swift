@@ -1,10 +1,10 @@
 import SwiftUI
 
-struct CommunicationBannerGroupBoxStyle: GroupBoxStyle {
-    let variant: CommunicationBanner.Variant
+struct CalloutGroupBoxStyle: GroupBoxStyle {
+    let variant: Callout.Variant
     let onClose: (() -> Void)?
 
-    private var style: CommunicationBanner.Variant.Style {
+    private var style: Callout.Variant.Style {
         switch variant {
         case .information: .information
         case .notice: .notice
@@ -79,16 +79,16 @@ struct CommunicationBannerGroupBoxStyle: GroupBoxStyle {
     }
 }
 
-extension GroupBoxStyle where Self == CommunicationBannerGroupBoxStyle {
-    static func communicationBanner(
-        variant: CommunicationBanner.Variant,
+extension GroupBoxStyle where Self == CalloutGroupBoxStyle {
+    static func callout(
+        variant: Callout.Variant,
         onClose: (() -> Void)?
-    ) -> CommunicationBannerGroupBoxStyle {
-        CommunicationBannerGroupBoxStyle(variant: variant, onClose: onClose)
+    ) -> CalloutGroupBoxStyle {
+        CalloutGroupBoxStyle(variant: variant, onClose: onClose)
     }
 }
 
-private extension CommunicationBanner.Variant {
+private extension Callout.Variant {
     struct Style {
         let backgroundColor: Color
         let borderColor: Color
@@ -102,7 +102,7 @@ private extension CommunicationBanner.Variant {
     }
 }
 
-extension CommunicationBanner.Variant.Style {
+extension Callout.Variant.Style {
     static var information: Self = .init(
         backgroundColor: .l2Neutral02,
         borderColor: .clear,

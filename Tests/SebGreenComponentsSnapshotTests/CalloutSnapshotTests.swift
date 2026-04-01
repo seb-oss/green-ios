@@ -1,20 +1,15 @@
-//
-//  AlertSnapshotTests.swift
-//  SebGreenComponents
-//
-
 import SwiftUI
 import XCTest
 @testable import SebGreenComponents
 
-final class CommunicationBannerSnapshotTests: SEBViewImageSnapshotTesting {
-    func test_InformationMessageView_information() {
-        banner(variant: .information, actions: .init(onClose: {}))
+final class CalloutSnapshotTests: SEBViewImageSnapshotTesting {
+    func test_callout_information() {
+        callout(variant: .information, actions: .init(onClose: {}))
             .snapshotTest()
     }
 
-    func test_InformationMessageView_notice_ctaInternal() {
-        banner(
+    func test_callout_notice_ctaInternal() {
+        callout(
             variant: .notice,
             actions: .init(
                 onClose: {},
@@ -28,8 +23,8 @@ final class CommunicationBannerSnapshotTests: SEBViewImageSnapshotTesting {
         .snapshotTest()
     }
 
-    func test_InformationMessageView_warning_ctaExternal() {
-        banner(
+    func test_callout_warning_ctaExternal() {
+        callout(
             variant: .warning,
             actions: .init(
                 callToAction: .init(
@@ -42,16 +37,16 @@ final class CommunicationBannerSnapshotTests: SEBViewImageSnapshotTesting {
         .snapshotTest()
     }
 
-    func test_InformationMessageView_error() {
-        banner(variant: .error, actions: .init(onClose: {}))
+    func test_callout_error() {
+        callout(variant: .error, actions: .init(onClose: {}))
             .snapshotTest()
     }
 
-    private func banner(
-        variant: CommunicationBanner.Variant,
-        actions: CommunicationBanner.Actions
+    private func callout(
+        variant: Callout.Variant,
+        actions: Callout.Actions
     ) -> some View {
-        CommunicationBanner(
+        Callout(
             model: .init(
                 title: title(for: variant),
                 message: message(for: variant),
@@ -61,7 +56,7 @@ final class CommunicationBannerSnapshotTests: SEBViewImageSnapshotTesting {
         )
     }
 
-    private func title(for variant: CommunicationBanner.Variant) -> String {
+    private func title(for variant: Callout.Variant) -> String {
         switch variant {
         case .information:
             return "Information"
@@ -74,7 +69,7 @@ final class CommunicationBannerSnapshotTests: SEBViewImageSnapshotTesting {
         }
     }
 
-    private func message(for variant: CommunicationBanner.Variant) -> String {
+    private func message(for variant: Callout.Variant) -> String {
         switch variant {
         case .information:
             return "Used for passive, non-critical updates like tips or background information."
