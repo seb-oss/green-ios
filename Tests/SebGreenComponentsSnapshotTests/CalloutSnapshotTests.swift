@@ -48,11 +48,12 @@ final class CalloutSnapshotTests: SEBViewImageSnapshotTesting {
     ) -> some View {
         Callout(
             model: .init(
+                id: "",
                 title: title(for: variant),
-                message: message(for: variant),
-                variant: variant
+                shortText: message(for: variant),
+                variant: variant,
+                actions: actions
             ),
-            actions: actions
         )
     }
 
