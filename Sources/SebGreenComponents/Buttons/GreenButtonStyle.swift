@@ -3,20 +3,23 @@ import GdsKit
 
 // MARK: - Button Style
 
-public struct SEBGreenButtonStyle: ButtonStyle {
-    let greenConfiguration: SEBGreenButtonStyle.Configuration
-    let dimensions: SEBGreenButtonStyle.Dimensions
-    let layoutBehavior: SEBGreenButtonStyle.LayoutBehavior
+public struct GreenButtonStyle: ButtonStyle {
+    let shape: Shape
+    let greenConfiguration: GreenButtonStyle.Configuration
+    let dimensions: GreenButtonStyle.Dimensions
+    let layoutBehavior: GreenButtonStyle.LayoutBehavior
     let iconPosition: IconPosition
     
     @Environment(\.isEnabled) private var isEnabled: Bool
     
     init(
-        configuration: SEBGreenButtonStyle.Configuration,
-        dimensions: SEBGreenButtonStyle.Dimensions,
-        layoutBehavior: SEBGreenButtonStyle.LayoutBehavior = .fill,
+        shape: Shape = .pill,
+        configuration: GreenButtonStyle.Configuration,
+        dimensions: GreenButtonStyle.Dimensions,
+        layoutBehavior: GreenButtonStyle.LayoutBehavior = .fill,
         iconPosition: IconPosition
     ) {
+        self.shape = shape
         self.greenConfiguration = configuration
         self.dimensions = dimensions
         self.layoutBehavior = layoutBehavior
@@ -51,11 +54,12 @@ public struct SEBGreenButtonStyle: ButtonStyle {
             .environment(\.buttonIconSpacing, dimensions.iconSpacing)
             .font(dimensions.font)
             .padding(.vertical, dimensions.verticalPadding)
-            .padding(.horizontal, dimensions.horizontalPadding)
+            .padding(.horizontal, shape.isPill ? dimensions.horizontalPadding : nil)
             .multilineTextAlignment(.leading)
             .foregroundStyle(effectiveForeground)
+            .frame(width: shape.isCircle ? dimensions.height : nil)
             .frame(minHeight: dimensions.height) // Visible
-            .layoutBehavior(layoutBehavior)
+            .layoutBehavior(shape.isCircle ? .hug : layoutBehavior)
             .background {
                 // Pressed background overlays on top when pressed and enabled
                 if configuration.isPressed && isEnabled {
@@ -80,8 +84,29 @@ public struct SEBGreenButtonStyle: ButtonStyle {
     }
 }
 
-extension ButtonStyle where Self == SEBGreenButtonStyle {
-    static func seb(_ style: SEBGreenButtonStyle) -> some ButtonStyle  {
+extension GreenButtonStyle {
+    public enum Shape {
+        case pill
+        case circle
+        
+        var isPill: Bool {
+            switch self {
+            case .circle: return false
+            case .pill: return true
+            }
+        }
+        
+        var isCircle: Bool {
+            switch self {
+            case .circle: return true
+            case .pill: return false
+            }
+        }
+    }
+}
+
+public extension ButtonStyle where Self == GreenButtonStyle {
+    static func seb(_ style: GreenButtonStyle) -> some ButtonStyle  {
         style
     }
 }
@@ -102,7 +127,7 @@ public enum IconPosition {
 
 private extension View {
     @ViewBuilder
-    func layoutBehavior(_ layoutBehavior: SEBGreenButtonStyle.LayoutBehavior) -> some View {
+    func layoutBehavior(_ layoutBehavior: GreenButtonStyle.LayoutBehavior) -> some View {
         switch layoutBehavior {
         case .fill:
             self.frame(maxWidth: .infinity)

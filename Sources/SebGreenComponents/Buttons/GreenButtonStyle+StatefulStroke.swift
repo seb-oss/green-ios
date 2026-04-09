@@ -1,6 +1,6 @@
 import SwiftUI
 
-public extension SEBGreenButtonStyle.Configuration {
+public extension GreenButtonStyle.Configuration {
     struct StatefulStroke {
         private let normal: Stroke?
         private let pressed: Stroke?

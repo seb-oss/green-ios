@@ -2,7 +2,7 @@ import SwiftUI
 
 // MARK: - Configuration
 
-public extension SEBGreenButtonStyle {
+public extension GreenButtonStyle {
     struct Configuration {
         let background: StatefulStyle
         let foreground: StatefulStyle

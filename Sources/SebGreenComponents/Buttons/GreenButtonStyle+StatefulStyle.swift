@@ -2,7 +2,7 @@ import SwiftUI
 
 // MARK: - Style
 
-public extension SEBGreenButtonStyle.Configuration {
+public extension GreenButtonStyle.Configuration {
     struct StatefulStyle {
         private let normal: AnyShapeStyle
         private let pressed: AnyShapeStyle?

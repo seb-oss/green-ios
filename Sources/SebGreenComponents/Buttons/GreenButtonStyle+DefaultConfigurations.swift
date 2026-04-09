@@ -1,7 +1,7 @@
 import SwiftUI
 import GdsKit
 
-extension SEBGreenButtonStyle.Configuration {
+extension GreenButtonStyle.Configuration {
     static let primary = Self(
         background: StatefulStyle(
             normal: Color.l3NeutralStrong,
@@ -16,7 +16,7 @@ extension SEBGreenButtonStyle.Configuration {
     
     static let secondary = Self(
         background: StatefulStyle(
-            normal: LevelBasedColor { level, _ in level.colors.neutral01 },
+            normal: .surfaceAware,
             pressed: Color.stateOnPress,
             disabled: Color.l3Disabled03
         ),

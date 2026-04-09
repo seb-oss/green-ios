@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct SEBGreenButtonLabelStyle: LabelStyle {
+struct GreenLabelStyle: LabelStyle {
     @Environment(\.buttonIconPosition) private var iconPosition
     @Environment(\.buttonIconSpacing) private var iconSpacing
     
@@ -21,12 +21,12 @@ struct SEBGreenButtonLabelStyle: LabelStyle {
     }
 }
 
-extension LabelStyle where Self == SEBGreenButtonLabelStyle {
-    static var buttonLabelStyle: SEBGreenButtonLabelStyle {
-        SEBGreenButtonLabelStyle()
+extension LabelStyle where Self == GreenLabelStyle {
+    static var buttonLabelStyle: GreenLabelStyle {
+        GreenLabelStyle()
     }
     
-    static func seb(_ style: SEBGreenButtonLabelStyle) -> some LabelStyle  {
+    static func seb(_ style: GreenLabelStyle) -> some LabelStyle  {
         style
     }
 }

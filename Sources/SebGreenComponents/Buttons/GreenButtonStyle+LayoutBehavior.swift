@@ -1,6 +1,6 @@
 import SwiftUI
 
-public extension SEBGreenButtonStyle {
+public extension GreenButtonStyle {
     enum LayoutBehavior: Equatable {
         case fill
         case hug
@@ -9,7 +9,7 @@ public extension SEBGreenButtonStyle {
     }
 }
 
-extension SEBGreenButtonStyle.LayoutBehavior: CustomStringConvertible {
+extension GreenButtonStyle.LayoutBehavior: CustomStringConvertible {
     public var description: String {
         switch self {
         case .fill:

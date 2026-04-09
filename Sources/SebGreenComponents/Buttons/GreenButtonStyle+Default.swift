@@ -4,9 +4,9 @@ import SwiftUI
 ///
 /// These static properties offer quick access to commonly used button styles with standard defaults:
 /// `.large` dimensions, `.fill` layout behavior, and `.leading` icon position.
-public extension SEBGreenButtonStyle {
-    static var primary: SEBGreenButtonStyle {
-        SEBGreenButtonStyle(
+public extension GreenButtonStyle {
+    static var primary: GreenButtonStyle {
+        GreenButtonStyle(
             configuration: .primary,
             dimensions: .large,
             layoutBehavior: .fill,
@@ -14,8 +14,8 @@ public extension SEBGreenButtonStyle {
         )
     }
     
-    static var secondary: SEBGreenButtonStyle {
-        SEBGreenButtonStyle(
+    static var secondary: GreenButtonStyle {
+        GreenButtonStyle(
             configuration: .secondary,
             dimensions: .large,
             layoutBehavior: .fill,
@@ -23,8 +23,8 @@ public extension SEBGreenButtonStyle {
         )
     }
     
-    static var tertiary: SEBGreenButtonStyle {
-        SEBGreenButtonStyle(
+    static var tertiary: GreenButtonStyle {
+        GreenButtonStyle(
             configuration: .tertiary,
             dimensions: .large,
             layoutBehavior: .fill,
@@ -32,8 +32,8 @@ public extension SEBGreenButtonStyle {
         )
     }
     
-    static var outline: SEBGreenButtonStyle {
-        SEBGreenButtonStyle(
+    static var outline: GreenButtonStyle {
+        GreenButtonStyle(
             configuration: .outline,
             dimensions: .large,
             layoutBehavior: .fill,
@@ -41,8 +41,8 @@ public extension SEBGreenButtonStyle {
         )
     }
     
-    static var negative: SEBGreenButtonStyle {
-        SEBGreenButtonStyle(
+    static var negative: GreenButtonStyle {
+        GreenButtonStyle(
             configuration: .negative,
             dimensions: .large,
             layoutBehavior: .fill,
@@ -50,8 +50,8 @@ public extension SEBGreenButtonStyle {
         )
     }
     
-    static var notice: SEBGreenButtonStyle {
-        SEBGreenButtonStyle(
+    static var notice: GreenButtonStyle {
+        GreenButtonStyle(
             configuration: .notice,
             dimensions: .large,
             layoutBehavior: .fill,
@@ -64,9 +64,10 @@ public extension SEBGreenButtonStyle {
 ///
 /// These instance methods allow chaining multiple customizations on an existing button style,
 /// enabling a builder-pattern approach to configuration.
-public extension SEBGreenButtonStyle {
+public extension GreenButtonStyle {
     func dimensions(_ dimensions: Dimensions) -> Self {
-        SEBGreenButtonStyle(
+        GreenButtonStyle(
+            shape: self.shape,
             configuration: self.greenConfiguration,
             dimensions: dimensions,
             layoutBehavior: self.layoutBehavior,
@@ -75,7 +76,8 @@ public extension SEBGreenButtonStyle {
     }
     
     func layoutBehavior(_ layoutBehavior: LayoutBehavior) -> Self {
-        SEBGreenButtonStyle(
+        GreenButtonStyle(
+            shape: self.shape,
             configuration: self.greenConfiguration,
             dimensions: self.dimensions,
             layoutBehavior: layoutBehavior,
@@ -84,7 +86,8 @@ public extension SEBGreenButtonStyle {
     }
     
     func iconPosition(_ iconPosition: IconPosition) -> Self {
-        SEBGreenButtonStyle(
+        GreenButtonStyle(
+            shape: self.shape,
             configuration: self.greenConfiguration,
             dimensions: self.dimensions,
             layoutBehavior: self.layoutBehavior,
@@ -97,13 +100,15 @@ public extension SEBGreenButtonStyle {
 ///
 /// These methods allow one-step creation of button styles with custom dimensions, layout behavior,
 /// and icon positioning, while maintaining sensible defaults.
-public extension SEBGreenButtonStyle {
+public extension GreenButtonStyle {
     static func primary(
+        shape: Shape = .pill,
         dimensions: Dimensions = .large,
         layoutBehavior: LayoutBehavior = .fill,
         iconPosition: IconPosition = .leading
-    ) -> SEBGreenButtonStyle {
-        SEBGreenButtonStyle(
+    ) -> GreenButtonStyle {
+        GreenButtonStyle(
+            shape: shape,
             configuration: .primary,
             dimensions: dimensions,
             layoutBehavior: layoutBehavior,
@@ -112,11 +117,13 @@ public extension SEBGreenButtonStyle {
     }
     
     static func secondary(
+        shape: Shape = .pill,
         dimensions: Dimensions = .large,
         layoutBehavior: LayoutBehavior = .fill,
         iconPosition: IconPosition = .leading
-    ) -> SEBGreenButtonStyle {
-        SEBGreenButtonStyle(
+    ) -> GreenButtonStyle {
+        GreenButtonStyle(
+            shape: shape,
             configuration: .secondary,
             dimensions: dimensions,
             layoutBehavior: layoutBehavior,
@@ -125,11 +132,13 @@ public extension SEBGreenButtonStyle {
     }
     
     static func tertiary(
+        shape: Shape = .pill,
         dimensions: Dimensions = .large,
         layoutBehavior: LayoutBehavior = .fill,
         iconPosition: IconPosition = .leading
-    ) -> SEBGreenButtonStyle {
-        SEBGreenButtonStyle(
+    ) -> GreenButtonStyle {
+        GreenButtonStyle(
+            shape: shape,
             configuration: .tertiary,
             dimensions: dimensions,
             layoutBehavior: layoutBehavior,
@@ -138,11 +147,13 @@ public extension SEBGreenButtonStyle {
     }
     
     static func outline(
+        shape: Shape = .pill,
         dimensions: Dimensions = .large,
         layoutBehavior: LayoutBehavior = .fill,
         iconPosition: IconPosition = .leading
-    ) -> SEBGreenButtonStyle {
-        SEBGreenButtonStyle(
+    ) -> GreenButtonStyle {
+        GreenButtonStyle(
+            shape: shape,
             configuration: .outline,
             dimensions: dimensions,
             layoutBehavior: layoutBehavior,
@@ -151,11 +162,13 @@ public extension SEBGreenButtonStyle {
     }
     
     static func negative(
+        shape: Shape = .pill,
         dimensions: Dimensions = .large,
         layoutBehavior: LayoutBehavior = .fill,
         iconPosition: IconPosition = .leading
-    ) -> SEBGreenButtonStyle {
-        SEBGreenButtonStyle(
+    ) -> GreenButtonStyle {
+        GreenButtonStyle(
+            shape: shape,
             configuration: .negative,
             dimensions: dimensions,
             layoutBehavior: layoutBehavior,
@@ -164,11 +177,13 @@ public extension SEBGreenButtonStyle {
     }
     
     static func notice(
+        shape: Shape = .pill,
         dimensions: Dimensions = .large,
         layoutBehavior: LayoutBehavior = .fill,
         iconPosition: IconPosition = .leading
-    ) -> SEBGreenButtonStyle {
-        SEBGreenButtonStyle(
+    ) -> GreenButtonStyle {
+        GreenButtonStyle(
+            shape: shape,
             configuration: .notice,
             dimensions: dimensions,
             layoutBehavior: layoutBehavior,

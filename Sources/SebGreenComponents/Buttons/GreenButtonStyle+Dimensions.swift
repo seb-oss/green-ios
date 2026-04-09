@@ -1,7 +1,7 @@
 import SwiftUI
 import GdsKit
 
-public extension SEBGreenButtonStyle {
+public extension GreenButtonStyle {
     struct Dimensions: Equatable {
         let height: CGFloat
         let verticalPadding: CGFloat
@@ -32,7 +32,7 @@ public extension SEBGreenButtonStyle {
     }
 }
 
-public extension SEBGreenButtonStyle.Dimensions {
+public extension GreenButtonStyle.Dimensions {
     static let small = Self(
         height: 32.0,
         verticalPadding: .space3xs,
@@ -63,7 +63,7 @@ public extension SEBGreenButtonStyle.Dimensions {
     )
 }
 
-extension SEBGreenButtonStyle.Dimensions: CustomStringConvertible {
+extension GreenButtonStyle.Dimensions: CustomStringConvertible {
     public var description: String {
         switch self {
         case .small: return "Small"
