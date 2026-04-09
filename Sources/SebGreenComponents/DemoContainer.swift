@@ -71,7 +71,6 @@ struct DemoContainer<Configuration: View, Content: View>: View {
                 if isConfigurable && shouldShowConfigurationView {
                     configuration
                         .background(in: .rect(cornerRadius: 16))
-                        .padding(.spaceM)
                 }
 
                 content

@@ -45,7 +45,7 @@ public struct InputFieldDemo: View {
 
     public var body: some View {
         ScrollViewReader { proxy in
-            DemoContainer("InputField", contentPadding: .zero) {
+            DemoContainer("InputField") {
                 configuration
             } content: {
                 VStack(spacing: .spaceXl) {
@@ -105,7 +105,6 @@ public struct InputFieldDemo: View {
                 }
                 .optionalField(isOptional)
                 .expandTextArea(expandTextArea ? 4... : 1...)
-                .padding(.spaceM)
                 .surface(surface)
                 .onChange(of: focusedField) { focusedField in
                     withAnimation {
