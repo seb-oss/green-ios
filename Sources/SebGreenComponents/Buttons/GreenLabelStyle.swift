@@ -1,8 +1,17 @@
+import GdsKit
 import SwiftUI
 
 struct GreenLabelStyle: LabelStyle {
-    @Environment(\.buttonIconPosition) private var iconPosition
-    @Environment(\.buttonIconSpacing) private var iconSpacing
+    private let iconPosition: IconPosition
+    private let iconSpacing: CGFloat
+    
+    fileprivate init(
+        iconPosition: IconPosition,
+        iconSpacing: CGFloat
+    ) {
+        self.iconPosition = iconPosition
+        self.iconSpacing = iconSpacing
+    }
     
     func makeBody(configuration: Configuration) -> some View {
         let icon = configuration.icon
@@ -22,8 +31,14 @@ struct GreenLabelStyle: LabelStyle {
 }
 
 extension LabelStyle where Self == GreenLabelStyle {
-    static var buttonLabelStyle: GreenLabelStyle {
-        GreenLabelStyle()
+    static func buttonLabelStyle(
+        iconPosition: IconPosition = .leading,
+        iconSpacing: CGFloat = .spaceXs
+    ) -> GreenLabelStyle {
+        GreenLabelStyle(
+            iconPosition: iconPosition,
+            iconSpacing: iconSpacing
+        )
     }
     
     static func seb(_ style: GreenLabelStyle) -> some LabelStyle  {

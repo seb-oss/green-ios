@@ -48,10 +48,13 @@ public struct GreenButtonStyle: ButtonStyle {
         
         let cornerRadius = dimensions.cornerRadius
         
+        let buttonLabelStyle = GreenLabelStyle.buttonLabelStyle(
+            iconPosition: iconPosition,
+            iconSpacing: dimensions.iconSpacing
+        )
+        
         configuration.label
-            .labelStyle(.seb(.buttonLabelStyle))
-            .environment(\.buttonIconPosition, iconPosition)
-            .environment(\.buttonIconSpacing, dimensions.iconSpacing)
+            .labelStyle(.seb(buttonLabelStyle))
             .font(dimensions.font)
             .padding(.vertical, dimensions.verticalPadding)
             .padding(.horizontal, shape.isPill ? dimensions.horizontalPadding : nil)
@@ -59,7 +62,7 @@ public struct GreenButtonStyle: ButtonStyle {
             .foregroundStyle(effectiveForeground)
             .frame(width: shape.isCircle ? dimensions.height : nil)
             .frame(minHeight: dimensions.height) // Visible
-            .layoutBehavior(shape.isCircle ? .hug : layoutBehavior)
+            .layoutBehavior(shape.isCircle ? .hug : layoutBehavior) 
             .background {
                 // Pressed background overlays on top when pressed and enabled
                 if configuration.isPressed && isEnabled {
@@ -109,11 +112,6 @@ public extension ButtonStyle where Self == GreenButtonStyle {
     static func seb(_ style: GreenButtonStyle) -> some ButtonStyle  {
         style
     }
-}
-
-extension EnvironmentValues {
-    @Entry var buttonIconPosition: IconPosition = .leading
-    @Entry var buttonIconSpacing: CGFloat = 8
 }
 
 // MARK: - Icon Position
