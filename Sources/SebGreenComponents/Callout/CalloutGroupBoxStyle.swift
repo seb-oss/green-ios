@@ -83,10 +83,10 @@ extension Callout.Variant {
     fileprivate struct Style {
         let backgroundColor: Color
         let borderColor: Color
-        let iconColor: Color = .l3Neutral05
-        let textColor: Color = .l3Neutral05
-        let closeButtonPrimaryColor: Color = .l3Neutral05
-        let closeButtonSecondaryColor: Color = .l3Neutral05.opacity(0.12)
+        let iconColor: Color = .white
+        let textColor: Color = .white
+        let closeButtonPrimaryColor: Color = .white
+        let closeButtonSecondaryColor: Color = .white.opacity(0.12)
         let iconSystemName: String?
     }
 }
@@ -105,7 +105,7 @@ extension Callout.Variant.Style {
     )
 
     static var warning: Self = .init(
-        backgroundColor: .init(hex: 0xfA7610C),
+        backgroundColor: .init(hex: 0xA7610C),
         borderColor: .clear,
         iconSystemName: "exclamationmark.triangle"
     )

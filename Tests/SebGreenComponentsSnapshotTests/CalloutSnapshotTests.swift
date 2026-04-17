@@ -38,7 +38,7 @@ final class CalloutSnapshotTests: SEBViewImageSnapshotTesting {
     }
 
     func test_callout_error() {
-        callout(variant: .error, actions: .init(onClose: {}))
+        callout(variant: .critical, actions: .init(onClose: {}))
             .snapshotTest()
     }
 
@@ -65,8 +65,8 @@ final class CalloutSnapshotTests: SEBViewImageSnapshotTesting {
             return "Notice"
         case .warning:
             return "Warning"
-        case .error:
-            return "Error"
+        case .critical:
+            return "Critical"
         }
     }
 
@@ -78,7 +78,7 @@ final class CalloutSnapshotTests: SEBViewImageSnapshotTesting {
             return "Used for actionable, attention-worthy updates that are still non-critical."
         case .warning:
             return "Used to highlight important risks or information without interrupting the flow."
-        case .error:
+        case .critical:
             return "Used to communicate that something has gone wrong and needs user attention."
         }
     }
