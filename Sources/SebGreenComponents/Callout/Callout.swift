@@ -13,20 +13,20 @@ public struct Callout: View {
 
     public var body: some View {
         GroupBox(model.title) {
-            VStack(alignment: .leading, spacing: .space2xs) {
+            VStack(alignment: .leading, spacing: .spaceS) {
                 Text(model.shortText)
 
                 if let callToAction = model.actions.callToAction {
-                    GreenButton(
-                        title: callToAction.title,
-                        kind: .tertiary,
-                        size: .small,
-                        icon: callToAction.linkStyle.map {
-                            Image(systemName: $0.symbolName)
-                        },
-                        iconPosition: .trailing,
+                    // TODO: Use Button with GDS-style instead
+                    Button(
+                        callToAction.title,
+                        systemImage: callToAction.linkStyle?.symbolName ?? "",
                         action: callToAction.action
                     )
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .padding(.vertical, .spaceXs)
+                    .background(Color.white.opacity(0.12))
+                    .clipShape(.capsule)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -45,7 +45,7 @@ extension Callout {
         case information
         case notice
         case warning
-        case error
+        case critical
     }
 
     public struct Model: Identifiable {
@@ -168,10 +168,10 @@ extension Callout {
             Callout(
                 model: .init(
                     id: "4",
-                    title: "Error",
+                    title: "Critical",
                     shortText:
                         "Used to communicate that something has gone wrong or does not work and needs user attention.",
-                    variant: .error,
+                    variant: .critical,
                     actions: .init(onClose: {})
                 ),
             )

@@ -11,9 +11,9 @@ import SwiftUI
 /// Icon(systemName: "star.fill")
 ///
 /// // Custom upper bound — allow scaling up to .xxLarge only
-/// Icon(systemName: "star.fill", dynamicTypeSizeRange: ..<.xxLarge)
+/// Icon(systemName: "star.fill", dynamicTypeSizeRange: ..<DynamicTypeSize.xxLarge)
 /// ```
-public struct Icon: View {
+public struct Icon<R>: View where R: RangeExpression, R.Bound == DynamicTypeSize {
     private enum ImageSource {
         case resource(ImageResource)
         case system(String)
@@ -24,11 +24,11 @@ public struct Icon: View {
     ///
     /// The icon scales automatically up to, but not including, the specified upper bound.
     /// Defaults to `..<DynamicTypeSize.accessibility1`.
-    let dynamicTypeSizeRange: PartialRangeUpTo<DynamicTypeSize>
+    let dynamicTypeSizeRange: R
 
     init(
         _ resource: ImageResource,
-        dynamicTypeSizeRange: PartialRangeUpTo<DynamicTypeSize> = ..<DynamicTypeSize.accessibility1
+        dynamicTypeSizeRange: R = ..<DynamicTypeSize.accessibility1
     ) {
         self.imageSource = .resource(resource)
         self.dynamicTypeSizeRange = dynamicTypeSizeRange
@@ -36,7 +36,7 @@ public struct Icon: View {
 
     public init(
         systemName: String,
-        dynamicTypeSizeRange: PartialRangeUpTo<DynamicTypeSize> = ..<DynamicTypeSize.accessibility1
+        dynamicTypeSizeRange: R = ..<DynamicTypeSize.accessibility1
     ) {
         self.imageSource = .system(systemName)
         self.dynamicTypeSizeRange = dynamicTypeSizeRange

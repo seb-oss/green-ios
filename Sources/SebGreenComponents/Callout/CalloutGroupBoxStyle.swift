@@ -9,41 +9,25 @@ struct CalloutGroupBoxStyle: GroupBoxStyle {
         case .information: .information
         case .notice: .notice
         case .warning: .warning
-        case .error: .error
+        case .critical: .critical
         }
     }
 
     func makeBody(configuration: Configuration) -> some View {
-        HStack(alignment: .top, spacing: .spaceS) {
-            rail
+        VStack(alignment: .leading, spacing: .spaceXs) {
+            header(configuration.label)
+                .padding(.trailing, .spaceM)
 
-            VStack(alignment: .leading, spacing: .space3xs) {
-                configuration.label
-                    .typography(.detailBookM)
-                    .foregroundStyle(style.textColor)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .padding(.trailing, .spaceM)
-
-                configuration.content
-                    .typography(.bodyRegularS)
-                    .foregroundStyle(style.textColor)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
-            .padding(.vertical, .spaceM)
+            configuration.content
+                .typography(.bodyRegularS)
+                .foregroundStyle(style.textColor)
+                .fixedSize(horizontal: false, vertical: true)
         }
-        .padding(.leading, .space2xs)
-        .padding(.trailing, .spaceM)
+        .padding(.spaceM)
         .background(
             style.backgroundColor,
             in: .rect(cornerRadius: .cornerRadius)
         )
-        .overlay {
-            RoundedRectangle(cornerRadius: .cornerRadius)
-                .stroke(
-                    style.borderColor,
-                    lineWidth: .cornerRadiusLightWidth
-                )
-        }
         .overlay(alignment: .topTrailing) {
             if let onClose {
                 closeButton(onClose: onClose)
@@ -51,31 +35,38 @@ struct CalloutGroupBoxStyle: GroupBoxStyle {
         }
     }
 
-    private var rail: some View {
-        style.railColor
-            .overlay {
-                Icon(systemName: style.iconSystemName)
+    private func header<Content: View>(_ label: Content) -> some View {
+        AdaptiveStack(
+            spacing: .space2xs,
+            horizontalAlignment: .leading
+        ) {
+            if let name = style.iconSystemName {
+                Icon(systemName: name)
                     .foregroundStyle(style.iconColor)
                     .accessibilityHidden(true)
             }
-            .frame(width: .space4xl)
-            .clipShape(railShape)
-            .padding(.vertical, .space2xs)
+
+            label
+                .typography(.detailBookM)
+                .foregroundStyle(style.textColor)
+                .fixedSize(horizontal: false, vertical: true)
+        }
     }
 
+    @ViewBuilder
     private func closeButton(onClose: @escaping () -> Void) -> some View {
-        Button(systemName: "xmark.circle.fill", action: onClose)
-            .foregroundStyle(
-                style.closeButtonPrimaryColor,
-                style.closeButtonSecondaryColor
-            )
-            .contentShape(.circle)
-            .accessibilityLabel("Close")
-            .padding([.top, .trailing], .spaceXs)
-    }
-
-    private var railShape: some Shape {
-        RoundedRectangle(cornerRadius: 12, style: .continuous)
+        Button(
+            systemName: "xmark.circle.fill",
+            dynamicTypeSizeRange: DynamicTypeSize.xxxLarge ..< .accessibility1,
+            action: onClose
+        )
+        .foregroundStyle(
+            style.closeButtonPrimaryColor,
+            style.closeButtonSecondaryColor
+        )
+        .contentShape(.circle)
+        .accessibilityLabel("Dismiss")
+        .padding([.top, .trailing], .spaceXs)
     }
 }
 
@@ -88,73 +79,59 @@ extension GroupBoxStyle where Self == CalloutGroupBoxStyle {
     }
 }
 
-private extension Callout.Variant {
-    struct Style {
+extension Callout.Variant {
+    fileprivate struct Style {
         let backgroundColor: Color
         let borderColor: Color
-        let railColor: Color
-        let iconColor: Color
-        let textColor: Color
-        let closeButtonPrimaryColor: Color
-        let closeButtonSecondaryColor: Color
-        let iconSystemName: String
-        let shouldAutoFocus: Bool
+        let iconColor: Color = .l3Neutral05
+        let textColor: Color = .l3Neutral05
+        let closeButtonPrimaryColor: Color = .l3Neutral05
+        let closeButtonSecondaryColor: Color = .l3Neutral05.opacity(0.12)
+        let iconSystemName: String?
     }
 }
 
 extension Callout.Variant.Style {
     static var information: Self = .init(
-        backgroundColor: .l2Neutral02,
+        backgroundColor: .init(hex: 0x3B3F3E),
         borderColor: .clear,
-        railColor: .l2Information01,
-        iconColor: .contentNeutral02,
-        textColor: .contentNeutral01,
-        closeButtonPrimaryColor: .contentNeutral02,
-        closeButtonSecondaryColor: .l3Neutral02,
-        iconSystemName: "info.circle",
-        shouldAutoFocus: false
+        iconSystemName: nil
     )
 
     static var notice: Self = .init(
-        backgroundColor: .l2Neutral02,
+        backgroundColor: .init(hex: 0x2C4454),
         borderColor: .clear,
-        railColor: .l2Notice01,
-        iconColor: .contentNotice01,
-        textColor: .contentNeutral01,
-        closeButtonPrimaryColor: .contentNeutral02,
-        closeButtonSecondaryColor: .l3Neutral02,
-        iconSystemName: "megaphone",
-        shouldAutoFocus: false
+        iconSystemName: "info.circle"
     )
 
     static var warning: Self = .init(
-        backgroundColor: .l2Neutral02,
+        backgroundColor: .init(hex: 0xfA7610C),
         borderColor: .clear,
-        railColor: .l2Warning01,
-        iconColor: .contentWarning01,
-        textColor: .contentNeutral01,
-        closeButtonPrimaryColor: .contentNeutral02,
-        closeButtonSecondaryColor: .l3Neutral02,
-        iconSystemName: "exclamationmark.triangle",
-        shouldAutoFocus: true
+        iconSystemName: "exclamationmark.triangle"
     )
 
-    static var error: Self = .init(
-        backgroundColor: .l2Neutral02,
+    static var critical: Self = .init(
+        backgroundColor: .init(hex: 0x8A230F),
         borderColor: .clear,
-        railColor: .l2Negative01,
-        iconColor: .contentNegative01,
-        textColor: .contentNeutral01,
-        closeButtonPrimaryColor: .contentNeutral02,
-        closeButtonSecondaryColor: .l3Neutral02,
-        iconSystemName: "exclamationmark.triangle",
-        shouldAutoFocus: true
+        iconSystemName: "bell"
     )
 }
 
-// MARK: - Design tokens
+// MARK: - Helpers that will be removed as soon as GDKs tokens are updated
 
 extension CGFloat {
-    static let cornerRadius = 12.0
+    static let cornerRadius = 16.0
     static let cornerRadiusLightWidth = 1.5
+}
+
+extension Color {
+    fileprivate init(hex: UInt, alpha: Double = 1) {
+        self.init(
+            .sRGB,
+            red: Double((hex >> 16) & 0xff) / 255,
+            green: Double((hex >> 08) & 0xff) / 255,
+            blue: Double((hex >> 00) & 0xff) / 255,
+            opacity: alpha
+        )
+    }
 }
