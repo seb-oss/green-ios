@@ -47,7 +47,7 @@ struct CalloutGroupBoxStyle: GroupBoxStyle {
             }
 
             label
-                .typography(.detailBookM)
+                .typography(.headingXs)
                 .foregroundStyle(style.textColor)
                 .fixedSize(horizontal: false, vertical: true)
         }
