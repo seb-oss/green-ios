@@ -20,17 +20,13 @@ public struct SEBGreenButtonStyleDemo: View {
         } content: {
             VStack(spacing: .spaceXl) {
                 // Primary with no icon
-                Button("Primary") {
-                    print("Hello")
-                }
+                Button("Primary") { }
                 .buttonStyle(.seb(.primary.dimensions(buttonDimensions).layoutBehavior(buttonLayoutBehavior)))
                 
                 Divider()
                 
                 HStack {
-                    Button {
-                        print("Leading")
-                    } label: {
+                    Button { } label: {
                         if shouldShowIcon {
                             Label("Leading", systemImage: "star")
                         } else {
@@ -39,9 +35,7 @@ public struct SEBGreenButtonStyleDemo: View {
                     }
                     .buttonStyle(.seb(.primary.dimensions(buttonDimensions).layoutBehavior(buttonLayoutBehavior)))
                     
-                    Button {
-                        print("Hello")
-                    } label: {
+                    Button { } label: {
                         if shouldShowIcon {
                             Label("Trailing", systemImage: "arrow.right")
                         } else {
@@ -54,9 +48,7 @@ public struct SEBGreenButtonStyleDemo: View {
                 Divider()
                 
                 // Secondary with Label (icon position controlled by style)
-                Button {
-                    print("Hello")
-                } label: {
+                Button { } label: {
                     if shouldShowIcon {
                         Label("Secondary", systemImage: "info.circle")
                     } else {
@@ -68,9 +60,7 @@ public struct SEBGreenButtonStyleDemo: View {
                 Divider()
                 
                 VStack {
-                    Button {
-                        print("Hello")
-                    } label: {
+                    Button { } label: {
                         if shouldShowIcon {
                             Label("Secondary on White", systemImage: "info.circle")
                         } else {
@@ -86,9 +76,7 @@ public struct SEBGreenButtonStyleDemo: View {
                 Divider()
                 
                 // Tertiary with Label
-                Button {
-                    print("Hello")
-                } label: {
+                Button { } label: {
                     if shouldShowIcon {
                         Label("Tertiary", systemImage: "star.fill")
                     } else {
@@ -100,9 +88,7 @@ public struct SEBGreenButtonStyleDemo: View {
                 Divider()
                 
                 // Outline with Label
-                Button {
-                    print("Hello")
-                } label: {
+                Button { } label: {
                     if shouldShowIcon {
                         Label("Outline", systemImage: "arrow.right")
                     } else {
@@ -114,9 +100,7 @@ public struct SEBGreenButtonStyleDemo: View {
                 Divider()
                 
                 // Negative with multiline text and Label
-                Button {
-                    print("Hello")
-                } label: {
+                Button { } label: {
                     Label {
                         Text("Negative Multiple Lines Negative Multiple Lines Negative")
                     } icon: {
@@ -130,9 +114,7 @@ public struct SEBGreenButtonStyleDemo: View {
                 Divider()
                 
                 // Notice with Label and icon
-                Button {
-                    print("Hello")
-                } label: {
+                Button { } label: {
                     Label {
                         Text("Notice button")
                     } icon: {
@@ -165,9 +147,7 @@ public struct SEBGreenButtonStyleDemo: View {
                             VStack(spacing: .spaceS) {
                                 
                                 // Icon-only button using custom Icon view
-                                Button {
-                                    print("Hello")
-                                } label: {
+                                Button { } label: {
                                     Icon(systemName: "ellipsis")
                                 }
                                 .buttonStyle(.seb(.primary(shape: .circle).dimensions(buttonDimensions)))
@@ -176,9 +156,7 @@ public struct SEBGreenButtonStyleDemo: View {
                                 Divider()
                                 
                                 // Custom composition (not using Label)
-                                Button {
-                                    print("Hello")
-                                } label: {
+                                Button { } label: {
                                     HStack(spacing: 8) {
                                         Icon(systemName: "heart.fill")
                                         VStack(alignment: .leading, spacing: 2) {
