@@ -1,63 +1,74 @@
 import SwiftUI
 
-// MARK: - Default Styles
-
 extension CalloutGroupBoxStyle {
     static var information: CalloutGroupBoxStyle {
         CalloutGroupBoxStyle(
-            backgroundColor: .init(hex: 0x3B3F3E),
+            backgroundColor: AnyShapeStyle(.surfaceAware),
+            ignoreBackgroundOpacity: true,
+            borderColor: .borderSubtle01,
+            shouldShowBorder: { $0 == .neutral02 },
+            iconColor: .contentNeutral01,
+            textColor: .contentNeutral01,
+            iconSystemName: nil
+        )
+    }
+
+    static var informationLoud: CalloutGroupBoxStyle {
+        CalloutGroupBoxStyle(
+            backgroundColor: AnyShapeStyle(Color.l2NeutralLoud),
+            ignoreBackgroundOpacity: false,
             borderColor: .clear,
+            shouldShowBorder: { _ in false },
             iconColor: .white,
             textColor: .white,
-            closeButtonPrimaryColor: .white,
-            closeButtonSecondaryColor: .white.opacity(0.12),
             iconSystemName: nil
         )
     }
 
     static var notice: CalloutGroupBoxStyle {
         CalloutGroupBoxStyle(
-            backgroundColor: .init(hex: 0x2C4454),
+            backgroundColor: AnyShapeStyle(Color(hex: 0x2C4454)),
+            ignoreBackgroundOpacity: false,
             borderColor: .clear,
+            shouldShowBorder: { _ in false },
             iconColor: .white,
             textColor: .white,
-            closeButtonPrimaryColor: .white,
-            closeButtonSecondaryColor: .white.opacity(0.12),
             iconSystemName: "info.circle"
         )
     }
 
     static var warning: CalloutGroupBoxStyle {
         CalloutGroupBoxStyle(
-            backgroundColor: .init(hex: 0xA7610C),
+            backgroundColor: AnyShapeStyle(Color(hex: 0xA7610C)),
+            ignoreBackgroundOpacity: false,
             borderColor: .clear,
+            shouldShowBorder: { _ in false },
             iconColor: .white,
             textColor: .white,
-            closeButtonPrimaryColor: .white,
-            closeButtonSecondaryColor: .white.opacity(0.12),
             iconSystemName: "exclamationmark.triangle"
         )
     }
 
     static var critical: CalloutGroupBoxStyle {
         CalloutGroupBoxStyle(
-            backgroundColor: .init(hex: 0x8A230F),
+            backgroundColor: AnyShapeStyle(Color(hex: 0x8A230F)),
+            ignoreBackgroundOpacity: false,
             borderColor: .clear,
+            shouldShowBorder: { _ in false },
             iconColor: .white,
             textColor: .white,
-            closeButtonPrimaryColor: .white,
-            closeButtonSecondaryColor: .white.opacity(0.12),
             iconSystemName: "bell"
         )
     }
 }
 
-// MARK: - GroupBoxStyle Extension
-
 extension GroupBoxStyle where Self == CalloutGroupBoxStyle {
-    static func callout(_ variant: Callout.Variant) -> CalloutGroupBoxStyle {
+    public static func callout(
+        _ variant: Callout.Variant
+    ) -> CalloutGroupBoxStyle {
         switch variant {
-        case .information: .information
+        case .information(.default): .information
+        case .information(.loud): .informationLoud
         case .notice: .notice
         case .warning: .warning
         case .critical: .critical

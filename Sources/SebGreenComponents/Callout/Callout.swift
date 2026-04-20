@@ -1,10 +1,8 @@
-//
-// Copyright © 2026 Skandinaviska Enskilda Banken AB (publ). All rights reserved.
-//
-
 import SwiftUI
 
 public struct Callout: View {
+    @Environment(\.surface) private var surface
+
     private let model: Model
 
     public init(model: Model) {
@@ -31,105 +29,32 @@ public struct Callout: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .groupBoxStyle(.callout(model.variant))
         .overlay(alignment: .topTrailing) {
             if let onClose = model.actions.onClose {
                 closeButton(onClose: onClose)
             }
         }
+        .groupBoxStyle(.callout(model.variant))
     }
 
     @ViewBuilder
     private func closeButton(onClose: @escaping () -> Void) -> some View {
+        let colors = model.variant.closeButtonColors(
+            surface: surface
+        )
+
         Button(
             systemName: "xmark.circle.fill",
             dynamicTypeSizeRange: DynamicTypeSize.xxxLarge ..< .accessibility1,
             action: onClose
         )
         .foregroundStyle(
-            Color.white,
-            Color.white.opacity(0.12)
+            colors.primary,
+            colors.secondary
         )
         .contentShape(.circle)
         .accessibilityLabel("Dismiss")
         .padding([.top, .trailing], .spaceXs)
-    }
-}
-
-extension Callout {
-    public enum Variant: CaseIterable, Equatable {
-        case information
-        case notice
-        case warning
-        case critical
-    }
-
-    public struct Model: Identifiable {
-        public let id: String
-        public let title: String
-        public let shortText: String
-        public let message: String?
-        public let variant: Variant
-        public let actions: Actions
-
-        public init(
-            id: String,
-            title: String,
-            shortText: String,
-            message: String? = nil,
-            variant: Variant,
-            actions: Actions = .init()
-        ) {
-            self.id = id
-            self.title = title
-            self.shortText = shortText
-            self.message = message
-            self.variant = variant
-            self.actions = actions
-        }
-    }
-
-    public struct Actions {
-        public struct CallToAction {
-            public enum LinkStyle: Equatable {
-                case internalLink
-                case externalLink
-
-                fileprivate var symbolName: String {
-                    switch self {
-                    case .internalLink:
-                        return "arrow.right"
-                    case .externalLink:
-                        return "arrow.up.right"
-                    }
-                }
-            }
-
-            public let title: String
-            public let linkStyle: LinkStyle?
-            public let action: () -> Void
-
-            public init(
-                title: String,
-                linkStyle: LinkStyle? = nil,
-                action: @escaping () -> Void
-            ) {
-                self.title = title
-                self.linkStyle = linkStyle
-                self.action = action
-            }
-        }
-
-        public let onClose: (() -> Void)?
-        public let callToAction: CallToAction?
-
-        public init(
-            onClose: (() -> Void)? = nil,
-            callToAction: CallToAction? = nil
-        ) {
-            self.onClose = onClose
-            self.callToAction = callToAction
-        }
     }
 }
 
@@ -139,10 +64,21 @@ extension Callout {
             Callout(
                 model: .init(
                     id: "1",
-                    title: "Information",
+                    title: "Information (Default)",
                     shortText:
                         "Used for passive, non-critical updates like tips or background information.",
-                    variant: .information,
+                    variant: .information(.default),
+                    actions: .init(onClose: {})
+                ),
+            )
+
+            Callout(
+                model: .init(
+                    id: "1b",
+                    title: "Information (Loud)",
+                    shortText:
+                        "Used for passive, non-critical updates like tips or background information.",
+                    variant: .information(.loud),
                     actions: .init(onClose: {})
                 ),
             )

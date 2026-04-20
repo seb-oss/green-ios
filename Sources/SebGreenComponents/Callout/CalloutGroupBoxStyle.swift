@@ -1,15 +1,22 @@
 import SwiftUI
 
-struct CalloutGroupBoxStyle: GroupBoxStyle {
-    let backgroundColor: Color
+public struct CalloutGroupBoxStyle: GroupBoxStyle {
+    @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.surface) private var surface
+
+    let backgroundColor: AnyShapeStyle
+    let ignoreBackgroundOpacity: Bool
     let borderColor: Color
+    let shouldShowBorder: @Sendable (Surface) -> Bool
     let iconColor: Color
     let textColor: Color
-    let closeButtonPrimaryColor: Color
-    let closeButtonSecondaryColor: Color
     let iconSystemName: String?
 
-    func makeBody(configuration: Configuration) -> some View {
+    private var shouldReduceBackgroundOpacity: Bool {
+        !ignoreBackgroundOpacity && colorScheme == .dark
+    }
+
+    public func makeBody(configuration: Configuration) -> some View {
         VStack(alignment: .leading, spacing: .spaceXs) {
             header(configuration.label)
                 .padding(.trailing, .spaceM)
@@ -21,9 +28,17 @@ struct CalloutGroupBoxStyle: GroupBoxStyle {
         }
         .padding(.spaceM)
         .background(
-            backgroundColor,
+            backgroundColor.opacity(
+                shouldReduceBackgroundOpacity ? 0.8 : 1
+            ),
             in: .rect(cornerRadius: .cornerRadius)
         )
+        .overlay {
+            if shouldShowBorder(surface) {
+                RoundedRectangle(cornerRadius: .cornerRadius)
+                    .strokeBorder(borderColor, style: .init())
+            }
+        }
     }
 
     private func header<Content: View>(_ label: Content) -> some View {
