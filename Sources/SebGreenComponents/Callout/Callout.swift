@@ -31,12 +31,28 @@ public struct Callout: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .groupBoxStyle(
-            .callout(
-                variant: model.variant,
-                onClose: model.actions.onClose
-            )
+        .groupBoxStyle(.callout(model.variant))
+        .overlay(alignment: .topTrailing) {
+            if let onClose = model.actions.onClose {
+                closeButton(onClose: onClose)
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func closeButton(onClose: @escaping () -> Void) -> some View {
+        Button(
+            systemName: "xmark.circle.fill",
+            dynamicTypeSizeRange: DynamicTypeSize.xxxLarge ..< .accessibility1,
+            action: onClose
         )
+        .foregroundStyle(
+            Color.white,
+            Color.white.opacity(0.12)
+        )
+        .contentShape(.circle)
+        .accessibilityLabel("Dismiss")
+        .padding([.top, .trailing], .spaceXs)
     }
 }
 
