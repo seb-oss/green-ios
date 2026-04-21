@@ -70,7 +70,7 @@ struct DemoContainer<Configuration: View, Content: View>: View {
             VStack(spacing: .spaceXl) {
                 if isConfigurable && shouldShowConfigurationView {
                     configuration
-                        .background(in: .rect(cornerRadius: 16))
+                        .background(.surfaceAware, in: .rect(cornerRadius: 16))
                 }
 
                 content
@@ -79,7 +79,6 @@ struct DemoContainer<Configuration: View, Content: View>: View {
             .padding(contentPadding)
         }
         .animation(.easeIn, value: shouldShowConfigurationView)
-        .background(level.colors.neutral02)
         .navigationTitle(title)
         .toolbar {
             if isConfigurable {

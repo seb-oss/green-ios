@@ -2,6 +2,7 @@ import GdsKit
 import SwiftUI
 
 private enum Component: String, CaseIterable, Identifiable {
+    case callouts = "Callout"
     case inputFields = "Input Field"
     case toggles = "Toggle"
 	case buttons = "Buttons"
@@ -12,6 +13,7 @@ private enum Component: String, CaseIterable, Identifiable {
     @ViewBuilder
     var view: some View {
         switch self {
+        case .callouts: CalloutDemo()
         case .inputFields: InputFieldDemo()
         case .toggles: ToggleDemo()
 		case .buttons: SEBGreenButtonStyleDemo()

@@ -73,61 +73,7 @@ public struct Callout: View {
     }
 }
 
+@available(iOS 17, *)
 #Preview("Alert") {
-    ScrollView {
-        VStack(alignment: .leading, spacing: .spaceM) {
-            Callout(
-                "Information (Subtle)",
-                shortText:
-                    "Used for passive, non-critical updates like tips or background information.",
-                action: .init(
-                    title: "See details",
-                    linkStyle: .internalLink,
-                    action: {}
-                )
-
-            ) {}
-            .calloutStyle(.information(.subtle))
-
-            Callout(
-                "Information (Loud)",
-                shortText:
-                    "Used for passive, non-critical updates like tips or background information.",
-            ) {}
-            .calloutStyle(.information(.loud))
-
-            Callout(
-                "Notice",
-                shortText:
-                    "Used for actionable, attention-worthy updates that are still non-critical.",
-                action: .init(
-                    title: "See details",
-                    linkStyle: .internalLink,
-                    action: {}
-                )
-            ) {}
-            .calloutStyle(.notice)
-
-            Callout(
-                "Warning",
-                shortText:
-                    "Used to highlight important risks or information related to surrounding context.",
-                action: .init(
-                    title: "Read more",
-                    linkStyle: .externalLink,
-                    action: {}
-                )
-            ) {}
-            .calloutStyle(.warning)
-
-            Callout(
-                "Critical",
-                shortText:
-                    "Used to communicate that something has gone wrong or does not work and needs user attention.",
-            ) {}
-            .calloutStyle(.critical)
-        }
-        .padding(.spaceM)
-    }
-    .surface(.neutral02)
+    CalloutDemo()
 }

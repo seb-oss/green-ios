@@ -46,9 +46,3 @@ extension Callout {
         }
     }
 }
-
-extension Callout.Action: Hashable {
-    public static func == (lhs: Callout.Action, rhs: Callout.Action) -> Bool {
-        lhs == rhs
-    }
-}
