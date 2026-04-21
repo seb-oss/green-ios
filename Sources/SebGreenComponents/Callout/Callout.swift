@@ -30,16 +30,20 @@ public struct Callout: View {
                 Text(shortText)
 
                 if let action {
-                    // TODO: Use Button with GDS-style instead
                     Button(
                         action.title,
                         systemImage: action.linkStyle?.symbolName ?? "",
                         action: action.perform
                     )
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .padding(.vertical, .spaceXs)
-                    .background(Color.white.opacity(0.12))
-                    .clipShape(.capsule)
+                    .buttonStyle(
+                        .seb(
+                            .secondary(
+                                dimensions: .small,
+                                iconPosition: .trailing
+                            )
+                        )
+                    )
+                    .level(.level2)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)

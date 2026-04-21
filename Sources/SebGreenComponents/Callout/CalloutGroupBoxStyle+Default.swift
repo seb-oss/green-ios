@@ -15,7 +15,7 @@ extension CalloutGroupBoxStyle {
 
     static var informationLoud: CalloutGroupBoxStyle {
         CalloutGroupBoxStyle(
-            backgroundColor: AnyShapeStyle(Color.l2NeutralLoud),
+            backgroundColor: AnyShapeStyle(Color(hex: 0x3B3F3E)),
             ignoreBackgroundOpacity: false,
             borderColor: .clear,
             shouldShowBorder: { _ in false },
