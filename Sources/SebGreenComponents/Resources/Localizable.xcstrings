@@ -54,6 +54,23 @@
         }
       }
     },
+    "GreeniOS.Accessibility.Dismiss" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dismiss"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avfärda"
+          }
+        }
+      }
+    },
     "GreeniOS.InputField.Accessibility.MaxCharactersReached.Announcement" : {
       "extractionState" : "manual",
       "localizations" : {

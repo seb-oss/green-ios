@@ -72,7 +72,7 @@ public struct Callout: View {
             colors.secondary
         )
         .contentShape(.circle)
-        .accessibilityLabel("Dismiss")
+        .accessibilityLabel("GreeniOS.Accessibility.Dismiss")
         .padding([.top, .trailing], .spaceXs)
     }
 }
