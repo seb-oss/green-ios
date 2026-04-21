@@ -67,11 +67,22 @@ extension GroupBoxStyle where Self == CalloutGroupBoxStyle {
         _ variant: Callout.Variant
     ) -> CalloutGroupBoxStyle {
         switch variant {
-        case .information(.default): .information
+        case .information(.subtle): .information
         case .information(.loud): .informationLoud
         case .notice: .notice
         case .warning: .warning
         case .critical: .critical
         }
+    }
+}
+
+
+extension EnvironmentValues {
+    @Entry var calloutStyle: Callout.Variant = .information(.subtle)
+}
+
+extension View {
+    public func calloutStyle(_ style: Callout.Variant) -> some View {
+        environment(\.calloutStyle, style)
     }
 }

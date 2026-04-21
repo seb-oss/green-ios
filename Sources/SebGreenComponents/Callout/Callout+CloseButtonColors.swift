@@ -10,7 +10,7 @@ extension Callout.Variant {
         switch self {
         case .information(let style):
             switch style {
-            case .default:
+            case .subtle:
                 CloseButtonColors(
                     primary: .contentNeutral02,
                     secondary:

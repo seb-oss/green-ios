@@ -2,24 +2,39 @@ import SwiftUI
 
 public struct Callout: View {
     @Environment(\.surface) private var surface
+    @Environment(\.calloutStyle) private var calloutStyle
 
-    private let model: Model
+    private let title: any StringProtocol
+    private let shortText: any StringProtocol
+    private let message: (any StringProtocol)?
+    private let action: Callout.Action?
+    private let onClose: (() -> Void)?
 
-    public init(model: Model) {
-        self.model = model
+    public init(
+        _ title: any StringProtocol,
+        shortText: any StringProtocol,
+        message: (any StringProtocol)? = nil,
+        action: Callout.Action? = nil,
+        onClose: (() -> Void)? = nil
+    ) {
+        self.title = title
+        self.shortText = shortText
+        self.message = message
+        self.action = action
+        self.onClose = onClose
     }
 
     public var body: some View {
-        GroupBox(model.title) {
+        GroupBox(title) {
             VStack(alignment: .leading, spacing: .spaceS) {
-                Text(model.shortText)
+                Text(shortText)
 
-                if let callToAction = model.actions.callToAction {
+                if let action {
                     // TODO: Use Button with GDS-style instead
                     Button(
-                        callToAction.title,
-                        systemImage: callToAction.linkStyle?.symbolName ?? "",
-                        action: callToAction.action
+                        action.title,
+                        systemImage: action.linkStyle?.symbolName ?? "",
+                        action: action.perform
                     )
                     .frame(maxWidth: .infinity, alignment: .center)
                     .padding(.vertical, .spaceXs)
@@ -30,16 +45,16 @@ public struct Callout: View {
             .frame(maxWidth: .infinity, alignment: .leading)
         }
         .overlay(alignment: .topTrailing) {
-            if let onClose = model.actions.onClose {
+            if let onClose {
                 closeButton(onClose: onClose)
             }
         }
-        .groupBoxStyle(.callout(model.variant))
+        .groupBoxStyle(.callout(calloutStyle))
     }
 
     @ViewBuilder
     private func closeButton(onClose: @escaping () -> Void) -> some View {
-        let colors = model.variant.closeButtonColors(
+        let colors = calloutStyle.closeButtonColors(
             surface: surface
         )
 
@@ -62,71 +77,55 @@ public struct Callout: View {
     ScrollView {
         VStack(alignment: .leading, spacing: .spaceM) {
             Callout(
-                model: .init(
-                    id: "1",
-                    title: "Information (Default)",
-                    shortText:
-                        "Used for passive, non-critical updates like tips or background information.",
-                    variant: .information(.default),
-                    actions: .init(onClose: {})
-                ),
-            )
+                "Information (Subtle)",
+                shortText:
+                    "Used for passive, non-critical updates like tips or background information.",
+                action: .init(
+                    title: "See details",
+                    linkStyle: .internalLink,
+                    action: {}
+                )
+
+            ) {}
+            .calloutStyle(.information(.subtle))
 
             Callout(
-                model: .init(
-                    id: "1b",
-                    title: "Information (Loud)",
-                    shortText:
-                        "Used for passive, non-critical updates like tips or background information.",
-                    variant: .information(.loud),
-                    actions: .init(onClose: {})
-                ),
-            )
-            Callout(
-                model: .init(
-                    id: "2",
-                    title: "Notice",
-                    shortText:
-                        "Used for actionable, attention-worthy updates that are still non-critical.",
-                    variant: .notice,
-                    actions: .init(
-                        onClose: {},
-                        callToAction: .init(
-                            title: "See details",
-                            linkStyle: .internalLink,
-                            action: {}
-                        )
-                    )
-                ),
-            )
+                "Information (Loud)",
+                shortText:
+                    "Used for passive, non-critical updates like tips or background information.",
+            ) {}
+            .calloutStyle(.information(.loud))
 
             Callout(
-                model: .init(
-                    id: "3",
-                    title: "Warning",
-                    shortText:
-                        "Used to highlight important risks or information related to surrounding context.",
-                    variant: .warning,
-                    actions: .init(
-                        callToAction: .init(
-                            title: "Read more",
-                            linkStyle: .externalLink,
-                            action: {}
-                        )
-                    )
-                ),
-            )
+                "Notice",
+                shortText:
+                    "Used for actionable, attention-worthy updates that are still non-critical.",
+                action: .init(
+                    title: "See details",
+                    linkStyle: .internalLink,
+                    action: {}
+                )
+            ) {}
+            .calloutStyle(.notice)
 
             Callout(
-                model: .init(
-                    id: "4",
-                    title: "Critical",
-                    shortText:
-                        "Used to communicate that something has gone wrong or does not work and needs user attention.",
-                    variant: .critical,
-                    actions: .init(onClose: {})
-                ),
-            )
+                "Warning",
+                shortText:
+                    "Used to highlight important risks or information related to surrounding context.",
+                action: .init(
+                    title: "Read more",
+                    linkStyle: .externalLink,
+                    action: {}
+                )
+            ) {}
+            .calloutStyle(.warning)
+
+            Callout(
+                "Critical",
+                shortText:
+                    "Used to communicate that something has gone wrong or does not work and needs user attention.",
+            ) {}
+            .calloutStyle(.critical)
         }
         .padding(.spaceM)
     }
