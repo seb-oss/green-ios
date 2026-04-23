@@ -105,7 +105,6 @@ public struct InputFieldDemo: View {
                 }
                 .optionalField(isOptional)
                 .expandTextArea(expandTextArea ? 4... : 1...)
-                .surface(surface)
                 .onChange(of: focusedField) { focusedField in
                     withAnimation {
                         proxy.scrollTo(focusedField, anchor: .center)
@@ -134,6 +133,7 @@ public struct InputFieldDemo: View {
                 }
             }
             .scrollDismissesKeyboard(.interactively)
+            .surface(surface)
         }
     }
 

@@ -1,36 +1,42 @@
 import SwiftUI
 
-struct CalloutGroupBoxStyle: GroupBoxStyle {
-    let variant: Callout.Variant
-    let onClose: (() -> Void)?
+public struct CalloutGroupBoxStyle: GroupBoxStyle {
+    @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.surface) private var surface
 
-    private var style: Callout.Variant.Style {
-        switch variant {
-        case .information: .information
-        case .notice: .notice
-        case .warning: .warning
-        case .critical: .critical
-        }
+    let backgroundColor: AnyShapeStyle
+    let ignoreBackgroundOpacity: Bool
+    let borderColor: Color
+    let shouldShowBorder: @Sendable (Surface) -> Bool
+    let iconColor: Color
+    let textColor: Color
+    let iconSystemName: String?
+
+    private var shouldReduceBackgroundOpacity: Bool {
+        !ignoreBackgroundOpacity && colorScheme == .dark
     }
 
-    func makeBody(configuration: Configuration) -> some View {
+    public func makeBody(configuration: Configuration) -> some View {
         VStack(alignment: .leading, spacing: .spaceXs) {
             header(configuration.label)
                 .padding(.trailing, .spaceM)
 
             configuration.content
                 .typography(.bodyRegularS)
-                .foregroundStyle(style.textColor)
+                .foregroundStyle(textColor)
                 .fixedSize(horizontal: false, vertical: true)
         }
         .padding(.spaceM)
         .background(
-            style.backgroundColor,
+            backgroundColor.opacity(
+                shouldReduceBackgroundOpacity ? 0.8 : 1
+            ),
             in: .rect(cornerRadius: .cornerRadius)
         )
-        .overlay(alignment: .topTrailing) {
-            if let onClose {
-                closeButton(onClose: onClose)
+        .overlay {
+            if shouldShowBorder(surface) {
+                RoundedRectangle(cornerRadius: .cornerRadius)
+                    .strokeBorder(borderColor, style: .init())
             }
         }
     }
@@ -40,81 +46,18 @@ struct CalloutGroupBoxStyle: GroupBoxStyle {
             spacing: .space2xs,
             horizontalAlignment: .leading
         ) {
-            if let name = style.iconSystemName {
-                Icon(systemName: name)
-                    .foregroundStyle(style.iconColor)
+            if let iconSystemName {
+                Icon(systemName: iconSystemName)
+                    .foregroundStyle(iconColor)
                     .accessibilityHidden(true)
             }
 
             label
-                .typography(.detailBookM)
-                .foregroundStyle(style.textColor)
+                .typography(.headingXs)
+                .foregroundStyle(textColor)
                 .fixedSize(horizontal: false, vertical: true)
         }
     }
-
-    @ViewBuilder
-    private func closeButton(onClose: @escaping () -> Void) -> some View {
-        Button(
-            systemName: "xmark.circle.fill",
-            dynamicTypeSizeRange: DynamicTypeSize.xxxLarge ..< .accessibility1,
-            action: onClose
-        )
-        .foregroundStyle(
-            style.closeButtonPrimaryColor,
-            style.closeButtonSecondaryColor
-        )
-        .contentShape(.circle)
-        .accessibilityLabel("Dismiss")
-        .padding([.top, .trailing], .spaceXs)
-    }
-}
-
-extension GroupBoxStyle where Self == CalloutGroupBoxStyle {
-    static func callout(
-        variant: Callout.Variant,
-        onClose: (() -> Void)?
-    ) -> CalloutGroupBoxStyle {
-        CalloutGroupBoxStyle(variant: variant, onClose: onClose)
-    }
-}
-
-extension Callout.Variant {
-    fileprivate struct Style {
-        let backgroundColor: Color
-        let borderColor: Color
-        let iconColor: Color = .white
-        let textColor: Color = .white
-        let closeButtonPrimaryColor: Color = .white
-        let closeButtonSecondaryColor: Color = .white.opacity(0.12)
-        let iconSystemName: String?
-    }
-}
-
-extension Callout.Variant.Style {
-    static var information: Self = .init(
-        backgroundColor: .init(hex: 0x3B3F3E),
-        borderColor: .clear,
-        iconSystemName: nil
-    )
-
-    static var notice: Self = .init(
-        backgroundColor: .init(hex: 0x2C4454),
-        borderColor: .clear,
-        iconSystemName: "info.circle"
-    )
-
-    static var warning: Self = .init(
-        backgroundColor: .init(hex: 0xA7610C),
-        borderColor: .clear,
-        iconSystemName: "exclamationmark.triangle"
-    )
-
-    static var critical: Self = .init(
-        backgroundColor: .init(hex: 0x8A230F),
-        borderColor: .clear,
-        iconSystemName: "bell"
-    )
 }
 
 // MARK: - Helpers that will be removed as soon as GDKs tokens are updated
@@ -125,7 +68,7 @@ extension CGFloat {
 }
 
 extension Color {
-    fileprivate init(hex: UInt, alpha: Double = 1) {
+    init(hex: UInt, alpha: Double = 1) {
         self.init(
             .sRGB,
             red: Double((hex >> 16) & 0xff) / 255,
