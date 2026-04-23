@@ -1,69 +1,140 @@
-//
-//  GreenButtonStyle.swift
-//  SebGreenComponents
-//
-//  Created by Mayur Deshmukh on 2025-08-28.
-//
-
 import SwiftUI
+import GdsKit
 
-// Should this be public?
-struct GreenButtonStyle: ButtonStyle {
-    let kind: GreenButton.Kind
-    let size: GreenButton.Size
+// MARK: - Button Style
+
+public struct GreenButtonStyle: ButtonStyle {
+    let shape: Shape
+    let greenConfiguration: GreenButtonStyle.Configuration
+    let dimensions: GreenButtonStyle.Dimensions
+    let layoutBehavior: GreenButtonStyle.LayoutBehavior
+    let iconPosition: IconPosition
     
-    public func makeBody(configuration: Configuration) -> some View {
-        GeometryReader { proxy in // TODO: - SEB-29415: Check if this can be achieved with ScaledMetrics
-            let minH = GreenButtonTokens.minHeight(for: size)
-            let corner = GreenButtonTokens.cornerRadius(forHeight: minH)
-            let bgColors = GreenButtonTokens.background(for: kind)
-            let fgColors = GreenButtonTokens.foreground(for: kind)
-            let border = GreenButtonTokens.border(for: kind)
-            let padding = GreenButtonTokens.paddings(for: size)
-            
-            // pressed/disabled state derived colors
-            let isPressed = configuration.isPressed
-            let state = ButtonVisualState(isPressed: isPressed)
-            
-            configuration.label
-                .padding(.horizontal, padding.h)
-                .padding(.vertical, padding.v)
-                .frame(minHeight: minH)
-                .contentShape(Rectangle())
-                .background(
-                    RoundedRectangle(cornerRadius: corner)
-                        .fill(bgColors.color(for: state))
-                        .overlay(content: {
-                            if isPressed {
-                                RoundedRectangle(cornerRadius: corner)
-                                    .fill(
-                                        GreenButtonTokens.pressedOverlay(for: kind)
-                                    )
-                            }
-                        })
-                )
-                .overlay(
-                    RoundedRectangle(cornerRadius: corner)
-                        .strokeBorder(border?.color(for: state) ?? .clear, lineWidth: border?.width ?? 0)
-                )
-                .foregroundStyle(fgColors.color(for: state))
-                .animation(.easeInOut(duration: 0.16), value: isPressed)
-            // Maintain single-line radius even if height grows due to wrapping: clamp radius to single-line baseline
-                .modifier(DynamicCornerRadius(baseCorner: corner))
-                .frame(width: proxy.size.width, height: proxy.size.height, alignment: .center)
-        }
-        .frame(minHeight: GreenButtonTokens.minHeight(for: size))
-        .fixedSize(horizontal: false, vertical: true) // allows wrapping to increase height
+    @Environment(\.isEnabled) private var isEnabled: Bool
+    
+    init(
+        shape: Shape = .pill,
+        configuration: GreenButtonStyle.Configuration,
+        dimensions: GreenButtonStyle.Dimensions,
+        layoutBehavior: GreenButtonStyle.LayoutBehavior = .fill,
+        iconPosition: IconPosition
+    ) {
+        self.shape = shape
+        self.greenConfiguration = configuration
+        self.dimensions = dimensions
+        self.layoutBehavior = layoutBehavior
+        self.iconPosition = iconPosition
+    }
+    
+    public func makeBody(configuration: ButtonStyle.Configuration) -> some View {
+        let greenConfiguration = greenConfiguration
+        
+        let effectiveForeground = greenConfiguration.foreground.style(
+            isPressed: configuration.isPressed,
+            isDisabled: !isEnabled
+        )
+        let normalBackground = greenConfiguration.background.style(
+            isPressed: false,
+            isDisabled: !isEnabled
+        )
+        let pressedBackground = greenConfiguration.background.style(
+            isPressed: configuration.isPressed,
+            isDisabled: !isEnabled
+        )
+        let effectiveStroke = greenConfiguration.stroke?.stroke(
+            isPressed: configuration.isPressed,
+            isDisabled: !isEnabled
+        )
+        
+        let cornerRadius = dimensions.cornerRadius
+        
+        let buttonLabelStyle = GreenLabelStyle.buttonLabelStyle(
+            iconPosition: iconPosition,
+            iconSpacing: dimensions.iconSpacing
+        )
+        
+        configuration.label
+            .labelStyle(.seb(buttonLabelStyle))
+            .font(dimensions.font)
+            .padding(.vertical, dimensions.verticalPadding)
+            .padding(.horizontal, shape.isPill ? dimensions.horizontalPadding : nil)
+            .multilineTextAlignment(.leading)
+            .foregroundStyle(effectiveForeground)
+            .frame(width: shape.isCircle ? dimensions.height : nil)
+            .frame(minHeight: dimensions.height) // Visible
+            .layoutBehavior(shape.isCircle ? .hug : layoutBehavior) 
+            .background {
+                // Pressed background overlays on top when pressed and enabled
+                if configuration.isPressed && isEnabled {
+                    RoundedRectangle(cornerRadius: dimensions.cornerRadius)
+                        .fill(pressedBackground)
+                }
+            }
+            .background(
+                normalBackground,
+                in: .rect(cornerRadius: cornerRadius)
+            )
+            .overlay {
+                if let stroke = effectiveStroke {
+                    RoundedRectangle(cornerRadius: cornerRadius)
+                        .stroke(stroke.color, style: stroke.style)
+                }
+            }
+            .frame(minHeight: 44) // Touch area
+            .contentShape(.rect)
+            .animation(.easeInOut(duration: 0.16), value: isEnabled)
+            .animation(.easeOut(duration: 0.16), value: configuration.isPressed)
     }
 }
 
-private struct DynamicCornerRadius: ViewModifier {
-    var baseCorner: CGFloat
-    func body(content: Content) -> some View {
-        content
-            .background(GeometryReader { g in
-                Color.clear
-                    .clipShape(RoundedRectangle(cornerRadius: baseCorner))
-            })
+extension GreenButtonStyle {
+    public enum Shape {
+        case pill
+        case circle
+        
+        var isPill: Bool {
+            switch self {
+            case .circle: return false
+            case .pill: return true
+            }
+        }
+        
+        var isCircle: Bool {
+            switch self {
+            case .circle: return true
+            case .pill: return false
+            }
+        }
+    }
+}
+
+public extension ButtonStyle where Self == GreenButtonStyle {
+    static func seb(_ style: GreenButtonStyle) -> some ButtonStyle  {
+        style
+    }
+}
+
+// MARK: - Icon Position
+
+public enum IconPosition {
+    case leading
+    case trailing
+}
+
+// MARK: Layout Behavior
+
+private extension View {
+    @ViewBuilder
+    func layoutBehavior(_ layoutBehavior: GreenButtonStyle.LayoutBehavior) -> some View {
+        switch layoutBehavior {
+        case .fill:
+            self.frame(maxWidth: .infinity)
+        case .hug:
+            self // Natural sizing - respects parent bounds and allows wrapping
+        case .fixed(let width):
+            self.frame(width: width)
+        case .flexible(let min, let max):
+            self.frame(minWidth: min, maxWidth: max)
+        }
     }
 }

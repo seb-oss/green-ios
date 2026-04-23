@@ -4,6 +4,7 @@ import SwiftUI
 private enum Component: String, CaseIterable, Identifiable {
     case inputFields = "Input Field"
     case toggles = "Toggle"
+	case buttons = "Buttons"
 
     var id: String { rawValue }
 
@@ -13,6 +14,7 @@ private enum Component: String, CaseIterable, Identifiable {
         switch self {
         case .inputFields: InputFieldDemo()
         case .toggles: ToggleDemo()
+		case .buttons: SEBGreenButtonStyleDemo()
         }
     }
 }

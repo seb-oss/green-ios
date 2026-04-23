@@ -119,7 +119,8 @@ public struct InfoCardView: View {
             callToActionView
         }
         .padding(.spaceM)
-        .background(model.variant.backgroundColor)
+//        .background(model.variant.backgroundColor)
+        .surface(.neutral01)
         .clipShape(cardShape)
         .overlay(cardBorder)
         .accessibilityElement(children: .contain)
@@ -179,12 +180,8 @@ public struct InfoCardView: View {
         title: String,
         action: @escaping (() -> Void)
     ) -> some View {
-        GreenButton(
-            title: title,
-            kind: .secondary,
-            size: .small,
-            action: action
-        )
+        Button(title, action: action)
+            .buttonStyle(.seb(.secondary.dimensions(.small)))
     }
 }
 
