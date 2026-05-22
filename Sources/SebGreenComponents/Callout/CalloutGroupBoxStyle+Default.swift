@@ -5,7 +5,7 @@ extension CalloutGroupBoxStyle {
         CalloutGroupBoxStyle(
             backgroundColor: AnyShapeStyle(.surfaceAware),
             ignoreBackgroundOpacity: true,
-            borderColor: .borderSubtle01,
+            borderColor: .borderNeutral02,
             shouldShowBorder: { $0 == .neutral02 },
             iconColor: .contentNeutral01,
             textColor: .contentNeutral01,

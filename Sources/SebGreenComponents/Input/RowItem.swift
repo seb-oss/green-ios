@@ -9,7 +9,7 @@ import SwiftUI
 
 extension View {
     public func icon(_ icon: Image) -> some View {
-        HStack(spacing: .spaceS) {
+        HStack(spacing: .gds(.spaceS)) {
             icon
             
             self
@@ -21,7 +21,7 @@ extension View {
             self
             
             Text(subheadline)
-                .typography(.detailRegularS)
+                .font(.gds(.detailSRegular))
                 .foregroundStyle(Color.contentNeutral02)
         }
     }
@@ -49,7 +49,7 @@ extension View {
     
     public func rowItem() -> some View {
         self
-            .padding(.vertical, .spaceS)
+            .padding(.vertical, .gds(.spaceS))
     }
 }
 

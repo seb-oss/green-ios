@@ -33,7 +33,7 @@ struct GreenLabelStyle: LabelStyle {
 extension LabelStyle where Self == GreenLabelStyle {
     static func buttonLabelStyle(
         iconPosition: IconPosition = .leading,
-        iconSpacing: CGFloat = .spaceXs
+        iconSpacing: CGFloat = .gds(.spaceXs)
     ) -> GreenLabelStyle {
         GreenLabelStyle(
             iconPosition: iconPosition,

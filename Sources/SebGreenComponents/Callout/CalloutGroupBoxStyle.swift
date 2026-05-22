@@ -17,16 +17,16 @@ public struct CalloutGroupBoxStyle: GroupBoxStyle {
     }
 
     public func makeBody(configuration: Configuration) -> some View {
-        VStack(alignment: .leading, spacing: .spaceXs) {
+        VStack(alignment: .leading, spacing: .gds(.spaceXs)) {
             header(configuration.label)
-                .padding(.trailing, .spaceM)
+                .padding(.trailing, .gds(.spaceM))
 
             configuration.content
-                .typography(.bodyRegularS)
+                .font(.gds(.bodySRegular))
                 .foregroundStyle(textColor)
                 .fixedSize(horizontal: false, vertical: true)
         }
-        .padding(.spaceM)
+        .padding(.gds(.spaceM))
         .background(
             backgroundColor.opacity(
                 shouldReduceBackgroundOpacity ? 0.8 : 1
@@ -43,7 +43,7 @@ public struct CalloutGroupBoxStyle: GroupBoxStyle {
 
     private func header<Content: View>(_ label: Content) -> some View {
         AdaptiveStack(
-            spacing: .space2xs,
+            spacing: .gds(.space2xs),
             horizontalAlignment: .leading
         ) {
             if let iconSystemName {
@@ -53,7 +53,7 @@ public struct CalloutGroupBoxStyle: GroupBoxStyle {
             }
 
             label
-                .typography(.headingXs)
+                .font(.gds(.headingXs))
                 .foregroundStyle(textColor)
                 .fixedSize(horizontal: false, vertical: true)
         }

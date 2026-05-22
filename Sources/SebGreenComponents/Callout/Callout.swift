@@ -23,7 +23,7 @@ public struct Callout: View {
 
     public var body: some View {
         GroupBox(title) {
-            VStack(alignment: .leading, spacing: .spaceS) {
+            VStack(alignment: .leading, spacing: .gds(.spaceS)) {
                 Text(shortText)
 
                 if let action {
@@ -34,7 +34,7 @@ public struct Callout: View {
                     )
                     .buttonStyle(
                         .seb(
-                            .secondary(
+                            .tonal(
                                 dimensions: .small,
                                 iconPosition: .trailing
                             )
@@ -70,7 +70,7 @@ public struct Callout: View {
         )
         .contentShape(.circle)
         .accessibilityLabel("GreeniOS.Accessibility.Dismiss")
-        .padding([.top, .trailing], .spaceXs)
+        .padding([.top, .trailing], .gds(.spaceXs))
     }
 }
 

@@ -13,7 +13,7 @@ public struct CalloutDemo: View {
         DemoContainer("Callout") {
             configuration
         } content: {
-            VStack(spacing: .spaceM) {
+            VStack(spacing: .gds(.spaceM)) {
                 callout(
                     "Information (Subtle)",
                     shortText: "Used for passive, non-critical updates like tips or background information.",
@@ -53,7 +53,7 @@ public struct CalloutDemo: View {
                         Label("Restore dismissed", systemImage: "arrow.counterclockwise")
                     }
                     .buttonStyle(.bordered)
-                    .padding(.top, .spaceS)
+                    .padding(.top, .gds(.spaceS))
                 }
             }
         }
@@ -84,7 +84,7 @@ public struct CalloutDemo: View {
     }
 
     private var configuration: some View {
-        VStack(spacing: .spaceL) {
+        VStack(spacing: .gds(.spaceL)) {
             DemoSection("General settings") {
                 Toggle(
                     "Action button",
@@ -111,7 +111,7 @@ public struct CalloutDemo: View {
                 .pickerStyle(.segmented)
             }
         }
-        .padding(.spaceM)
+        .padding(.gds(.spaceM))
     }
 }
 

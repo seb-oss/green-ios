@@ -18,7 +18,7 @@ public struct SEBGreenButtonStyleDemo: View {
         DemoContainer("Green Buttons") {
             configurationView
         } content: {
-            VStack(spacing: .spaceXl) {
+            VStack(spacing: .gds(.spaceXl)) {
                 // Primary with no icon
                 Button("Primary") { }
                 .buttonStyle(.seb(.primary.dimensions(buttonDimensions).layoutBehavior(buttonLayoutBehavior)))
@@ -124,12 +124,26 @@ public struct SEBGreenButtonStyleDemo: View {
                     }
                 }
                 .buttonStyle(.seb(.notice.iconPosition(iconPosition).dimensions(buttonDimensions).layoutBehavior(buttonLayoutBehavior)))
-                
+
+                Divider()
+
+                // Tonal with Label and icon
+                Button { } label: {
+                    Label {
+                        Text("Tonal button")
+                    } icon: {
+                        if shouldShowIcon {
+                            Image(systemName: "circle.hexagongrid")
+                        }
+                    }
+                }
+                .buttonStyle(.seb(.tonal.iconPosition(iconPosition).dimensions(buttonDimensions).layoutBehavior(buttonLayoutBehavior)))
+
                 Divider()
             }
             .disabled(isDisabled)
             
-            VStack(spacing: .spaceXl) {
+            VStack(spacing: .gds(.spaceXl)) {
                 let workInProgress = "Work in Progress"
                 
                 Button(action: {
@@ -144,7 +158,7 @@ public struct SEBGreenButtonStyleDemo: View {
                 .sheet(isPresented: $shouldShowWorkInProgress) {
                     NavigationStack {
                         ScrollView {
-                            VStack(spacing: .spaceS) {
+                            VStack(spacing: .gds(.spaceS)) {
                                 
                                 // Icon-only button using custom Icon view
                                 Button { } label: {
@@ -182,7 +196,7 @@ public struct SEBGreenButtonStyleDemo: View {
     }
     
     private var configurationView: some View {
-        VStack(spacing: .spaceL) {
+        VStack(spacing: .gds(.spaceL)) {
             DemoSection("Configuration") {
                 HStack {
                     Text("Icon position")
@@ -245,7 +259,7 @@ public struct SEBGreenButtonStyleDemo: View {
                 .foregroundStyle(Color.primary)
             }
         }
-        .padding(.spaceM)
+        .padding(.gds(.spaceM))
         .dynamicTypeSize(.large)
     }
 }

@@ -62,11 +62,11 @@ extension InputField {
                         .frame(height: isExpanded ? nil : 0)
                 }
 
-                Spacer(minLength: .spaceM)
+                Spacer(minLength: .gds(.spaceM))
 
                 AccessoryContainer($value, isEditing: isEditing)
             }
-            .padding(.spaceM)
+            .padding(.gds(.spaceM))
             .frame(
                 maxWidth: .infinity,
                 minHeight: minimumFrameHeight,
@@ -95,9 +95,7 @@ extension InputField {
 
         private var floatingLabel: some View {
             Text(label)
-                .typography(
-                    isExpanded ? .detailBookXs : .detailBookM
-                )
+                .font(.gds(isExpanded ? .detailXsBook : .detailMBook))
                 .foregroundStyle(Color.contentNeutral02)
                 .animation(.snappy, value: isExpanded)
                 .accessibilityHidden(true)

@@ -49,7 +49,7 @@ where F.FormatOutput == String, F.FormatInput: Equatable {
     }
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: .spaceXs) {
+        VStack(alignment: .leading, spacing: .gds(.spaceXs)) {
             inputField
 
             if let validationError {
@@ -89,7 +89,7 @@ where F.FormatOutput == String, F.FormatInput: Equatable {
                 TextField("", text: textBinding)
             }
         }
-        .typography(.detailBookM)
+        .font(.gds(.detailMBook))
         .foregroundStyle(Color.contentNeutral01)
         .tint(Color.contentNeutral01)
         .autocorrectionDisabled(true)
@@ -136,7 +136,7 @@ where F.FormatOutput == String, F.FormatInput: Equatable {
             Icon(systemName: "exclamationmark.square.fill")
                 .accessibilityHidden(true)
             Text(error.localizedDescription)
-                .typography(.detailBookS)
+                .font(.gds(.detailSBook))
                 .fixedSize(horizontal: false, vertical: true)
 
         }

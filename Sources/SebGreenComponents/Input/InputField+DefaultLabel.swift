@@ -44,16 +44,16 @@ extension InputField {
         }
 
         var body: some View {
-            VStack(alignment: .leading, spacing: .spaceXs) {
+            VStack(alignment: .leading, spacing: .gds(.spaceXs)) {
                 header
 
-                HStack(alignment: .center, spacing: .spaceM) {
+                HStack(alignment: .center, spacing: .gds(.spaceM)) {
                     textField
                         .focused($isFocused)
 
                     AccessoryContainer($value, isEditing: isEditing)
                 }
-                .padding(.spaceM)
+                .padding(.gds(.spaceM))
                 .background {
                     RoundedRectangle(cornerRadius: cornerRadius)
                         .fill(.surfaceAware)
@@ -65,7 +65,7 @@ extension InputField {
                         .foregroundStyle(
                             hasValidationError
                                 ? Color.borderNegative01
-                                : Color.borderInteractive
+                                : Color.gds(.borderNeutral01)
                         )
                         .animation(.snappy, value: value)
                 }
@@ -85,24 +85,24 @@ extension InputField {
         }
 
         private var header: some View {
-            VStack(alignment: .leading, spacing: .space5xs) {
+            VStack(alignment: .leading, spacing: .gds(.space5xs)) {
                 HStack {
                     Text(label)
                         .accessibilityHidden(true)
                     Spacer(minLength: .zero)
                     infoContainer
                 }
-                .typography(.detailBookM)
+                .font(.gds(.detailMBook))
                 .foregroundStyle(Color.contentNeutral01)
 
                 if let supportiveText, !supportiveText.isEmpty {
                     Text(supportiveText)
-                        .typography(.detailBookS)
+                        .font(.gds(.detailSBook))
                         .foregroundStyle(Color.contentNeutral02)
                         .accessibilityHidden(true)
                 }
             }
-            .padding(.horizontal, .spaceM)
+            .padding(.horizontal, .gds(.spaceM))
         }
     }
 }

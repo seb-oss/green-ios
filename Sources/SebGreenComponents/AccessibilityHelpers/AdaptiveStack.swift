@@ -1,3 +1,4 @@
+import GdsDimensions
 import GdsKit
 import SwiftUI
 
@@ -14,7 +15,7 @@ public struct AdaptiveStack<Content>: View where Content: View {
     @ViewBuilder public let content: Content
 
     public init(
-        spacing: CGFloat = .spaceM,
+        spacing: CGFloat = .gds(.spaceM),
         horizontalAlignment: HorizontalAlignment = .center,
         verticalAlignment: VerticalAlignment = .center,
         @ViewBuilder content: () -> Content

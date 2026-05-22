@@ -43,15 +43,15 @@ public struct LabelOutsideInput: View {
     
     public var body: some View {
         VStack(alignment: .leading, spacing: .zero) {
-            VStack(alignment: .leading, spacing: .space2xs) {
+            VStack(alignment: .leading, spacing: .gds(.space2xs)) {
                 label
-                    .padding(.leading, .spaceM)
+                    .padding(.leading, .gds(.spaceM))
                 
                 if let hintText {
                     hintAccessoryView(with: hintText)
                 }
             }
-            .padding(.bottom, .spaceXs)
+            .padding(.bottom, .gds(.spaceXs))
             
             inputField
         }
@@ -75,14 +75,14 @@ private extension LabelOutsideInput {
             
             HStack(spacing: .zero) {
                 input
-                    .padding(.vertical, .spaceS)
+                    .padding(.vertical, .gds(.spaceS))
                 
                 Spacer(minLength: 0)
                 
                 accessoryStack
             }
-            .padding(.horizontal, .spaceM)
-            .padding(.vertical, .spaceS)
+            .padding(.horizontal, .gds(.spaceM))
+            .padding(.vertical, .gds(.spaceS))
         }
     }
     
@@ -95,8 +95,8 @@ private extension LabelOutsideInput {
 
 private extension LabelOutsideInput {
     var background: some View {
-        Color.l3Elevated02
-            .cornerRadius(.spaceS)
+        Color.gds(.l3Neutral02)
+            .cornerRadius(.gds(.spaceS))
     }
 }
 
@@ -118,10 +118,7 @@ private extension LabelOutsideInput {
 private extension LabelOutsideInput {
     var placeholderView: some View {
         Text(placeholder)
-            .typography(
-                isValid ? .detailRegularM :
-                .detailBookM
-            )
+            .font(.gds(isValid ? .detailMRegular : .detailMBook))
             .foregroundStyle(
                 isValid ? Color.contentNeutral02 : Color.contentNegative01
             )
@@ -146,7 +143,7 @@ private extension LabelOutsideInput {
     var label: some View {
         Text(title)
             .foregroundStyle(labelColor)
-            .typography(.detailBookM)
+            .font(.gds(.detailMBook))
     }
     
     var labelColor: Color {
@@ -156,7 +153,7 @@ private extension LabelOutsideInput {
     var textfield: some View {
         TextField("", text: limitedTextBinding)
             .focused($isFocused)
-            .typography(.detailBookM)
+            .font(.gds(.detailMBook))
             .foregroundStyle(textFieldForegroundColor)
             .onAppear {
                 DispatchQueue.main.async {
@@ -170,7 +167,7 @@ private extension LabelOutsideInput {
 //            .scrollContentBackground(.hidden)
             .background(Color.clear)
             .focused($isFocused)
-            .typography(.detailBookM)
+            .font(.gds(.detailMBook))
             .foregroundStyle(textFieldForegroundColor)
             .onAppear {
                 DispatchQueue.main.async {
@@ -215,7 +212,7 @@ private extension LabelOutsideInput {
     var clearButton: some View {
         Button(action: clearInput) {
             Image(systemName: "xmark.circle.fill")
-                .typography(.detailRegularM)
+                .font(.gds(.detailMRegular))
                 .foregroundStyle(Color.contentNeutral02)
         }
     }
@@ -227,7 +224,7 @@ private extension LabelOutsideInput {
     var characterCountLabel: some View {
         Text(characterCountString)
             .foregroundStyle(Color.contentNeutral01)
-            .typography(.detailRegularXs)
+            .font(.gds(.detailXsRegular))
     }
     
     var characterCountString: String {
@@ -249,9 +246,9 @@ private extension LabelOutsideInput {
     private func hintAccessoryView(with hintText: String) -> some View {
         Text(hintText)
             .foregroundStyle(isValid ? Color.contentNeutral02 : Color.contentNegative01)
-            .typography(.bodyMediumS)
+            .font(.gds(.bodySMedium))
             .padding(.top, .zero)
-            .padding(.leading, .spaceM)
+            .padding(.leading, .gds(.spaceM))
     }
     
     private var hintText: String? {
@@ -272,7 +269,7 @@ private extension LabelOutsideInput {
         
         var body: some View {
             ScrollView {
-                VStack(alignment: .leading, spacing: .spaceM) {
+                VStack(alignment: .leading, spacing: .gds(.spaceM)) {
                     LabelOutsideInput(
                         text: $textDefault,
                         title: "Longer title for accessbility",
@@ -316,13 +313,13 @@ private extension LabelOutsideInput {
                     )
                     
                     Text(verbatim: "Tip: Tap any field to edit and see the floating label + clear button.")
-                        .typography(.detailRegularXs)
+                        .font(.gds(.detailXsRegular))
                         .foregroundStyle(Color.contentNeutral02)
                 }
                 .padding(.horizontal, 8)
                 .padding(.vertical, 16)
             }
-            .background(Color.l2Elevated01)
+            .background(Color.gds(.l3Neutral02))
         }
     }
 }
@@ -330,6 +327,6 @@ private extension LabelOutsideInput {
 struct LabelOutsideInput_Previews: PreviewProvider {
     static var previews: some View {
         LabelOutsideInput.DummyForm()
-            .background(Color.l2Elevated01)
+            .background(Color.gds(.l3Neutral02))
     }
 }

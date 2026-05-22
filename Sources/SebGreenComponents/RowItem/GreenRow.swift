@@ -95,28 +95,28 @@ public struct GreenRow: View, Identifiable {
     }
 
     private var rowContent: some View {
-        HStack(alignment: .center, spacing: .spaceM) {
+        HStack(alignment: .center, spacing: .gds(.spaceM)) {
             leadingView
 
             VStack(alignment: .leading, spacing: subtitle == nil ? 0 : 2) {
                 Text(title)
-                    .typography(.bodyMediumM)
+                    .font(.gds(.bodyMMedium))
                     .foregroundColor(titleColor)
                     .lineLimit(nil)
 
                 if let subtitleText = subtitle {
                     Text(subtitleText)
-                        .typography(.detailRegularS)
+                        .font(.gds(.detailSRegular))
                         .foregroundColor(subtitleColor)
                         .lineLimit(nil)
                 }
             }
 
-            Spacer(minLength: .spaceS)
+            Spacer(minLength: .gds(.spaceS))
 
             trailingView
         }
-        .padding(.horizontal, .spaceM)
+        .padding(.horizontal, .gds(.spaceM))
         .padding(.vertical, verticalPadding)
         .frame(minHeight: minHeight, alignment: .leading)
     }
@@ -192,7 +192,7 @@ public struct GreenRow: View, Identifiable {
                 .foregroundColor(.contentNeutral02)
         case .valueText(let text):
             Text(text)
-                .typography(.detailRegularS)
+                .font(.gds(.detailSRegular))
                 .foregroundColor(.contentNeutral02)
                 .multilineTextAlignment(.trailing)
         case .icon(let image):
@@ -251,13 +251,13 @@ public struct GreenRow: View, Identifiable {
 /// Intended to be applied at row-level, not around a whole list.
 private struct RowSeparatorModifier: ViewModifier {
     let isVisible: Bool
-    let leadingInset: CGFloat = .spaceM
+    let leadingInset: CGFloat = .gds(.spaceM)
 
     func body(content: Content) -> some View {
         content.overlay(alignment: .bottom) {
             if isVisible {
                 Rectangle()
-                    .fill(Color.borderSeparator01)
+                    .fill(Color.gds(.borderNeutral02))
                     .frame(height: 0.5)
                     .padding(.leading, leadingInset)
             }

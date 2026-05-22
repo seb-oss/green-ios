@@ -48,7 +48,7 @@ public struct InputFieldDemo: View {
             DemoContainer("InputField") {
                 configuration
             } content: {
-                VStack(spacing: .spaceXl) {
+                VStack(spacing: .gds(.spaceXl)) {
                     InputField("Default Label", text: $defaultText) {
                         if presentInfoButton {
                             Button(systemName: "info.circle") {}
@@ -112,7 +112,7 @@ public struct InputFieldDemo: View {
                 }
                 .toolbar {
                     ToolbarItemGroup(placement: .keyboard) {
-                        HStack(spacing: .spaceM) {
+                        HStack(spacing: .gds(.spaceM)) {
                             Button(systemName: "chevron.up") {
                                 focusedField = focusedField?.previous
                             }
@@ -128,7 +128,7 @@ public struct InputFieldDemo: View {
                                 focusedField = nil
                             }
                         }
-                        .padding(.horizontal, .spaceM)
+                        .padding(.horizontal, .gds(.spaceM))
                     }
                 }
             }
@@ -138,7 +138,7 @@ public struct InputFieldDemo: View {
     }
 
     private var configuration: some View {
-        VStack(spacing: .spaceL) {
+        VStack(spacing: .gds(.spaceL)) {
             DemoSection("General settings") {
                 Toggle(
                     "Optional",
@@ -199,7 +199,7 @@ public struct InputFieldDemo: View {
                 }
             }
         }
-        .padding(.spaceM)
+        .padding(.gds(.spaceM))
     }
 }
 

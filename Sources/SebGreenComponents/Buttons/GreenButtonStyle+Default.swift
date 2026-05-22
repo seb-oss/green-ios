@@ -58,6 +58,15 @@ public extension GreenButtonStyle {
             iconPosition: .leading
         )
     }
+
+    static var tonal: GreenButtonStyle {
+        GreenButtonStyle(
+            configuration: .tonal,
+            dimensions: .large,
+            layoutBehavior: .fill,
+            iconPosition: .leading
+        )
+    }
 }
 
 /// Provides fluent API methods for customizing button style properties.
@@ -185,6 +194,21 @@ public extension GreenButtonStyle {
         GreenButtonStyle(
             shape: shape,
             configuration: .notice,
+            dimensions: dimensions,
+            layoutBehavior: layoutBehavior,
+            iconPosition: iconPosition
+        )
+    }
+
+    static func tonal(
+        shape: Shape = .pill,
+        dimensions: Dimensions = .large,
+        layoutBehavior: LayoutBehavior = .fill,
+        iconPosition: IconPosition = .leading
+    ) -> GreenButtonStyle {
+        GreenButtonStyle(
+            shape: shape,
+            configuration: .tonal,
             dimensions: dimensions,
             layoutBehavior: layoutBehavior,
             iconPosition: iconPosition

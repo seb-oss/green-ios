@@ -16,8 +16,8 @@ public extension Level {
         switch self {
         case .level1:
             Colors(
-                neutral01: .l1Neutral01,
-                neutral02: .l1Neutral02,
+                neutral01: .gds(.l1Neutral01),
+                neutral02: .gds(.l1Neutral02),
                 neutralStrong: nil,
                 neutralTone: nil,
                 neutralLoud: nil,
@@ -27,25 +27,25 @@ public extension Level {
             )
         case .level2:
             Colors(
-                neutral01: .l2Neutral01,
-                neutral02: .l2Neutral02,
+                neutral01: .gds(.l2Neutral01),
+                neutral02: .gds(.l2Neutral02),
                 neutralStrong: nil,
                 neutralTone: nil,
-                neutralLoud: .l2NeutralLoud,
+                neutralLoud: .clear,//.l2NeutralLoud,
                 brand01: nil,
                 negative01: nil,
                 disabled03: nil
             )
         case .level3:
             Colors(
-                neutral01: .l3Neutral01,
-                neutral02: .l3Neutral02,
-                neutralStrong: .l3NeutralStrong,
-                neutralTone: .l3NeutralTone,
+                neutral01: .gds(.l3Neutral01),
+                neutral02: .gds(.l3Neutral02),
+                neutralStrong: .clear,//.l3NeutralStrong,
+                neutralTone: .clear,//.l3NeutralTone,
                 neutralLoud: nil,
-                brand01: .l3Brand01,
-                negative01: .l3Negative01,
-                disabled03: .l3Disabled03
+                brand01: .gds(.l3Brand01),
+                negative01: .gds(.l3Negative01),
+                disabled03: .gds(.l3Disabled03)
             )
         }
     }
