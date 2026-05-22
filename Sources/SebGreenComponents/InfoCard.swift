@@ -37,9 +37,9 @@ public struct InfoCardView: View {
         )
         
         public static let informationHd = Variant(
-            backgroundColor: .clear,//.l2NeutralLoud,
+            backgroundColor: .gds(.l2Neutral04),
             borderColor: .clear,
-            closeButtonBackgroundColor: .clear,//.l3NeutralTone,
+            closeButtonBackgroundColor: .gds(.l3Tonal01),
             closeButtonColor: .gds(.contentNeutral05),
             textForegroundColor: .gds(.contentNeutral05)
         )

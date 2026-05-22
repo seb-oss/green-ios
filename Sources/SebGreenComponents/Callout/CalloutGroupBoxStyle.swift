@@ -5,16 +5,11 @@ public struct CalloutGroupBoxStyle: GroupBoxStyle {
     @Environment(\.surface) private var surface
 
     let backgroundColor: AnyShapeStyle
-    let ignoreBackgroundOpacity: Bool
     let borderColor: Color
     let shouldShowBorder: @Sendable (Surface) -> Bool
     let iconColor: Color
     let textColor: Color
     let iconSystemName: String?
-
-    private var shouldReduceBackgroundOpacity: Bool {
-        !ignoreBackgroundOpacity && colorScheme == .dark
-    }
 
     public func makeBody(configuration: Configuration) -> some View {
         VStack(alignment: .leading, spacing: .gds(.spaceXs)) {
@@ -28,9 +23,7 @@ public struct CalloutGroupBoxStyle: GroupBoxStyle {
         }
         .padding(.gds(.spaceM))
         .background(
-            backgroundColor.opacity(
-                shouldReduceBackgroundOpacity ? 0.8 : 1
-            ),
+            backgroundColor,
             in: .rect(cornerRadius: .cornerRadius)
         )
         .overlay {

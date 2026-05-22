@@ -4,7 +4,6 @@ extension CalloutGroupBoxStyle {
     static var information: CalloutGroupBoxStyle {
         CalloutGroupBoxStyle(
             backgroundColor: AnyShapeStyle(.surfaceAware),
-            ignoreBackgroundOpacity: true,
             borderColor: .gds(.borderNeutral02),
             shouldShowBorder: { $0 == .neutral02 },
             iconColor: .gds(.contentNeutral01),
@@ -15,8 +14,7 @@ extension CalloutGroupBoxStyle {
 
     static var informationLoud: CalloutGroupBoxStyle {
         CalloutGroupBoxStyle(
-            backgroundColor: AnyShapeStyle(Color(hex: 0x3B3F3E)),
-            ignoreBackgroundOpacity: false,
+            backgroundColor: AnyShapeStyle(.gds(.l2Neutral04, bundle: .module)),
             borderColor: .clear,
             shouldShowBorder: { _ in false },
             iconColor: .white,
@@ -27,8 +25,7 @@ extension CalloutGroupBoxStyle {
 
     static var notice: CalloutGroupBoxStyle {
         CalloutGroupBoxStyle(
-            backgroundColor: AnyShapeStyle(Color(hex: 0x2C4454)),
-            ignoreBackgroundOpacity: false,
+            backgroundColor: AnyShapeStyle(.gds(.tempNotice, bundle: .module)),
             borderColor: .clear,
             shouldShowBorder: { _ in false },
             iconColor: .white,
@@ -39,8 +36,7 @@ extension CalloutGroupBoxStyle {
 
     static var warning: CalloutGroupBoxStyle {
         CalloutGroupBoxStyle(
-            backgroundColor: AnyShapeStyle(Color(hex: 0xA7610C)),
-            ignoreBackgroundOpacity: false,
+            backgroundColor: AnyShapeStyle(.gds(.tempWarning, bundle: .module)),
             borderColor: .clear,
             shouldShowBorder: { _ in false },
             iconColor: .white,
@@ -51,8 +47,7 @@ extension CalloutGroupBoxStyle {
 
     static var critical: CalloutGroupBoxStyle {
         CalloutGroupBoxStyle(
-            backgroundColor: AnyShapeStyle(Color(hex: 0x8A230F)),
-            ignoreBackgroundOpacity: false,
+            backgroundColor: AnyShapeStyle(.gds(.tempCritical, bundle: .module)),
             borderColor: .clear,
             shouldShowBorder: { _ in false },
             iconColor: .white,
