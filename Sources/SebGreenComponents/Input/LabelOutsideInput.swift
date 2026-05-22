@@ -120,7 +120,7 @@ private extension LabelOutsideInput {
         Text(placeholder)
             .font(.gds(isValid ? .detailMRegular : .detailMBook))
             .foregroundStyle(
-                isValid ? Color.contentNeutral02 : Color.contentNegative01
+                .gds(isValid ? .contentNeutral02 : .contentNegative01)
             )
     }
 }
@@ -147,7 +147,7 @@ private extension LabelOutsideInput {
     }
     
     var labelColor: Color {
-        isValid || isFocused ? Color.contentNeutral01 : Color.contentNegative01
+        .gds(isValid || isFocused ? .contentNeutral01 : .contentNegative01)
     }
     
     var textfield: some View {
@@ -177,7 +177,7 @@ private extension LabelOutsideInput {
     }
     
     var textFieldForegroundColor: Color {
-        isValid || isFocused ? Color.contentNeutral01 : Color.contentNegative01
+        .gds(isValid || isFocused ? .contentNeutral01 : .contentNegative01)
     }
     
     var limitedTextBinding: Binding<String> {
@@ -213,7 +213,7 @@ private extension LabelOutsideInput {
         Button(action: clearInput) {
             Image(systemName: "xmark.circle.fill")
                 .font(.gds(.detailMRegular))
-                .foregroundStyle(Color.contentNeutral02)
+                .foregroundStyle(.gds(.contentNeutral02))
         }
     }
     
@@ -223,7 +223,7 @@ private extension LabelOutsideInput {
     
     var characterCountLabel: some View {
         Text(characterCountString)
-            .foregroundStyle(Color.contentNeutral01)
+            .foregroundStyle(.gds(.contentNeutral01))
             .font(.gds(.detailXsRegular))
     }
     
@@ -237,7 +237,7 @@ private extension LabelOutsideInput {
     
     var errorIcon: some View {
         Image(systemName: "exclamationmark.square.fill")
-            .foregroundStyle(Color.contentNegative01)
+            .foregroundStyle(.gds(.contentNegative01))
     }
 }
 
@@ -245,7 +245,7 @@ private extension LabelOutsideInput {
 private extension LabelOutsideInput {
     private func hintAccessoryView(with hintText: String) -> some View {
         Text(hintText)
-            .foregroundStyle(isValid ? Color.contentNeutral02 : Color.contentNegative01)
+            .foregroundStyle(.gds(isValid ? .contentNeutral02 : .contentNegative01))
             .font(.gds(.bodySMedium))
             .padding(.top, .zero)
             .padding(.leading, .gds(.spaceM))
@@ -314,7 +314,7 @@ private extension LabelOutsideInput {
                     
                     Text(verbatim: "Tip: Tap any field to edit and see the floating label + clear button.")
                         .font(.gds(.detailXsRegular))
-                        .foregroundStyle(Color.contentNeutral02)
+                        .foregroundStyle(Color.gds(.contentNeutral02))
                 }
                 .padding(.horizontal, 8)
                 .padding(.vertical, 16)

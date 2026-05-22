@@ -47,7 +47,7 @@ extension InputField {
 
         private var clearButton: some View {
             Button(systemName: "xmark.circle.fill", action: clearField)
-                .foregroundStyle(Color.contentNeutral02)
+                .foregroundStyle(.gds(.contentNeutral02))
                 .opacity(presentClearButton ? 1 : 0)
                 .animation(.snappy, value: value)
         }

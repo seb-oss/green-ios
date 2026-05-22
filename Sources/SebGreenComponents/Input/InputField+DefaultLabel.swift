@@ -63,9 +63,7 @@ extension InputField {
                     RoundedRectangle(cornerRadius: cornerRadius)
                         .stroke(style: .init(lineWidth: borderWidth))
                         .foregroundStyle(
-                            hasValidationError
-                                ? Color.borderNegative01
-                                : Color.gds(.borderNeutral01)
+                            .gds(hasValidationError ? .borderNegative01 : .borderNeutral01)
                         )
                         .animation(.snappy, value: value)
                 }
@@ -93,12 +91,12 @@ extension InputField {
                     infoContainer
                 }
                 .font(.gds(.detailMBook))
-                .foregroundStyle(Color.contentNeutral01)
+                .foregroundStyle(.gds(.contentNeutral01))
 
                 if let supportiveText, !supportiveText.isEmpty {
                     Text(supportiveText)
                         .font(.gds(.detailSBook))
-                        .foregroundStyle(Color.contentNeutral02)
+                        .foregroundStyle(.gds(.contentNeutral02))
                         .accessibilityHidden(true)
                 }
             }

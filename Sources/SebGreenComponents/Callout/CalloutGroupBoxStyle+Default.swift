@@ -5,10 +5,10 @@ extension CalloutGroupBoxStyle {
         CalloutGroupBoxStyle(
             backgroundColor: AnyShapeStyle(.surfaceAware),
             ignoreBackgroundOpacity: true,
-            borderColor: .borderNeutral02,
+            borderColor: .gds(.borderNeutral02),
             shouldShowBorder: { $0 == .neutral02 },
-            iconColor: .contentNeutral01,
-            textColor: .contentNeutral01,
+            iconColor: .gds(.contentNeutral01),
+            textColor: .gds(.contentNeutral01),
             iconSystemName: nil
         )
     }

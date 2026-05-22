@@ -83,14 +83,14 @@ private extension FloatingLabelInput {
 private extension FloatingLabelInput {
     @ViewBuilder
     var background: some View {
-        Color.l2Neutral02
+        Color.gds(.l2Neutral02)
             .cornerRadius(.gds(.spaceM))
             .overlay {
                 if !isValid {
                     RoundedRectangle(cornerRadius: .gds(.spaceM))
                         .inset(by: 1)
                         .stroke(
-                            Color.borderNegative01,
+                            Color.gds(.borderNegative01),
                             lineWidth: .gds(.space4xs)
                         )
                 }
@@ -118,7 +118,7 @@ private extension FloatingLabelInput {
         Text(placeholder)
             .font(.gds(.detailMBook))
             .padding(.vertical, .gds(.spaceS))
-            .foregroundStyle(Color.contentNeutral02)
+            .foregroundStyle(.gds(.contentNeutral02))
     }
 }
 
@@ -142,7 +142,7 @@ private extension FloatingLabelInput {
 
     var label: some View {
         Text(placeholder)
-            .foregroundStyle(Color.contentNeutral02)
+            .foregroundStyle(.gds(.contentNeutral02))
             .font(.gds(.detailSRegular))
     }
 
@@ -150,7 +150,7 @@ private extension FloatingLabelInput {
         TextField("", text: $text)
             .focused($isFocused)
             .font(.gds(.detailMBook))
-            .foregroundStyle(Color.contentNeutral01)
+            .foregroundStyle(.gds(.contentNeutral01))
             .onReceive(textDidChange) { notification in
                 textChangeNotifationReceived(notification)
             }
@@ -166,7 +166,7 @@ private extension FloatingLabelInput {
             .background(Color.clear)
             .focused($isFocused)
             .font(.gds(.detailMBook))
-            .foregroundStyle(Color.contentNeutral01)
+            .foregroundStyle(.gds(.contentNeutral01))
             .onReceive(textDidChange) { notification in
                 textChangeNotifationReceived(notification)
             }
@@ -199,7 +199,7 @@ private extension FloatingLabelInput {
         Button(action: clearInput) {
             Image(systemName: "xmark.circle.fill")
                 .font(.gds(.detailMRegular))
-                .foregroundStyle(Color.contentNeutral02)
+                .foregroundStyle(.gds(.contentNeutral02))
         }
     }
 
@@ -209,7 +209,7 @@ private extension FloatingLabelInput {
 
     var characterCountLabel: some View {
         Text(characterCountString)
-            .foregroundStyle(Color.contentNeutral01)
+            .foregroundStyle(.gds(.contentNeutral01))
             .font(.gds(.detailXsRegular))
     }
 
@@ -223,7 +223,7 @@ private extension FloatingLabelInput {
 
     var errorIcon: some View {
         Image(systemName: "exclamationmark.square.fill")
-            .foregroundStyle(Color.contentNegative01)
+            .foregroundStyle(.gds(.contentNegative01))
     }
 
     private func textChangeNotifationReceived(_ notification: Notification) {
@@ -238,7 +238,7 @@ private extension FloatingLabelInput {
     private var hintAccessoryView: some View {
         if isValid {
             Text(supportingText ?? "")
-                .foregroundStyle(Color.contentNeutral02)
+                .foregroundStyle(.gds(.contentNeutral02))
                 .font(.gds(.bodySMedium))
                 .padding(.top, .gds(.spaceXs))
                 .padding(.leading, .gds(.spaceM))
@@ -247,7 +247,7 @@ private extension FloatingLabelInput {
                 errorIcon
                 
                 Text(errorText ?? "")
-                    .foregroundStyle(Color.contentNegative01)
+                    .foregroundStyle(.gds(.contentNegative01))
                     .font(.gds(.bodySMedium))
                     
             }
@@ -315,12 +315,12 @@ struct DummyForm: View {
                 
                 Text(verbatim: "Tip: Tap any field to edit and see the floating label + clear button.")
                     .font(.gds(.detailXsRegular))
-                    .foregroundStyle(Color.contentNeutral02)
+                    .foregroundStyle(.gds(.contentNeutral02))
             }
             .padding(.horizontal, 8)
             .padding(.vertical, 16)
         }
-        .background(Color.l1Neutral02)
+        .background(.gds(.l1Neutral02))
     }
 }
 

@@ -90,8 +90,8 @@ where F.FormatOutput == String, F.FormatInput: Equatable {
             }
         }
         .font(.gds(.detailMBook))
-        .foregroundStyle(Color.contentNeutral01)
-        .tint(Color.contentNeutral01)
+        .foregroundStyle(.gds(.contentNeutral01))
+        .tint(.gds(.contentNeutral01))
         .autocorrectionDisabled(true)
         .accessibilityLabel(accessibilityLabel)
         .accessibilityAction(
@@ -140,7 +140,7 @@ where F.FormatOutput == String, F.FormatInput: Equatable {
                 .fixedSize(horizontal: false, vertical: true)
 
         }
-        .foregroundColor(Color.contentNegative01)
+        .foregroundColor(.gds(.contentNegative01))
         .padding(.horizontal, 14)  // Needs to be 14px due to 2px border.
         .accessibilityHidden(true)
     }

@@ -7,7 +7,7 @@ public struct GdsToggleStyle: ToggleStyle {
 
     public func makeBody(configuration: Configuration) -> some View {
         Toggle(configuration)
-            .tint(.l3Positive01)
+            .tint(.gds(.l3Positive01))
     }
 }
 

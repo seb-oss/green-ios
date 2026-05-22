@@ -141,20 +141,20 @@ public struct GreenRow: View, Identifiable {
 
     private var rowBackground: Color {
         if !isEnabled {
-            return Color.l1Neutral01
+            return Color.gds(.l1Neutral01)
         }
         if isSelected {
-            return Color.stateNeutral01.opacity(0.08)
+            return Color.gds(.stateNeutral01).opacity(0.08)
         }
-        return Color.l1Neutral01
+        return Color.gds(.l1Neutral01)
     }
 
     private var titleColor: Color {
-        isEnabled ? .contentNeutral01 : .contentDisabled01
+        .gds(isEnabled ? .contentNeutral01 : .contentDisabled01)
     }
 
     private var subtitleColor: Color {
-        isEnabled ? .contentNeutral02 : .contentDisabled02
+        .gds(isEnabled ? .contentNeutral02 : .contentDisabled02)
     }
 
     // MARK: Leading / Trailing views
@@ -169,15 +169,15 @@ public struct GreenRow: View, Identifiable {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 24, height: 24)
-                .foregroundColor(.contentNeutral01)
+                .foregroundColor(.gds(.contentNeutral01))
         case .checkbox(let isSelected):
             Image(systemName: isSelected ? "checkmark.square.fill" : "square")
                 .imageScale(.medium)
-                .foregroundColor(isSelected ? .contentPositive01 : .contentNeutral02)
+                .foregroundColor(.gds(isSelected ? .contentPositive01 : .contentNeutral02))
         case .radio(let isSelected):
             Image(systemName: isSelected ? "largecircle.fill.circle" : "circle")
                 .imageScale(.medium)
-                .foregroundColor(isSelected ? .contentNeutral02 : .contentNeutral02)
+                .foregroundColor(.gds(isSelected ? .contentNeutral02 : .contentNeutral02))
         }
     }
 
@@ -189,18 +189,18 @@ public struct GreenRow: View, Identifiable {
         case .chevron:
             Image(systemName: "chevron.right")
                 .imageScale(.small)
-                .foregroundColor(.contentNeutral02)
+                .foregroundColor(.gds(.contentNeutral02))
         case .valueText(let text):
             Text(text)
                 .font(.gds(.detailSRegular))
-                .foregroundColor(.contentNeutral02)
+                .foregroundColor(.gds(.contentNeutral02))
                 .multilineTextAlignment(.trailing)
         case .icon(let image):
             image
                 .resizable()
                 .scaledToFit()
                 .frame(width: 20, height: 20)
-                .foregroundColor(.contentNeutral02)
+                .foregroundColor(.gds(.contentNeutral02))
         case .toggle(let isOnBinding):
             Toggle(isOn: isOnBinding) {
                 EmptyView()
@@ -211,11 +211,11 @@ public struct GreenRow: View, Identifiable {
         case .checkbox(let isSelected):
             Image(systemName: isSelected ? "checkmark.square.fill" : "square")
                 .imageScale(.medium)
-                .foregroundColor(isSelected ? .contentPositive01 : .contentNeutral02)
+                .foregroundColor(.gds(isSelected ? .contentPositive01 : .contentNeutral02))
         case .radio(let isSelected):
             Image(systemName: isSelected ? "largecircle.fill.circle" : "circle")
                 .imageScale(.medium)
-                .foregroundColor(isSelected ? .contentNeutral02 : .contentNeutral02)
+                .foregroundColor(.gds(isSelected ? .contentNeutral02 : .contentNeutral02))
         }
     }
 

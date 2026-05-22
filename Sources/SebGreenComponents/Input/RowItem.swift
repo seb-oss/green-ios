@@ -22,7 +22,7 @@ extension View {
             
             Text(subheadline)
                 .font(.gds(.detailSRegular))
-                .foregroundStyle(Color.contentNeutral02)
+                .foregroundStyle(.gds(.contentNeutral02))
         }
     }
     
