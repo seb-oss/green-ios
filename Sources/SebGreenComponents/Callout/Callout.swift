@@ -20,6 +20,20 @@ public struct Callout: View {
         self.action = action
         self.onClose = onClose
     }
+    
+    private var primaryActionStyle: GreenButtonStyle {
+        if case .information(.subtle) = calloutStyle {
+            .secondary(
+                dimensions: .small,
+                iconPosition: .trailing
+            )
+        } else {
+            .tonal(
+                dimensions: .small,
+                iconPosition: .trailing
+            )
+        }
+    }
 
     public var body: some View {
         GroupBox(title) {
@@ -32,14 +46,7 @@ public struct Callout: View {
                         systemImage: action.linkStyle?.symbolName ?? "",
                         action: action.perform
                     )
-                    .buttonStyle(
-                        .seb(
-                            .tonal(
-                                dimensions: .small,
-                                iconPosition: .trailing
-                            )
-                        )
-                    )
+                    .buttonStyle(.seb(primaryActionStyle))
                     .level(.level2)
                 }
             }
