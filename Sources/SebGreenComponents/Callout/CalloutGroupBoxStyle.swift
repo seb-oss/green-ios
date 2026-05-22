@@ -6,7 +6,6 @@ public struct CalloutGroupBoxStyle: GroupBoxStyle {
 
     let backgroundColor: AnyShapeStyle
     let borderColor: Color
-    let shouldShowBorder: @Sendable (Surface) -> Bool
     let iconColor: Color
     let textColor: Color
     let iconSystemName: String?
@@ -27,10 +26,8 @@ public struct CalloutGroupBoxStyle: GroupBoxStyle {
             in: .rect(cornerRadius: .cornerRadius)
         )
         .overlay {
-            if shouldShowBorder(surface) {
-                RoundedRectangle(cornerRadius: .cornerRadius)
-                    .strokeBorder(borderColor, style: .init())
-            }
+            RoundedRectangle(cornerRadius: .cornerRadius)
+                .strokeBorder(borderColor, style: .init())
         }
     }
 

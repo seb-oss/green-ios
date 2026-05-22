@@ -5,7 +5,6 @@ extension CalloutGroupBoxStyle {
         CalloutGroupBoxStyle(
             backgroundColor: AnyShapeStyle(.surfaceAware),
             borderColor: .gds(.borderNeutral02),
-            shouldShowBorder: { $0 == .neutral02 },
             iconColor: .gds(.contentNeutral01),
             textColor: .gds(.contentNeutral01),
             iconSystemName: nil
@@ -16,7 +15,6 @@ extension CalloutGroupBoxStyle {
         CalloutGroupBoxStyle(
             backgroundColor: AnyShapeStyle(.gds(.l2Neutral04, bundle: .module)),
             borderColor: .clear,
-            shouldShowBorder: { _ in false },
             iconColor: .white,
             textColor: .white,
             iconSystemName: nil
@@ -27,7 +25,6 @@ extension CalloutGroupBoxStyle {
         CalloutGroupBoxStyle(
             backgroundColor: AnyShapeStyle(.gds(.tempNotice, bundle: .module)),
             borderColor: .clear,
-            shouldShowBorder: { _ in false },
             iconColor: .white,
             textColor: .white,
             iconSystemName: "info.circle"
@@ -38,7 +35,6 @@ extension CalloutGroupBoxStyle {
         CalloutGroupBoxStyle(
             backgroundColor: AnyShapeStyle(.gds(.tempWarning, bundle: .module)),
             borderColor: .clear,
-            shouldShowBorder: { _ in false },
             iconColor: .white,
             textColor: .white,
             iconSystemName: "exclamationmark.triangle"
@@ -49,7 +45,6 @@ extension CalloutGroupBoxStyle {
         CalloutGroupBoxStyle(
             backgroundColor: AnyShapeStyle(.gds(.tempCritical, bundle: .module)),
             borderColor: .clear,
-            shouldShowBorder: { _ in false },
             iconColor: .white,
             textColor: .white,
             iconSystemName: "bell"
