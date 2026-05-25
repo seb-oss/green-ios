@@ -6,20 +6,17 @@ public struct Callout: View {
 
     private let title: any StringProtocol
     private let shortText: any StringProtocol
-    private let message: (any StringProtocol)?
     private let action: Callout.Action?
     private let onClose: (() -> Void)?
 
     public init(
         _ title: any StringProtocol,
         shortText: any StringProtocol,
-        message: (any StringProtocol)? = nil,
         action: Callout.Action? = nil,
         onClose: (() -> Void)? = nil
     ) {
         self.title = title
         self.shortText = shortText
-        self.message = message
         self.action = action
         self.onClose = onClose
     }
@@ -78,6 +75,6 @@ public struct Callout: View {
 }
 
 @available(iOS 17, *)
-#Preview("Alert") {
+#Preview("Callout") {
     CalloutDemo()
 }
