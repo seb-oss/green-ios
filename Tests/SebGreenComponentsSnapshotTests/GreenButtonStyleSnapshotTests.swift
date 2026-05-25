@@ -40,7 +40,7 @@ final class GreenButtonStyleSnapshotTests: SEBViewImageSnapshotTesting {
                 }
             }
         }
-        .buttonStyle(.seb(style))
+        .buttonStyle(.gds(style))
         .disabled(isDisabled)
         .padding()
         .frame(width: 320)

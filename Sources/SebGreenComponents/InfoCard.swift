@@ -181,7 +181,7 @@ public struct InfoCardView: View {
         action: @escaping (() -> Void)
     ) -> some View {
         Button(title, action: action)
-            .buttonStyle(.seb(.secondary.dimensions(.small)))
+            .buttonStyle(.gds(.secondary.dimensions(.small)))
     }
 }
 

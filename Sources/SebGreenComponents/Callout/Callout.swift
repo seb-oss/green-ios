@@ -46,7 +46,7 @@ public struct Callout: View {
                         systemImage: action.linkStyle?.symbolName ?? "",
                         action: action.perform
                     )
-                    .buttonStyle(.seb(primaryActionStyle))
+                    .buttonStyle(.gds(primaryActionStyle))
                     .level(.level2)
                 }
             }
