@@ -14,21 +14,6 @@ private struct GreenSheetNavigationStack<Content: View>: View {
     }
 }
 
-private struct SheetCloseButton: View {
-    let action: () -> Void
-
-    var body: some View {
-        if #available(iOS 26, *) {
-            Button(role: .close, action: action)
-                .tint(.gds(.contentNeutral02))
-        } else {
-            Button(systemName: "xmark.circle.fill", action: action)
-                .foregroundStyle(.gds(.contentNeutral02), .surfaceAware)
-                .font(.system(size: 24))
-        }
-    }
-}
-
 extension View {
     public func greenSheet(
         isPresented: Binding<Bool>,
@@ -98,17 +83,6 @@ extension View {
         }
     }
 
-    public func sheetCloseButton(
-        placement: ToolbarItemPlacement = .topBarTrailing,
-        action: @escaping () -> Void
-    ) -> some View {
-        toolbar {
-            ToolbarItem(placement: placement) {
-                SheetCloseButton(action: action)
-            }
-        }
-    }
-
     @ViewBuilder
     fileprivate func scrollBasedOnSizeIfAvailable() -> some View {
         if #available(iOS 16.4, *) {
@@ -145,7 +119,7 @@ extension View {
         )
         .padding(.horizontal)
         .sheetTitle("Amazing title", typography: .headingS)
-        .sheetCloseButton {
+        .navigationCloseButton {
             present = false
         }
         .presentationDetents([.medium, .large])

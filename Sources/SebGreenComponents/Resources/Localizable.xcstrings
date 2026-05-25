@@ -37,6 +37,24 @@
         }
       }
     },
+    "GreeniOS.Accessibility.Close" : {
+      "comment" : "VoiceOver label for the navigation close button",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Close"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stäng"
+          }
+        }
+      }
+    },
     "GreeniOS.Accessibility.CustomContent.InputFieldError" : {
       "extractionState" : "manual",
       "localizations" : {
