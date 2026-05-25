@@ -44,7 +44,7 @@ extension View {
     /// - Parameters:
     ///   - focusedField: A binding to the `@FocusState` tracking the currently focused field.
     ///   - field: The value this view represents in the focus state enum.
-    func scrollFocusField<Field: Hashable>(
+    public func scrollFocusField<Field: Hashable>(
         focusedField: FocusState<Field?>.Binding,
         equals field: Field
     ) -> some View {
@@ -78,7 +78,7 @@ extension View {
     /// - Parameters:
     ///   - focusedField: A binding to the `Bool` `@FocusState` for this field.
     ///   - id: A hashable identifier used to scroll to this view via `ScrollViewReader`.
-    func scrollFocusField(
+    public func scrollFocusField(
         focusedField: FocusState<Bool>.Binding,
         id: some Hashable
     ) -> some View {
