@@ -29,11 +29,7 @@ extension View {
         level: Level = .level2
     ) -> some View {
         self
-            .presentationBackground(
-                .levelBased { @Sendable level, _ in
-                    surface.color(for: level)
-                }
-            )
+            .presentationBackground(surface.color(for: level))
             .environment(\.surface, surface)
             .level(level)
     }
