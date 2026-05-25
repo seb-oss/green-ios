@@ -3,7 +3,6 @@ import XCTest
 
 @testable import SebGreenComponents
 
-@available(iOS 16, *)
 extension View {
     fileprivate func inputFieldSnapshotTest(
         _ suffix: String? = nil,
@@ -25,7 +24,6 @@ extension View {
     }
 }
 
-@available(iOS 16, *)
 final class InputFieldSnapshotTests: SEBViewImageSnapshotTesting {
 
     func test_inputField() {

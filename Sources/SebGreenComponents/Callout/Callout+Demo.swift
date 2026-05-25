@@ -1,6 +1,5 @@
 import SwiftUI
 
-@available(iOS 16, *)
 public struct CalloutDemo: View {
     @State private var showActionButton = true
     @State private var showCloseButton = true
@@ -115,7 +114,6 @@ public struct CalloutDemo: View {
     }
 }
 
-@available(iOS 16, *)
 #Preview {
     NavigationStack {
         CalloutDemo()

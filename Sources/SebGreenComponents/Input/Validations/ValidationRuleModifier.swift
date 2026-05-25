@@ -1,6 +1,5 @@
 import SwiftUI
 
-@available(iOS 16.0, *)
 private struct ValidationRuleModifier<Value: Equatable>: ViewModifier {
     private let rules: [any ValidationRule<Value>]
     private let isEnabled: Bool
@@ -84,7 +83,6 @@ private struct ValidationRuleModifier<Value: Equatable>: ViewModifier {
 }
 
 extension View {
-    @available(iOS 16, *)
     @ViewBuilder
     public func applyRules<V: Equatable>(
         to value: Binding<V>,

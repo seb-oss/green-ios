@@ -3,7 +3,6 @@ import Accessibility
 // TODO: Remove import UIKit when minimum deployment target is iOS 17+
 import UIKit
 
-@available(iOS 16, *)
 public struct MaxCharacterRule: ValidationRule {
     let maxCharacters: Int
     private let enforcement: Enforcement
@@ -69,7 +68,6 @@ public struct MaxCharacterRule: ValidationRule {
     }
 }
 
-@available(iOS 16, *)
 public extension ValidationRule where Self == MaxCharacterRule {
     static func maxCharacters(
         _ count: Int,
