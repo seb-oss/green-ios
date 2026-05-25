@@ -16,7 +16,7 @@ struct DemoSection<Content: View>: View {
 
     var body: some View {
         Section {
-            VStack(spacing: .space3xs) {
+            VStack(spacing: .gds(.space3xs)) {
                 content
             }
         } header: {
@@ -46,7 +46,7 @@ struct DemoContainer<Configuration: View, Content: View>: View {
 
     init(
         _ title: String,
-        contentPadding: CGFloat = .spaceM,
+        contentPadding: CGFloat = .gds(.spaceM),
         @ViewBuilder configuration: () -> Configuration,
         @ViewBuilder content: () -> Content
     ) {
@@ -67,7 +67,7 @@ struct DemoContainer<Configuration: View, Content: View>: View {
 
     var body: some View {
         ScrollView {
-            VStack(spacing: .spaceXl) {
+            VStack(spacing: .gds(.spaceXl)) {
                 if isConfigurable && shouldShowConfigurationView {
                     configuration
                         .background(.surfaceAware, in: .rect(cornerRadius: 16))
@@ -101,7 +101,7 @@ struct DemoContainer<Configuration: View, Content: View>: View {
 extension DemoContainer where Configuration == EmptyView {
     init(
         _ title: String,
-        contentPadding: CGFloat = .spaceM,
+        contentPadding: CGFloat = .gds(.spaceM),
         @ViewBuilder content: () -> Content
     ) {
         self.title = title

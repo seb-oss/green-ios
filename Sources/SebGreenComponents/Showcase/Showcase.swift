@@ -38,7 +38,7 @@ public struct Showcase: View {
             }
         }
         .scrollContentBackground(.hidden)
-        .background(Color.l1Neutral02)
+        .background(.gds(.l1Neutral02))
         .navigationTitle("Green Components")
     }
 }

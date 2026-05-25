@@ -29,19 +29,19 @@ public struct InfoCardView: View {
         }
         
         public static let information = Variant(
-            backgroundColor: .l2Neutral02,
-            borderColor: .borderInformation02,
-            closeButtonBackgroundColor: .l3Neutral02,
-            closeButtonColor: .contentNeutral02,
-            textForegroundColor: .contentNeutral01
+            backgroundColor: .gds(.l2Neutral02),
+            borderColor: .gds(.borderInformation02),
+            closeButtonBackgroundColor: .gds(.l3Neutral02),
+            closeButtonColor: .gds(.contentNeutral02),
+            textForegroundColor: .gds(.contentNeutral01)
         )
         
         public static let informationHd = Variant(
-            backgroundColor: .l2NeutralLoud,
+            backgroundColor: .gds(.l2Neutral04),
             borderColor: .clear,
-            closeButtonBackgroundColor: .l3NeutralTone,
-            closeButtonColor: .contentInversed,
-            textForegroundColor: .contentInversed
+            closeButtonBackgroundColor: .gds(.l3Tonal01),
+            closeButtonColor: .gds(.contentNeutral05),
+            textForegroundColor: .gds(.contentNeutral05)
         )
     }
     
@@ -113,12 +113,12 @@ public struct InfoCardView: View {
     }
     
     private var cardContent: some View {
-        VStack(alignment: .leading, spacing: .space3xs) {
+        VStack(alignment: .leading, spacing: .gds(.space3xs)) {
             titleView
             messageView
             callToActionView
         }
-        .padding(.spaceM)
+        .padding(.gds(.spaceM))
 //        .background(model.variant.backgroundColor)
         .surface(.neutral01)
         .clipShape(cardShape)
@@ -128,17 +128,17 @@ public struct InfoCardView: View {
     
     private var titleView: some View {
         Text(model.title)
-            .typography(.detailBookM)
+            .font(.gds(.detailMBook))
             .foregroundColor(model.variant.textForegroundColor)
             .fixedSize(horizontal: false, vertical: true)
-            .padding(.trailing, .space4xl)
+            .padding(.trailing, .gds(.space4xl))
     }
     
     private var messageView: some View {
         Text(model.message)
-            .typography(.detailRegularS)
+            .font(.gds(.detailSRegular))
             .foregroundColor(model.variant.textForegroundColor)
-            .padding(.bottom, .spaceXs)
+            .padding(.bottom, .gds(.spaceXs))
     }
     
     @ViewBuilder
@@ -160,7 +160,7 @@ public struct InfoCardView: View {
                 primaryLayerColor: model.variant.closeButtonColor,
                 secondaryLayerColor: model.variant.closeButtonBackgroundColor
             )
-            .padding(.spaceXs)
+            .padding(.gds(.spaceXs))
         }
     }
     
@@ -196,7 +196,7 @@ private struct CloseButton: View {
         Button(action: action) {
             Image(systemName: "xmark.circle.fill")
                 .symbolRenderingMode(.palette)
-                .typography(.bodyBookL)
+                .font(.gds(.bodyLBook))
                 .foregroundStyle(primaryLayerColor, secondaryLayerColor)
                 .contentShape(Rectangle())
         }

@@ -5,45 +5,35 @@ public struct CalloutGroupBoxStyle: GroupBoxStyle {
     @Environment(\.surface) private var surface
 
     let backgroundColor: AnyShapeStyle
-    let ignoreBackgroundOpacity: Bool
     let borderColor: Color
-    let shouldShowBorder: @Sendable (Surface) -> Bool
     let iconColor: Color
     let textColor: Color
     let iconSystemName: String?
 
-    private var shouldReduceBackgroundOpacity: Bool {
-        !ignoreBackgroundOpacity && colorScheme == .dark
-    }
-
     public func makeBody(configuration: Configuration) -> some View {
-        VStack(alignment: .leading, spacing: .spaceXs) {
+        VStack(alignment: .leading, spacing: .gds(.spaceXs)) {
             header(configuration.label)
-                .padding(.trailing, .spaceM)
+                .padding(.trailing, .gds(.spaceM))
 
             configuration.content
-                .typography(.bodyRegularS)
+                .font(.gds(.bodySRegular))
                 .foregroundStyle(textColor)
                 .fixedSize(horizontal: false, vertical: true)
         }
-        .padding(.spaceM)
+        .padding(.gds(.spaceM))
         .background(
-            backgroundColor.opacity(
-                shouldReduceBackgroundOpacity ? 0.8 : 1
-            ),
+            backgroundColor,
             in: .rect(cornerRadius: .cornerRadius)
         )
         .overlay {
-            if shouldShowBorder(surface) {
-                RoundedRectangle(cornerRadius: .cornerRadius)
-                    .strokeBorder(borderColor, style: .init())
-            }
+            RoundedRectangle(cornerRadius: .cornerRadius)
+                .strokeBorder(borderColor, style: .init())
         }
     }
 
     private func header<Content: View>(_ label: Content) -> some View {
         AdaptiveStack(
-            spacing: .space2xs,
+            spacing: .gds(.space2xs),
             horizontalAlignment: .leading
         ) {
             if let iconSystemName {
@@ -53,7 +43,7 @@ public struct CalloutGroupBoxStyle: GroupBoxStyle {
             }
 
             label
-                .typography(.headingXs)
+                .font(.gds(.headingXs))
                 .foregroundStyle(textColor)
                 .fixedSize(horizontal: false, vertical: true)
         }

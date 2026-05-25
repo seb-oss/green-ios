@@ -62,11 +62,11 @@ extension InputField {
                         .frame(height: isExpanded ? nil : 0)
                 }
 
-                Spacer(minLength: .spaceM)
+                Spacer(minLength: .gds(.spaceM))
 
                 AccessoryContainer($value, isEditing: isEditing)
             }
-            .padding(.spaceM)
+            .padding(.gds(.spaceM))
             .frame(
                 maxWidth: .infinity,
                 minHeight: minimumFrameHeight,
@@ -81,8 +81,7 @@ extension InputField {
                 RoundedRectangle(cornerRadius: cornerRadius)
                     .stroke(style: .init(lineWidth: hasValidationError ? 2 : 1))
                     .foregroundStyle(
-                        hasValidationError
-                            ? Color.borderNegative01 : Color.clear
+                        hasValidationError ? .gds(.borderNegative01) : Color.clear
                     )
                     .animation(.snappy, value: value)
             }
@@ -95,10 +94,8 @@ extension InputField {
 
         private var floatingLabel: some View {
             Text(label)
-                .typography(
-                    isExpanded ? .detailBookXs : .detailBookM
-                )
-                .foregroundStyle(Color.contentNeutral02)
+                .font(.gds(isExpanded ? .detailXsBook : .detailMBook))
+                .foregroundStyle(.gds(.contentNeutral02))
                 .animation(.snappy, value: isExpanded)
                 .accessibilityHidden(true)
         }

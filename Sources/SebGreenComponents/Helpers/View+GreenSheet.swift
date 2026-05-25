@@ -21,10 +21,10 @@ private struct SheetCloseButton: View {
     var body: some View {
         if #available(iOS 26, *) {
             Button(role: .close, action: action)
-                .tint(Color.contentNeutral02)
+                .tint(.gds(.contentNeutral02))
         } else {
             Button(systemName: "xmark.circle.fill", action: action)
-                .foregroundStyle(Color.contentNeutral02, .surfaceAware)
+                .foregroundStyle(.gds(.contentNeutral02), .surfaceAware)
                 .font(.system(size: 24))
         }
     }
@@ -83,7 +83,7 @@ extension View {
                     bundle: bundle,
                     comment: comment
                 )
-                .font(.seb(typography))
+                .font(.gds(typography))
             }
         }
     }
@@ -95,7 +95,7 @@ extension View {
         toolbar {
             ToolbarItem(placement: .principal) {
                 Text(content)
-                    .font(.seb(typography))
+                    .font(.gds(typography))
             }
         }
     }

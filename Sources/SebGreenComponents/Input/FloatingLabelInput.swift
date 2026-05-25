@@ -68,8 +68,8 @@ private extension FloatingLabelInput {
                 Spacer(minLength: 0)
                 accessoryStack
             }
-            .padding(.horizontal, .spaceM)
-            .padding(.vertical, .spaceS)
+            .padding(.horizontal, .gds(.spaceM))
+            .padding(.vertical, .gds(.spaceS))
         }
     }
 
@@ -83,15 +83,15 @@ private extension FloatingLabelInput {
 private extension FloatingLabelInput {
     @ViewBuilder
     var background: some View {
-        Color.l2Neutral02
-            .cornerRadius(.spaceM)
+        Color.gds(.l2Neutral02)
+            .cornerRadius(.gds(.spaceM))
             .overlay {
                 if !isValid {
-                    RoundedRectangle(cornerRadius: .spaceM)
+                    RoundedRectangle(cornerRadius: .gds(.spaceM))
                         .inset(by: 1)
                         .stroke(
-                            Color.borderNegative01,
-                            lineWidth: .space4xs
+                            Color.gds(.borderNegative01),
+                            lineWidth: .gds(.space4xs)
                         )
                 }
             }
@@ -116,9 +116,9 @@ private extension FloatingLabelInput {
 private extension FloatingLabelInput {
     var placeholderView: some View {
         Text(placeholder)
-            .typography(.detailBookM)
-            .padding(.vertical, .spaceS)
-            .foregroundStyle(Color.contentNeutral02)
+            .font(.gds(.detailMBook))
+            .padding(.vertical, .gds(.spaceS))
+            .foregroundStyle(.gds(.contentNeutral02))
     }
 }
 
@@ -142,15 +142,15 @@ private extension FloatingLabelInput {
 
     var label: some View {
         Text(placeholder)
-            .foregroundStyle(Color.contentNeutral02)
-            .typography(.detailRegularS)
+            .foregroundStyle(.gds(.contentNeutral02))
+            .font(.gds(.detailSRegular))
     }
 
     var textfield: some View {
         TextField("", text: $text)
             .focused($isFocused)
-            .typography(.detailBookM)
-            .foregroundStyle(Color.contentNeutral01)
+            .font(.gds(.detailMBook))
+            .foregroundStyle(.gds(.contentNeutral01))
             .onReceive(textDidChange) { notification in
                 textChangeNotifationReceived(notification)
             }
@@ -165,8 +165,8 @@ private extension FloatingLabelInput {
         TextEditor(text: $text)
             .background(Color.clear)
             .focused($isFocused)
-            .typography(.detailBookM)
-            .foregroundStyle(Color.contentNeutral01)
+            .font(.gds(.detailMBook))
+            .foregroundStyle(.gds(.contentNeutral01))
             .onReceive(textDidChange) { notification in
                 textChangeNotifationReceived(notification)
             }
@@ -198,8 +198,8 @@ private extension FloatingLabelInput {
     var clearButton: some View {
         Button(action: clearInput) {
             Image(systemName: "xmark.circle.fill")
-                .typography(.detailRegularM)
-                .foregroundStyle(Color.contentNeutral02)
+                .font(.gds(.detailMRegular))
+                .foregroundStyle(.gds(.contentNeutral02))
         }
     }
 
@@ -209,8 +209,8 @@ private extension FloatingLabelInput {
 
     var characterCountLabel: some View {
         Text(characterCountString)
-            .foregroundStyle(Color.contentNeutral01)
-            .typography(.detailRegularXs)
+            .foregroundStyle(.gds(.contentNeutral01))
+            .font(.gds(.detailXsRegular))
     }
 
     var characterCountString: String {
@@ -223,7 +223,7 @@ private extension FloatingLabelInput {
 
     var errorIcon: some View {
         Image(systemName: "exclamationmark.square.fill")
-            .foregroundStyle(Color.contentNegative01)
+            .foregroundStyle(.gds(.contentNegative01))
     }
 
     private func textChangeNotifationReceived(_ notification: Notification) {
@@ -238,21 +238,21 @@ private extension FloatingLabelInput {
     private var hintAccessoryView: some View {
         if isValid {
             Text(supportingText ?? "")
-                .foregroundStyle(Color.contentNeutral02)
-                .typography(.bodyMediumS)
-                .padding(.top, .spaceXs)
-                .padding(.leading, .spaceM)
+                .foregroundStyle(.gds(.contentNeutral02))
+                .font(.gds(.bodySMedium))
+                .padding(.top, .gds(.spaceXs))
+                .padding(.leading, .gds(.spaceM))
         } else {
             HStack(alignment: .center) {
                 errorIcon
                 
                 Text(errorText ?? "")
-                    .foregroundStyle(Color.contentNegative01)
-                    .typography(.bodyMediumS)
+                    .foregroundStyle(.gds(.contentNegative01))
+                    .font(.gds(.bodySMedium))
                     
             }
-            .padding(.top, .spaceXs)
-            .padding(.leading, .spaceM)
+            .padding(.top, .gds(.spaceXs))
+            .padding(.leading, .gds(.spaceM))
         }
     }
 
@@ -274,7 +274,7 @@ struct DummyForm: View {
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: .spaceM) {
+            VStack(alignment: .leading, spacing: .gds(.spaceM)) {
                 FloatingLabelInput(
                     text: $textDefault,
                     placeholder: "Longer Label for accessbility",
@@ -314,13 +314,13 @@ struct DummyForm: View {
                 )
                 
                 Text(verbatim: "Tip: Tap any field to edit and see the floating label + clear button.")
-                    .typography(.detailRegularXs)
-                    .foregroundStyle(Color.contentNeutral02)
+                    .font(.gds(.detailXsRegular))
+                    .foregroundStyle(.gds(.contentNeutral02))
             }
             .padding(.horizontal, 8)
             .padding(.vertical, 16)
         }
-        .background(Color.l1Neutral02)
+        .background(.gds(.l1Neutral02))
     }
 }
 

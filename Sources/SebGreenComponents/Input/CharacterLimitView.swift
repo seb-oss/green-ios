@@ -6,8 +6,8 @@ struct CharacterLimitView: View {
 
     var body: some View {
         Text("\(characterCount)/\(maxLimit)")
-            .typography(.detailRegularXs)
-            .foregroundStyle(Color.contentNeutral01)
+            .font(.gds(.detailXsRegular))
+            .foregroundStyle(.gds(.contentNeutral01))
             // No animation wanted
             .animation(nil, value: characterCount)
     }

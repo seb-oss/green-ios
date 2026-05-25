@@ -10,9 +10,8 @@ extension Callout.Variant {
         switch self {
         case .information(.subtle):
             CloseButtonColors(
-                primary: .contentNeutral02,
-                secondary:
-                    surface == .neutral01 ? .l3Neutral01 : .l3Neutral02
+                primary: .gds(.contentNeutral02),
+                secondary: .gds(surface == .neutral01 ? .l3Neutral01 : .l3Neutral02)
             )
         case .information(.loud), .notice, .warning, .critical:
             CloseButtonColors(

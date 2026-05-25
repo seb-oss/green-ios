@@ -63,18 +63,18 @@ public struct GreenList<Content: View>: View {
     private var listBackground: Color {
         switch style {
         case .plain, .grouped:
-            return .l1Neutral01
+            return .gds(.l1Neutral01)
         case .elevated, .elevatedGrouped:
-            return .l1Elevated01
+            return .gds(.l1Neutral01)
         }
     }
 
     private var listContainerBackground: Color {
         switch style {
         case .plain, .grouped:
-            return .l1Neutral02
+            return .gds(.l1Neutral02)
         case .elevated, .elevatedGrouped:
-            return .l1Neutral02
+            return .gds(.l1Neutral02)
         }
     }
 
@@ -99,16 +99,16 @@ public struct GreenList<Content: View>: View {
         switch style {
         case .plain:
             // Full-width list anchored to safe area
-            return EdgeInsets(top: .spaceL, leading: .space0, bottom: .spaceL, trailing: .space0)
+            return EdgeInsets(top: .gds(.spaceL), leading: .gds(.space0), bottom: .gds(.spaceL), trailing: .gds(.space0))
         case .grouped:
             // Grouped card inset horizontally and vertically
-            return EdgeInsets(top: .spaceL, leading: .spaceM, bottom: .spaceL, trailing: .spaceM)
+            return EdgeInsets(top: .gds(.spaceL), leading: .gds(.spaceM), bottom: .gds(.spaceL), trailing: .gds(.spaceM))
         case .elevated:
             // Elevated sheet-like surface inset horizontally
-            return EdgeInsets(top: .spaceL, leading: .spaceM, bottom: .spaceL, trailing: .spaceM)
+            return EdgeInsets(top: .gds(.spaceL), leading: .gds(.spaceM), bottom: .gds(.spaceL), trailing: .gds(.spaceM))
         case .elevatedGrouped:
             // Elevated grouped lists in cards
-            return EdgeInsets(top: .spaceL, leading: .spaceM, bottom: .spaceL, trailing: .spaceM)
+            return EdgeInsets(top: .gds(.spaceL), leading: .gds(.spaceM), bottom: .gds(.spaceL), trailing: .gds(.spaceM))
         }
     }
 }
@@ -146,10 +146,10 @@ struct GreenList_Previews: PreviewProvider {
                 // MARK: List 72 (tall rows)
 
                 Text("List 72")
-                    .typography(.detailRegularS)
-                    .foregroundColor(.contentNeutral03)
-                    .padding(.horizontal, .spaceM)
-                    .padding(.top, .spaceS)
+                    .font(.gds(.detailSRegular))
+                    .foregroundColor(.gds(.contentNeutral03))
+                    .padding(.horizontal, .gds(.spaceM))
+                    .padding(.top, .gds(.spaceS))
 
                 // 72: No leading / no trailing
                 GreenRow(
@@ -253,10 +253,10 @@ struct GreenList_Previews: PreviewProvider {
                 // MARK: List 56 (compact rows)
 
                 Text("List 56")
-                    .typography(.detailRegularS)
-                    .foregroundColor(.contentNeutral03)
-                    .padding(.horizontal, .spaceM)
-                    .padding(.top, .spaceL)
+                    .font(.gds(.detailSRegular))
+                    .foregroundColor(.gds(.contentNeutral03))
+                    .padding(.horizontal, .gds(.spaceM))
+                    .padding(.top, .gds(.spaceL))
 
                 // 56: No leading / chevron
                 GreenRow(

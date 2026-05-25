@@ -6,7 +6,7 @@ public extension GreenButtonStyle {
         let height: CGFloat
         let verticalPadding: CGFloat
         let horizontalPadding: CGFloat
-        var font: Font = .seb(.detailBookM)
+        var font: Font = .gds(.detailMBook)
         let iconSpacing: CGFloat
         let maxCornerRadius: CGFloat
         
@@ -17,7 +17,7 @@ public extension GreenButtonStyle {
             verticalPadding: CGFloat,
             horizontalPadding: CGFloat,
             font: Font? = nil,
-            iconSpacing: CGFloat = .spaceXs,
+            iconSpacing: CGFloat = .gds(.spaceXs),
             maxCornerRadius: CGFloat = 28.0
         ) {
             if let font {
@@ -35,31 +35,31 @@ public extension GreenButtonStyle {
 public extension GreenButtonStyle.Dimensions {
     static let small = Self(
         height: 32.0,
-        verticalPadding: .space3xs,
-        horizontalPadding: .spaceM,
-        font: .seb(.detailBookS),
-        iconSpacing: .space3xs
+        verticalPadding: .gds(.space3xs),
+        horizontalPadding: .gds(.spaceM),
+        font: .gds(.detailSBook),
+        iconSpacing: .gds(.space3xs)
     )
     
     static let medium = Self(
         height: 44.0,
-        verticalPadding: .spaceXs,
-        horizontalPadding: .spaceM,
-        iconSpacing: .space2xs
+        verticalPadding: .gds(.spaceXs),
+        horizontalPadding: .gds(.spaceM),
+        iconSpacing: .gds(.space2xs)
     )
     
     static let large = Self(
         height: 48.0,
-        verticalPadding: .spaceS,
-        horizontalPadding: .spaceM,
-        iconSpacing: .spaceXs
+        verticalPadding: .gds(.spaceS),
+        horizontalPadding: .gds(.spaceM),
+        iconSpacing: .gds(.spaceXs)
     )
     
     static let xlarge = Self(
         height: 56.0,
-        verticalPadding: .spaceM,
-        horizontalPadding: .spaceM,
-        iconSpacing: .spaceXs
+        verticalPadding: .gds(.spaceM),
+        horizontalPadding: .gds(.spaceM),
+        iconSpacing: .gds(.spaceXs)
     )
 }
 
@@ -70,9 +70,7 @@ extension GreenButtonStyle.Dimensions: CustomStringConvertible {
         case .medium: return "Medium"
         case .large: return "Large"
         case .xlarge: return "X-Large"
-        default:
-            assertionFailure("Unknown Dimension")
-            return "Unknown Dimension"
+        default: return "Custom"
         }
     }
 }

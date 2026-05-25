@@ -20,10 +20,24 @@ public struct Callout: View {
         self.action = action
         self.onClose = onClose
     }
+    
+    private var primaryActionStyle: GreenButtonStyle {
+        if case .information(.subtle) = calloutStyle {
+            .secondary(
+                dimensions: .small,
+                iconPosition: .trailing
+            )
+        } else {
+            .tonal(
+                dimensions: .small,
+                iconPosition: .trailing
+            )
+        }
+    }
 
     public var body: some View {
         GroupBox(title) {
-            VStack(alignment: .leading, spacing: .spaceS) {
+            VStack(alignment: .leading, spacing: .gds(.spaceS)) {
                 Text(shortText)
 
                 if let action {
@@ -32,14 +46,7 @@ public struct Callout: View {
                         systemImage: action.linkStyle?.symbolName ?? "",
                         action: action.perform
                     )
-                    .buttonStyle(
-                        .seb(
-                            .secondary(
-                                dimensions: .small,
-                                iconPosition: .trailing
-                            )
-                        )
-                    )
+                    .buttonStyle(.seb(primaryActionStyle))
                     .level(.level2)
                 }
             }
@@ -70,7 +77,7 @@ public struct Callout: View {
         )
         .contentShape(.circle)
         .accessibilityLabel("GreeniOS.Accessibility.Dismiss")
-        .padding([.top, .trailing], .spaceXs)
+        .padding([.top, .trailing], .gds(.spaceXs))
     }
 }
 
