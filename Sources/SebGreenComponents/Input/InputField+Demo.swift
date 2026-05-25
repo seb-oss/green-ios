@@ -1,6 +1,5 @@
 import SwiftUI
 
-@available(iOS 16.0, *)
 public struct InputFieldDemo: View {
     @State private var isOptional = false
     @State private var supportTextEnabled = false
@@ -203,7 +202,6 @@ public struct InputFieldDemo: View {
     }
 }
 
-@available(iOS 16.0, *)
 #Preview {
     NavigationStack {
         InputFieldDemo()

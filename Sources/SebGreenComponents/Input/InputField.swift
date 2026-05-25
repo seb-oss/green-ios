@@ -198,7 +198,6 @@ extension AccessibilityCustomContentKey {
     )
 }
 
-@available(iOS 16.0, *)
 #Preview {
     InputFieldDemo()
 }

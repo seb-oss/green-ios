@@ -1,6 +1,5 @@
 import SwiftUI
 
-@available(iOS 16, *)
 struct ToggleDemo: View {
     @State private var toggleOn = true
     @State private var toggleOff = false
@@ -26,7 +25,6 @@ struct ToggleDemo: View {
     }
 }
 
-@available(iOS 16, *)
 #Preview {
     ToggleDemo()
 }

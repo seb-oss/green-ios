@@ -1,7 +1,6 @@
 import GdsKit
 import SwiftUI
 
-@available(iOS 16, *)
 private struct GreenSheetNavigationStack<Content: View>: View {
     @ViewBuilder let content: () -> Content
 
@@ -30,7 +29,6 @@ private struct SheetCloseButton: View {
     }
 }
 
-@available(iOS 16, *)
 extension View {
     public func greenSheet(
         isPresented: Binding<Bool>,

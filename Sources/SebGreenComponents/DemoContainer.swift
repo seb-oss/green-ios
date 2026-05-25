@@ -1,7 +1,6 @@
 import GdsKit
 import SwiftUI
 
-@available(iOS 16, *)
 struct DemoSection<Content: View>: View {
     private let title: String
     private let content: Content
@@ -28,7 +27,6 @@ struct DemoSection<Content: View>: View {
     }
 }
 
-@available(iOS 16, *)
 struct DemoContainer<Configuration: View, Content: View>: View {
     private let title: String
     private let contentPadding: CGFloat
@@ -97,7 +95,6 @@ struct DemoContainer<Configuration: View, Content: View>: View {
     }
 }
 
-@available(iOS 16, *)
 extension DemoContainer where Configuration == EmptyView {
     init(
         _ title: String,

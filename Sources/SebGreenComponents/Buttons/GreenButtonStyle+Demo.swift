@@ -1,7 +1,6 @@
 import GdsKit
 import SwiftUI
 
-@available(iOS 16, *)
 public struct SEBGreenButtonStyleDemo: View {
     @State private var iconPosition: IconPosition = .leading
     @State private var shouldShowIcon = true
@@ -264,8 +263,6 @@ public struct SEBGreenButtonStyleDemo: View {
     }
 }
 
-
-@available(iOS 16, *)
 #Preview {
     NavigationStack {
         SEBGreenButtonStyleDemo()

@@ -9,7 +9,6 @@ private enum Component: String, CaseIterable, Identifiable {
 
     var id: String { rawValue }
 
-    @available(iOS 16, *)
     @ViewBuilder
     var view: some View {
         switch self {
@@ -21,7 +20,6 @@ private enum Component: String, CaseIterable, Identifiable {
     }
 }
 
-@available(iOS 16, *)
 public struct Showcase: View {
     private let components = Component.allCases
 
@@ -43,7 +41,6 @@ public struct Showcase: View {
     }
 }
 
-@available(iOS 16, *)
 #Preview {
     NavigationStack {
         Showcase()
