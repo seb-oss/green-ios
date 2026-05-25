@@ -69,12 +69,32 @@ extension View {
     }
 
     public func sheetTitle(
-        _ title: String,
+        _ key: LocalizedStringKey,
+        tableName: String? = nil,
+        bundle: Bundle? = nil,
+        comment: StaticString? = nil,
         typography: Typography = .headingXs
     ) -> some View {
         toolbar {
             ToolbarItem(placement: .principal) {
-                Text(title)
+                Text(
+                    key,
+                    tableName: tableName,
+                    bundle: bundle,
+                    comment: comment
+                )
+                .font(.seb(typography))
+            }
+        }
+    }
+
+    public func sheetTitle(
+        _ content: some StringProtocol,
+        typography: Typography = .headingXs
+    ) -> some View {
+        toolbar {
+            ToolbarItem(placement: .principal) {
+                Text(content)
                     .font(.seb(typography))
             }
         }
