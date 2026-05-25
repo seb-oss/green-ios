@@ -20,7 +20,7 @@ public struct SEBGreenButtonStyleDemo: View {
             VStack(spacing: .gds(.spaceXl)) {
                 // Primary with no icon
                 Button("Primary") { }
-                .buttonStyle(.seb(.primary.dimensions(buttonDimensions).layoutBehavior(buttonLayoutBehavior)))
+                .buttonStyle(.gds(.primary.dimensions(buttonDimensions).layoutBehavior(buttonLayoutBehavior)))
                 
                 Divider()
                 
@@ -32,7 +32,7 @@ public struct SEBGreenButtonStyleDemo: View {
                             Text("Leading")
                         }
                     }
-                    .buttonStyle(.seb(.primary.dimensions(buttonDimensions).layoutBehavior(buttonLayoutBehavior)))
+                    .buttonStyle(.gds(.primary.dimensions(buttonDimensions).layoutBehavior(buttonLayoutBehavior)))
                     
                     Button { } label: {
                         if shouldShowIcon {
@@ -41,7 +41,7 @@ public struct SEBGreenButtonStyleDemo: View {
                             Text("Trailing")
                         }
                     }
-                    .buttonStyle(.seb(.primary.dimensions(buttonDimensions).layoutBehavior(buttonLayoutBehavior).iconPosition(.trailing)))
+                    .buttonStyle(.gds(.primary.dimensions(buttonDimensions).layoutBehavior(buttonLayoutBehavior).iconPosition(.trailing)))
                 }
                 
                 Divider()
@@ -54,7 +54,7 @@ public struct SEBGreenButtonStyleDemo: View {
                         Text("Secondary")
                     }
                 }
-                .buttonStyle(.seb(.secondary.iconPosition(iconPosition).dimensions(buttonDimensions).layoutBehavior(buttonLayoutBehavior)))
+                .buttonStyle(.gds(.secondary.iconPosition(iconPosition).dimensions(buttonDimensions).layoutBehavior(buttonLayoutBehavior)))
 
                 Divider()
                 
@@ -66,7 +66,7 @@ public struct SEBGreenButtonStyleDemo: View {
                             Text("Secondary on White")
                         }
                     }
-                    .buttonStyle(.seb(.secondary.iconPosition(iconPosition).dimensions(buttonDimensions).layoutBehavior(buttonLayoutBehavior)))
+                    .buttonStyle(.gds(.secondary.iconPosition(iconPosition).dimensions(buttonDimensions).layoutBehavior(buttonLayoutBehavior)))
                     .padding()
                 }
                 .surface(.neutral01)
@@ -82,7 +82,7 @@ public struct SEBGreenButtonStyleDemo: View {
                         Text("Tertiary")
                     }
                 }
-                .buttonStyle(.seb(.tertiary.iconPosition(iconPosition).dimensions(buttonDimensions).layoutBehavior(buttonLayoutBehavior)))
+                .buttonStyle(.gds(.tertiary.iconPosition(iconPosition).dimensions(buttonDimensions).layoutBehavior(buttonLayoutBehavior)))
                 
                 Divider()
                 
@@ -94,7 +94,7 @@ public struct SEBGreenButtonStyleDemo: View {
                         Text("Outline")
                     }
                 }
-                .buttonStyle(.seb(.outline.iconPosition(iconPosition).dimensions(buttonDimensions).layoutBehavior(buttonLayoutBehavior)))
+                .buttonStyle(.gds(.outline.iconPosition(iconPosition).dimensions(buttonDimensions).layoutBehavior(buttonLayoutBehavior)))
 
                 Divider()
                 
@@ -108,7 +108,7 @@ public struct SEBGreenButtonStyleDemo: View {
                         }
                     }
                 }
-                .buttonStyle(.seb(.negative.iconPosition(iconPosition).dimensions(buttonDimensions).layoutBehavior(buttonLayoutBehavior)))
+                .buttonStyle(.gds(.negative.iconPosition(iconPosition).dimensions(buttonDimensions).layoutBehavior(buttonLayoutBehavior)))
                 
                 Divider()
                 
@@ -122,7 +122,7 @@ public struct SEBGreenButtonStyleDemo: View {
                         }
                     }
                 }
-                .buttonStyle(.seb(.notice.iconPosition(iconPosition).dimensions(buttonDimensions).layoutBehavior(buttonLayoutBehavior)))
+                .buttonStyle(.gds(.notice.iconPosition(iconPosition).dimensions(buttonDimensions).layoutBehavior(buttonLayoutBehavior)))
 
                 Divider()
 
@@ -136,7 +136,7 @@ public struct SEBGreenButtonStyleDemo: View {
                         }
                     }
                 }
-                .buttonStyle(.seb(.tonal.iconPosition(iconPosition).dimensions(buttonDimensions).layoutBehavior(buttonLayoutBehavior)))
+                .buttonStyle(.gds(.tonal.iconPosition(iconPosition).dimensions(buttonDimensions).layoutBehavior(buttonLayoutBehavior)))
 
                 Divider()
             }
@@ -163,7 +163,7 @@ public struct SEBGreenButtonStyleDemo: View {
                                 Button { } label: {
                                     Icon(systemName: "ellipsis")
                                 }
-                                .buttonStyle(.seb(.primary(shape: .circle).dimensions(buttonDimensions)))
+                                .buttonStyle(.gds(.primary(shape: .circle).dimensions(buttonDimensions)))
                                 .accessibilityLabel("Information")
                                 
                                 Divider()
@@ -180,7 +180,7 @@ public struct SEBGreenButtonStyleDemo: View {
                                         }
                                     }
                                 }
-                                .buttonStyle(.seb(.primary.dimensions(buttonDimensions).layoutBehavior(buttonLayoutBehavior)))
+                                .buttonStyle(.gds(.primary.dimensions(buttonDimensions).layoutBehavior(buttonLayoutBehavior)))
                                 
                                 Spacer()
                             }

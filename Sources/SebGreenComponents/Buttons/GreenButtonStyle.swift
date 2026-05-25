@@ -54,7 +54,7 @@ public struct GreenButtonStyle: ButtonStyle {
         )
         
         configuration.label
-            .labelStyle(.seb(buttonLabelStyle))
+            .labelStyle(.gds(buttonLabelStyle))
             .font(dimensions.font)
             .padding(.vertical, dimensions.verticalPadding)
             .padding(.horizontal, shape.isPill ? dimensions.horizontalPadding : nil)
@@ -109,7 +109,7 @@ extension GreenButtonStyle {
 }
 
 public extension ButtonStyle where Self == GreenButtonStyle {
-    static func seb(_ style: GreenButtonStyle) -> some ButtonStyle  {
+    static func gds(_ style: GreenButtonStyle) -> some ButtonStyle  {
         style
     }
 }
