@@ -1,10 +1,12 @@
 import SwiftUI
 
 public struct CalloutDemo: View {
+    @State private var cardIsClickable = false
     @State private var showActionButton = true
     @State private var showCloseButton = true
     @State private var surface: Surface = .neutral02
     @State private var dismissedVariants: Set<Callout.Variant> = []
+    @State private var trigger = false
 
     public init() {}
 
@@ -66,7 +68,7 @@ public struct CalloutDemo: View {
         variant: Callout.Variant
     ) -> some View {
         if !dismissedVariants.contains(variant) {
-            Callout(
+            let callout = Callout(
                 title,
                 shortText: shortText,
                 action: showActionButton
@@ -79,6 +81,18 @@ public struct CalloutDemo: View {
             .calloutStyle(variant)
             .id(variant)
             .transition(.opacity)
+
+            if cardIsClickable {
+                Button {
+                    trigger.toggle()
+                } label: {
+                    callout
+                }
+                .buttonStyle(.plain)
+                .sensoryFeedbackIfAvailable(.error, trigger: trigger)
+            } else {
+                callout
+            }
         }
     }
 
@@ -93,6 +107,17 @@ public struct CalloutDemo: View {
                     "Close button",
                     isOn: $showCloseButton.animation()
                 )
+
+                VStack(spacing: .gds(.spaceL)) {
+                    Divider()
+
+                    Toggle(
+                        isOn: $cardIsClickable
+                    ) {
+                        Text("Card clickable")
+                        Text("Makes the card clickable. This will trigger error haptic feedback.")
+                    }
+                }
             }
 
             Divider()
