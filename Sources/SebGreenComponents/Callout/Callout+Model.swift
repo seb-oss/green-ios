@@ -9,19 +9,6 @@ extension Callout {
             case subtle
             case loud
         }
-
-        public var accessibilitySeverityLabel: String? {
-            switch self {
-            case .information:
-                nil
-            case .notice:
-                String(localized: "GreeniOS.Callout.Accessibility.Severity.Notice", bundle: .module)
-            case .warning:
-                String(localized: "GreeniOS.Callout.Accessibility.Severity.Warning", bundle: .module)
-            case .critical:
-                String(localized: "GreeniOS.Callout.Accessibility.Severity.Critical", bundle: .module)
-            }
-        }
     }
 
     public struct Action {
