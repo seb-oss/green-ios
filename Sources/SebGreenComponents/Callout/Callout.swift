@@ -89,6 +89,7 @@ public struct Callout: View {
     private var content: some View {
         VStack(alignment: .leading, spacing: .gds(.spaceS)) {
             Text(shortText)
+                .multilineTextAlignment(.leading)
 
             if let action {
                 Button(
