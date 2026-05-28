@@ -79,6 +79,7 @@ extension View {
             ToolbarItem(placement: .principal) {
                 Text(content)
                     .font(.gds(typography))
+                    .accessibilityAddTraits(.isHeader)
             }
         }
     }
