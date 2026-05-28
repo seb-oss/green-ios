@@ -1,9 +1,7 @@
 import SwiftUI
+import GdsDimensions
 
 public struct CalloutGroupBoxStyle: GroupBoxStyle {
-    @Environment(\.colorScheme) private var colorScheme
-    @Environment(\.surface) private var surface
-
     let backgroundColor: AnyShapeStyle
     let borderColor: Color
     let iconColor: Color
@@ -23,10 +21,10 @@ public struct CalloutGroupBoxStyle: GroupBoxStyle {
         .padding(.gds(.spaceM))
         .background(
             backgroundColor,
-            in: .rect(cornerRadius: .cornerRadius)
+            in: .rect(cornerRadius: .gds(.radiusM))
         )
         .overlay {
-            RoundedRectangle(cornerRadius: .cornerRadius)
+            RoundedRectangle(cornerRadius: .gds(.radiusM))
                 .strokeBorder(borderColor, style: .init())
         }
     }
@@ -47,24 +45,5 @@ public struct CalloutGroupBoxStyle: GroupBoxStyle {
                 .foregroundStyle(textColor)
                 .fixedSize(horizontal: false, vertical: true)
         }
-    }
-}
-
-// MARK: - Helpers that will be removed as soon as GDKs tokens are updated
-
-extension CGFloat {
-    static let cornerRadius = 16.0
-    static let cornerRadiusLightWidth = 1.5
-}
-
-extension Color {
-    init(hex: UInt, alpha: Double = 1) {
-        self.init(
-            .sRGB,
-            red: Double((hex >> 16) & 0xff) / 255,
-            green: Double((hex >> 08) & 0xff) / 255,
-            blue: Double((hex >> 00) & 0xff) / 255,
-            opacity: alpha
-        )
     }
 }
