@@ -15,7 +15,7 @@ extension Callout.Variant {
             )
         case .information(.loud), .notice, .warning, .critical:
             CloseButtonColors(
-                primary: .white,  // TODO: Should be contentNeutral05
+                primary: .gds(.contentNeutral05),
                 secondary: .white.opacity(0.12)
             )
         }

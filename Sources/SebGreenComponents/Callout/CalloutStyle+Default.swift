@@ -1,61 +1,68 @@
 import SwiftUI
 
-extension CalloutGroupBoxStyle {
-    static var information: CalloutGroupBoxStyle {
-        CalloutGroupBoxStyle(
+extension CalloutStyle {
+    static var information: CalloutStyle {
+        CalloutStyle(
             backgroundColor: AnyShapeStyle(.surfaceAware),
             borderColor: .gds(.borderNeutral02),
             iconColor: .gds(.contentNeutral01),
             textColor: .gds(.contentNeutral01),
-            iconSystemName: nil
+            severityIcon: nil
         )
     }
 
-    static var informationLoud: CalloutGroupBoxStyle {
-        CalloutGroupBoxStyle(
+    static var informationLoud: CalloutStyle {
+        CalloutStyle(
             backgroundColor: AnyShapeStyle(.gds(.l2Neutral04, bundle: .module)),
             borderColor: .clear,
             iconColor: .white,
             textColor: .white,
-            iconSystemName: nil
+            severityIcon: nil
         )
     }
 
-    static var notice: CalloutGroupBoxStyle {
-        CalloutGroupBoxStyle(
+    static var notice: CalloutStyle {
+        CalloutStyle(
             backgroundColor: AnyShapeStyle(.gds(.tempNotice, bundle: .module)),
             borderColor: .clear,
             iconColor: .white,
             textColor: .white,
-            iconSystemName: "info.circle"
+            severityIcon: .init(
+                iconSystemName: "info.circle",
+                accessibilitySeverityLabel: String(localized: "GreeniOS.Callout.Accessibility.Severity.Notice", bundle: .module)
+            )
         )
     }
 
-    static var warning: CalloutGroupBoxStyle {
-        CalloutGroupBoxStyle(
+    static var warning: CalloutStyle {
+        CalloutStyle(
             backgroundColor: AnyShapeStyle(.gds(.tempWarning, bundle: .module)),
             borderColor: .clear,
             iconColor: .white,
             textColor: .white,
-            iconSystemName: "exclamationmark.triangle"
+            severityIcon: .init(
+                iconSystemName: "exclamationmark.triangle",
+                accessibilitySeverityLabel: String(localized: "GreeniOS.Callout.Accessibility.Severity.Warning", bundle: .module)
+            )
         )
     }
 
-    static var critical: CalloutGroupBoxStyle {
-        CalloutGroupBoxStyle(
+    static var critical: CalloutStyle {
+        CalloutStyle(
             backgroundColor: AnyShapeStyle(.gds(.tempCritical, bundle: .module)),
             borderColor: .clear,
             iconColor: .white,
             textColor: .white,
-            iconSystemName: "bell"
+            severityIcon: .init(
+                iconSystemName: "bell",
+                accessibilitySeverityLabel: String(localized: "GreeniOS.Callout.Accessibility.Severity.Critical", bundle: .module)
+            )
         )
     }
 }
 
-extension GroupBoxStyle where Self == CalloutGroupBoxStyle {
-    public static func callout(
-        _ variant: Callout.Variant
-    ) -> CalloutGroupBoxStyle {
+extension CalloutStyle {
+    static func callout(_ variant: Callout.Variant) -> CalloutStyle {
         switch variant {
         case .information(.subtle): .information
         case .information(.loud): .informationLoud
