@@ -89,6 +89,60 @@
         }
       }
     },
+    "GreeniOS.Callout.Accessibility.Severity.Critical" : {
+      "comment" : "VoiceOver severity prefix for critical callouts",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Critical information"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kritisk information"
+          }
+        }
+      }
+    },
+    "GreeniOS.Callout.Accessibility.Severity.Notice" : {
+      "comment" : "VoiceOver severity prefix for notice callouts",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Information"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Information"
+          }
+        }
+      }
+    },
+    "GreeniOS.Callout.Accessibility.Severity.Warning" : {
+      "comment" : "VoiceOver severity prefix for warning callouts",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Warning"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Varning"
+          }
+        }
+      }
+    },
     "GreeniOS.InputField.Accessibility.MaxCharactersReached.Announcement" : {
       "extractionState" : "manual",
       "localizations" : {
