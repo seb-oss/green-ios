@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/seb-oss/green-tokens-ios",
       "state" : {
-        "revision" : "fcb4386b2ad54c6e59a9eac0bbc747529eb07a4f",
-        "version" : "0.0.12"
+        "revision" : "2a275cd81a71a4ec6c18e53280aab611b12e1266",
+        "version" : "0.0.13"
       }
     },
     {
