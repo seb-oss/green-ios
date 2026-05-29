@@ -2,7 +2,7 @@ import SwiftUI
 
 public struct Callout: View {
     @Environment(\.surface) private var surface
-    @Environment(\.calloutStyle) private var variant
+    @Environment(\.calloutAppearance) private var appearance
 
     private let title: any StringProtocol
     private let shortText: any StringProtocol
@@ -20,22 +20,6 @@ public struct Callout: View {
         self.action = action
         self.onClose = onClose
     }
-    
-    private var style: CalloutStyle { .callout(variant) }
-
-    private var primaryActionStyle: GreenButtonStyle {
-        if case .information(.subtle) = variant {
-            .secondary(
-                dimensions: .small,
-                iconPosition: .trailing
-            )
-        } else {
-            .tonal(
-                dimensions: .small,
-                iconPosition: .trailing
-            )
-        }
-    }
 
     public var body: some View {
         let callout = VStack(alignment: .leading, spacing: .gds(.spaceXs)) {
@@ -43,10 +27,10 @@ public struct Callout: View {
             content
         }
         .padding(.gds(.spaceM))
-        .background(style.backgroundColor, in: .rect(cornerRadius: .gds(.radiusM)))
+        .background(appearance.backgroundColor, in: .rect(cornerRadius: .gds(.radiusM)))
         .overlay {
             RoundedRectangle(cornerRadius: .gds(.radiusM))
-                .strokeBorder(style.borderColor, style: .init())
+                .strokeBorder(appearance.borderColor)
         }
         .overlay(alignment: .topTrailing) {
             if let onClose {
@@ -72,15 +56,15 @@ public struct Callout: View {
 
     private var header: some View {
         AdaptiveStack(spacing: .gds(.space2xs), horizontalAlignment: .leading) {
-            if let icon = style.severityIcon {
+            if let icon = appearance.severityIcon {
                 Icon(systemName: icon.iconSystemName)
-                    .foregroundStyle(style.iconColor)
+                    .foregroundStyle(appearance.iconColor)
                     .accessibilityLabel(icon.accessibilitySeverityLabel)
             }
 
             Text(title)
                 .font(.gds(.headingXs))
-                .foregroundStyle(style.textColor)
+                .foregroundStyle(appearance.textColor)
                 .fixedSize(horizontal: false, vertical: true)
         }
         .padding(.trailing, .gds(.spaceM))
@@ -97,21 +81,19 @@ public struct Callout: View {
                     systemImage: action.linkStyle?.symbolName ?? "",
                     action: action.perform
                 )
-                .buttonStyle(.gds(primaryActionStyle))
+                .buttonStyle(.gds(appearance.primaryActionStyle))
                 .level(.level2)
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .font(.gds(.bodySRegular))
-        .foregroundStyle(style.textColor)
+        .foregroundStyle(appearance.textColor)
         .fixedSize(horizontal: false, vertical: true)
     }
 
     @ViewBuilder
     private func closeButton(onClose: @escaping () -> Void) -> some View {
-        let colors = variant.closeButtonColors(
-            surface: surface
-        )
+        let colors = appearance.closeButtonColors(surface)
 
         Button(
             systemName: "xmark.circle.fill",
