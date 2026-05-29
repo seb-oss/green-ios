@@ -20,8 +20,8 @@ final class FloatingLabelInputSnapshotTests: SEBViewImageSnapshotTesting {
             isValid: true
         )
         .frame(width: 320)
-        .padding(.spaceM)
-        .background(Color.l2Elevated01)
+        .padding(.gds(.spaceM))
+        .background(.gds(.l1Neutral02))
 
         assertSnapshot(of: view, as: .image(layout: .sizeThatFits), record: Self.snapshotRecordMode)
     }
@@ -33,8 +33,8 @@ final class FloatingLabelInputSnapshotTests: SEBViewImageSnapshotTesting {
             isValid: true
         )
         .frame(width: 320)
-        .padding(.spaceM)
-        .background(Color.l2Elevated01)
+        .padding(.gds(.spaceM))
+        .background(.gds(.l1Neutral02))
 
         assertSnapshot(of: view, as: .image(layout: .sizeThatFits), record: Self.snapshotRecordMode)
     }
@@ -47,8 +47,8 @@ final class FloatingLabelInputSnapshotTests: SEBViewImageSnapshotTesting {
             isValid: false
         )
         .frame(width: 320)
-        .padding(.spaceM)
-        .background(Color.l2Elevated01)
+        .padding(.gds(.spaceM))
+        .background(.gds(.l1Neutral02))
 
         assertSnapshot(of: view, as: .image(layout: .sizeThatFits), record: Self.snapshotRecordMode)
     }

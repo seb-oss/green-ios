@@ -14,7 +14,7 @@ extension View {
     ) {
         let view = self
             .frame(width: 320)
-            .padding(.spaceM)
+            .padding(.gds(.spaceM))
             .surface(surface, level: level)
             
         snapshot(of: view.colorScheme(.dark), fileID: fileID, file: filePath, testName: "\(testName)_dark", line: line, column: column)
