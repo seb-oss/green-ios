@@ -1,7 +1,7 @@
 import SwiftUI
 
 extension CalloutAppearance {
-    static var information: CalloutAppearance {
+    static var informationSubtle: CalloutAppearance {
         CalloutAppearance(
             backgroundColor: AnyShapeStyle(.surfaceAware),
             borderColor: .gds(.borderNeutral02),
@@ -18,7 +18,7 @@ extension CalloutAppearance {
         )
     }
 
-    static var informationLoud: CalloutAppearance {
+    static var information: CalloutAppearance {
         CalloutAppearance(
             backgroundColor: AnyShapeStyle(.gds(.l2Neutral04, bundle: .module)),
             severityIcon: nil,
@@ -59,8 +59,8 @@ extension CalloutAppearance {
 extension CalloutAppearance {
     static func appearance(for variant: Callout.Variant) -> CalloutAppearance {
         switch variant {
-        case .information(.subtle): .information
-        case .information(.loud): .informationLoud
+        case .information(.subtle): .informationSubtle
+        case .information(.default): .information
         case .notice: .notice
         case .warning: .warning
         case .critical: .critical

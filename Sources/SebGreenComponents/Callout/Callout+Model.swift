@@ -6,8 +6,8 @@ extension Callout {
         case critical
 
         public enum InformationStyle: Equatable {
+            case `default`
             case subtle
-            case loud
         }
     }
 
