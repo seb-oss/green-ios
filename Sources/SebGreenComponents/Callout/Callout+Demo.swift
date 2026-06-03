@@ -139,9 +139,11 @@ public struct CalloutDemo: View {
     }
 }
 
+#if DEBUG
 #Preview {
     NavigationStack {
         CalloutDemo()
             .previewByRegisteringFonts()
     }
 }
+#endif
