@@ -26,6 +26,15 @@ public struct NavigationCloseButton: View {
     public init(_ action: @escaping () -> Void) {
         self.action = action
     }
+    
+    @available(iOS, deprecated: 17, message: "Call `.surfaceAware directly`")
+    private var backgroundStyle: some ShapeStyle {
+        if #available(iOS 17, *) {
+            return .surfaceAware
+        } else {
+            return .clear
+        }
+    }
 
     public var body: some View {
         if #available(iOS 26, *) {
@@ -33,7 +42,10 @@ public struct NavigationCloseButton: View {
                 .tint(.gds(.contentNeutral02))
         } else {
             Button(systemName: "xmark.circle.fill", action: action)
-                .foregroundStyle(.gds(.contentNeutral02), .surfaceAware)
+                .foregroundStyle(
+                    .gds(.contentNeutral02),
+                    backgroundStyle
+                )
                 .font(.system(size: 24))
                 .accessibilityLabel(
                     String(localized: "GreeniOS.Accessibility.Close", bundle: .module)
@@ -76,6 +88,6 @@ extension View {
             .navigationCloseButton {}
             .navigationTitle("Title")
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .surface(.neutral01)
+            .surface(.neutral02)
     }
 }

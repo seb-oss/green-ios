@@ -109,7 +109,7 @@ extension GreenButtonStyle {
 }
 
 public extension ButtonStyle where Self == GreenButtonStyle {
-    static func gds(_ style: GreenButtonStyle) -> some ButtonStyle  {
+    static func gds(_ style: GreenButtonStyle) -> Self {
         style
     }
 }
