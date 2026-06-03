@@ -22,9 +22,9 @@ public struct CalloutDemo: View {
                 )
 
                 callout(
-                    "Information (Loud)",
+                    "Information",
                     shortText: "Used for passive, non-critical updates like tips or background information.",
-                    variant: .information(.loud)
+                    variant: .information(.default)
                 )
 
                 callout(
@@ -142,5 +142,6 @@ public struct CalloutDemo: View {
 #Preview {
     NavigationStack {
         CalloutDemo()
+            .previewByRegisteringFonts()
     }
 }

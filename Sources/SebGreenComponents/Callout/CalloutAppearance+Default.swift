@@ -1,32 +1,33 @@
 import SwiftUI
 
-extension CalloutStyle {
-    static var information: CalloutStyle {
-        CalloutStyle(
+extension CalloutAppearance {
+    static var informationSubtle: CalloutAppearance {
+        CalloutAppearance(
             backgroundColor: AnyShapeStyle(.surfaceAware),
             borderColor: .gds(.borderNeutral02),
             iconColor: .gds(.contentNeutral01),
             textColor: .gds(.contentNeutral01),
-            severityIcon: nil
+            severityIcon: nil,
+            primaryActionStyle: .secondary(dimensions: .small, iconPosition: .trailing),
+            closeButtonColors: { surface in
+                .init(
+                    primary: .gds(.contentNeutral02),
+                    secondary: .gds(surface == .neutral01 ? .l3Neutral01 : .l3Neutral02)
+                )
+            }
         )
     }
 
-    static var informationLoud: CalloutStyle {
-        CalloutStyle(
+    static var information: CalloutAppearance {
+        CalloutAppearance(
             backgroundColor: AnyShapeStyle(.gds(.l2Neutral04, bundle: .module)),
-            borderColor: .clear,
-            iconColor: .white,
-            textColor: .white,
-            severityIcon: nil
+            severityIcon: nil,
         )
     }
 
-    static var notice: CalloutStyle {
-        CalloutStyle(
+    static var notice: CalloutAppearance {
+        CalloutAppearance(
             backgroundColor: AnyShapeStyle(.gds(.tempNotice, bundle: .module)),
-            borderColor: .clear,
-            iconColor: .white,
-            textColor: .white,
             severityIcon: .init(
                 iconSystemName: "info.circle",
                 accessibilitySeverityLabel: String(localized: "GreeniOS.Callout.Accessibility.Severity.Notice", bundle: .module)
@@ -34,12 +35,9 @@ extension CalloutStyle {
         )
     }
 
-    static var warning: CalloutStyle {
-        CalloutStyle(
+    static var warning: CalloutAppearance {
+        CalloutAppearance(
             backgroundColor: AnyShapeStyle(.gds(.tempWarning, bundle: .module)),
-            borderColor: .clear,
-            iconColor: .white,
-            textColor: .white,
             severityIcon: .init(
                 iconSystemName: "exclamationmark.triangle",
                 accessibilitySeverityLabel: String(localized: "GreeniOS.Callout.Accessibility.Severity.Warning", bundle: .module)
@@ -47,12 +45,9 @@ extension CalloutStyle {
         )
     }
 
-    static var critical: CalloutStyle {
-        CalloutStyle(
+    static var critical: CalloutAppearance {
+        CalloutAppearance(
             backgroundColor: AnyShapeStyle(.gds(.tempCritical, bundle: .module)),
-            borderColor: .clear,
-            iconColor: .white,
-            textColor: .white,
             severityIcon: .init(
                 iconSystemName: "bell",
                 accessibilitySeverityLabel: String(localized: "GreeniOS.Callout.Accessibility.Severity.Critical", bundle: .module)
@@ -61,11 +56,11 @@ extension CalloutStyle {
     }
 }
 
-extension CalloutStyle {
-    static func callout(_ variant: Callout.Variant) -> CalloutStyle {
+extension CalloutAppearance {
+    static func appearance(for variant: Callout.Variant) -> CalloutAppearance {
         switch variant {
-        case .information(.subtle): .information
-        case .information(.loud): .informationLoud
+        case .information(.subtle): .informationSubtle
+        case .information(.default): .information
         case .notice: .notice
         case .warning: .warning
         case .critical: .critical
@@ -73,13 +68,13 @@ extension CalloutStyle {
     }
 }
 
-
 extension EnvironmentValues {
-    @Entry var calloutStyle: Callout.Variant = .information(.subtle)
+    @Entry var calloutAppearance: CalloutAppearance = .information
 }
 
 extension View {
-    public func calloutStyle(_ style: Callout.Variant) -> some View {
-        environment(\.calloutStyle, style)
+    /// Sets the visual variant of the callout.
+    public func calloutStyle(_ variant: Callout.Variant) -> some View {
+        environment(\.calloutAppearance, .appearance(for: variant))
     }
 }

@@ -103,7 +103,7 @@ final class GreenListSnapshotTests: SEBViewImageSnapshotTesting {
                 content()
             }
         }
-        .background(Color.l1Neutral02)
+        .background(.gds(.l1Neutral02))
     }
 }
 
@@ -117,10 +117,9 @@ private struct ListFixtureContent: View {
         Group {
             // Section title mimic
             Text("List Showcase")
-                .typography(.detailRegularS)
-                .foregroundColor(.contentNeutral03)
-                .padding(.horizontal, .spaceM)
-                .padding(.top, .spaceS)
+                .font(.gds(.detailSRegular))
+                .foregroundColor(.gds(.contentNeutral03))
+                .padding([.horizontal, .top], .gds(.spaceM))
 
             // Rows covering common states
             GreenRow(

@@ -19,8 +19,8 @@ final class LabelOutsideInputSnapshotTests: SEBViewImageSnapshotTesting {
             placeholder: "Label"
         )
         .frame(width: 320)
-        .padding(.spaceM)
-        .background(Color.l2Elevated01)
+        .padding(.gds(.spaceM))
+        .background(.gds(.l1Neutral02))
 
         assertSnapshot(of: view, as: .image(layout: .sizeThatFits), record: Self.snapshotRecordMode)
     }
@@ -32,8 +32,8 @@ final class LabelOutsideInputSnapshotTests: SEBViewImageSnapshotTesting {
             placeholder: "Label"
         )
         .frame(width: 320)
-        .padding(.spaceM)
-        .background(Color.l2Elevated01)
+        .padding(.gds(.spaceM))
+        .background(.gds(.l1Neutral02))
 
         assertSnapshot(of: view, as: .image(layout: .sizeThatFits), record: Self.snapshotRecordMode)
     }
@@ -47,8 +47,8 @@ final class LabelOutsideInputSnapshotTests: SEBViewImageSnapshotTesting {
             isValid: false
         )
         .frame(width: 320)
-        .padding(.spaceM)
-        .background(Color.l2Elevated01)
+        .padding(.gds(.spaceM))
+        .background(.gds(.l1Neutral02))
 
         assertSnapshot(of: view, as: .image(layout: .sizeThatFits), record: Self.snapshotRecordMode)
     }

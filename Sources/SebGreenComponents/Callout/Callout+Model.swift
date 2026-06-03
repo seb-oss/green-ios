@@ -1,13 +1,13 @@
 extension Callout {
-    public enum Variant: Hashable {
+    public enum Variant: Sendable, Hashable {
         case information(InformationStyle)
         case notice
         case warning
         case critical
 
-        public enum InformationStyle: Equatable {
+        public enum InformationStyle: Sendable, Equatable {
+            case `default`
             case subtle
-            case loud
         }
     }
 

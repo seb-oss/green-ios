@@ -3,83 +3,96 @@ import XCTest
 @testable import SebGreenComponents
 
 final class CalloutSnapshotTests: SEBViewImageSnapshotTesting {
-    func test_callout_information() {
-        callout(variant: .information, actions: .init(onClose: {}))
+
+    // MARK: - Variants
+
+    func test_callout_information_subtle() {
+        callout(variant: .information(.subtle))
             .snapshotTest()
     }
 
-    func test_callout_notice_ctaInternal() {
+    func test_callout_information_default() {
+        callout(variant: .information(.default))
+            .snapshotTest()
+    }
+
+    func test_callout_notice() {
+        callout(variant: .notice)
+            .snapshotTest()
+    }
+
+    func test_callout_warning() {
+        callout(variant: .warning)
+            .snapshotTest()
+    }
+
+    func test_callout_critical() {
+        callout(variant: .critical)
+            .snapshotTest()
+    }
+
+    // MARK: - Configurations
+
+    func test_callout_closeButton() {
+        callout(variant: .notice, onClose: {})
+            .snapshotTest()
+    }
+
+    func test_callout_cta_internalLink() {
         callout(
             variant: .notice,
-            actions: .init(
-                onClose: {},
-                callToAction: .init(
-                    title: "See details",
-                    linkStyle: .internalLink,
-                    action: {}
-                )
-            )
+            action: .init(title: "See details", linkStyle: .internalLink, action: {})
         )
         .snapshotTest()
     }
 
-    func test_callout_warning_ctaExternal() {
+    func test_callout_cta_externalLink() {
         callout(
             variant: .warning,
-            actions: .init(
-                callToAction: .init(
-                    title: "Read more",
-                    linkStyle: .externalLink,
-                    action: {}
-                )
-            )
+            action: .init(title: "Read more", linkStyle: .externalLink, action: {})
         )
         .snapshotTest()
     }
 
-    func test_callout_error() {
-        callout(variant: .critical, actions: .init(onClose: {}))
-            .snapshotTest()
+    func test_callout_alternativeBackground() {
+        callout(variant: .information(.subtle), onClose: {})
+            .snapshotTest(.neutral01)
+
+        callout(variant: .information(.subtle), onClose: {})
+            .snapshotTest(.neutral02)
     }
+
+    // MARK: - Helpers
 
     private func callout(
         variant: Callout.Variant,
-        actions: Callout.Actions
+        action: Callout.Action? = nil,
+        onClose: (() -> Void)? = nil
     ) -> some View {
         Callout(
-            model: .init(
-                id: "",
-                title: title(for: variant),
-                shortText: message(for: variant),
-                variant: variant,
-                actions: actions
-            ),
+            title(for: variant),
+            shortText: shortText(for: variant),
+            action: action,
+            onClose: onClose
         )
+        .calloutStyle(variant)
     }
 
     private func title(for variant: Callout.Variant) -> String {
         switch variant {
-        case .information:
-            return "Information"
-        case .notice:
-            return "Notice"
-        case .warning:
-            return "Warning"
-        case .critical:
-            return "Critical"
+        case .information: "Information"
+        case .notice: "Notice"
+        case .warning: "Warning"
+        case .critical: "Critical"
         }
     }
 
-    private func message(for variant: Callout.Variant) -> String {
+    private func shortText(for variant: Callout.Variant) -> String {
         switch variant {
-        case .information:
-            return "Used for passive, non-critical updates like tips or background information."
-        case .notice:
-            return "Used for actionable, attention-worthy updates that are still non-critical."
-        case .warning:
-            return "Used to highlight important risks or information without interrupting the flow."
-        case .critical:
-            return "Used to communicate that something has gone wrong and needs user attention."
+        case .information: "Used for passive, non-critical updates like tips or background information."
+        case .notice: "Used for actionable, attention-worthy updates that are still non-critical."
+        case .warning: "Used to highlight important risks or information without interrupting the flow."
+        case .critical: "Used to communicate that something has gone wrong and needs user attention."
         }
     }
 }

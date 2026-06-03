@@ -36,7 +36,7 @@ final class GdsToggleSnapshotTests: SEBViewImageSnapshotTesting {
 
 private struct ToggleGdsTintGallery: View {
     var body: some View {
-        VStack(spacing: .spaceL) {
+        VStack(spacing: .gds(.spaceL)) {
             // On (enabled)
             Toggle("", isOn: .constant(true))
                 .toggleStyle(.gds)
@@ -60,7 +60,7 @@ private struct ToggleGdsTintGallery: View {
                 .disabled(true)
         }
         .frame(width: 320)
-        .padding(.spaceL)
+        .padding(.gds(.spaceL))
         .background(Color.l1Neutral02)
     }
 }
