@@ -41,7 +41,7 @@ extension LabelStyle where Self == GreenLabelStyle {
         )
     }
     
-    static func gds(_ style: GreenLabelStyle) -> some LabelStyle  {
+    static func gds(_ style: GreenLabelStyle) -> Self {
         style
     }
 }
