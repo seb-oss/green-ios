@@ -26,7 +26,13 @@ public struct Callout: View {
             header
             content
         }
-        .padding(.gds(.spaceM))
+            .padding([.top, .horizontal], .gds(.spaceM))
+            .padding(
+                .bottom,
+                .gds(
+                    action != nil ? .spaceXs : .spaceM
+                )
+            )
         .background(appearance.backgroundColor, in: .rect(cornerRadius: .gds(.radiusM)))
         .overlay {
             RoundedRectangle(cornerRadius: .gds(.radiusM))
@@ -71,7 +77,7 @@ public struct Callout: View {
     }
     
     private var content: some View {
-        VStack(alignment: .leading, spacing: .gds(.spaceS)) {
+        VStack(alignment: .leading, spacing: .gds(.spaceXs)) {
             Text(shortText)
                 .multilineTextAlignment(.leading)
 
